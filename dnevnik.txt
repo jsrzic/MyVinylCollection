@@ -1,0 +1,29 @@
+1.Sastanak s Tihanom Horvat (21.10.2021.)
+
+- ocjena stanja vinila --> kolekcionar određuje sam 
+•	Poor (P) or Fair (F)
+•	Good (G)
+•	Very Good (VG)
+•	Very Good Plus (VG+)
+•	Excellent (E)
+•	Near Mint (NM)
+•	Mint (M)
+
+- postoji mogućnost prodaje van aplikacije --> samo označimo vinyl kao prodan u kolekcionarovoj listi
+- admin: blokiranje korisnika --> ručno, ne briše se iz baze podataka
+	(Oglase blokiranih korisnika nitko ne može vidjeti, kad ga administrator ponovno odblokira sve postaje ponovo vidljivo.)
+- događaji iz vanjskih usluga (Novi događaj) : naslov, slika, datum, kratki opis i link na događaj
+- pristupi na bazu: administrator, neregistrirani korisnik, registrirani korisnik
+- 2 odvojena pretraživanja:
+	1.izvođač, naziv albuma
+	2.korisniku(za umrežavanje s novim ljudima)
+- načini spremanja admina i korisnika u bazu ostavljeno nama na volju
+- na našem profilu imamo i listu vinyla koje smo prodali
+- postupak razmjene kao i kupnje
+- možemo maknuti ploču iz naše kolekcije --> oznaka deleted
+- način prodaje: ja imam registriran profil i ploču koju želim prodat, označim je da je na prodaju, ona se tako prikazuje drugima u aplikaciji, ukoliko netko drugi želi kupiti tu ploču označi ju (+ ili sl.), otvara se forma gdje se popunjava sve potrebno…
+- možemo pratiti druge korisnike
+- mogućnosti filtriranja po: žanru, podžanru, godini izdavanja, ocijeni stanja, podatcima o ploči(promjer), raritetu
+- prilikom logiranja: korisničko ime, lozinka
+- prilikom registriranja: ime, prezime, korisničko ime, lozinka, potvrda lozinke, e-mail, odabrati najdraže žanrove, lokacija povezana s uređaja
+- ne zaboraviti pisati use caseove za sve u dokumentaciji
