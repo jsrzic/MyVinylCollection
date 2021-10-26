@@ -1,7 +1,9 @@
+import Homepage from "./pages/Homepage";
+
 function App() {
   return (
     <div className="App">
-      <h1>My Vinyl App</h1>
+      <Homepage />
     </div>
   );
 }
