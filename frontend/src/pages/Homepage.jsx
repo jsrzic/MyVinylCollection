@@ -2,11 +2,11 @@ import React from "react";
 import vinyl from "../assets/vinyl.png";
 import "../index.css";
 import Button from "../components/Button";
-import { useWindowSize } from "../util/utils";
+import { IsMobile } from "../util/utils";
+import { pageStyle } from "../styles/globalStyles";
 
 function Homepage() {
   const homepageStyle = {
-    height: "100vh",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
@@ -15,21 +15,20 @@ function Homepage() {
     position: "relative",
   };
 
-  const homepageHeaderStyle =
-    useWindowSize().width > 768
-      ? {
-          width: "95%",
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "space-between",
-          margin: "1rem",
-        }
-      : {
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        };
+  const homepageHeaderStyle = IsMobile()
+    ? {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }
+    : {
+        width: "95%",
+        display: "flex",
+        alignItems: "start",
+        justifyContent: "space-between",
+        margin: "1rem",
+      };
 
   const imageStyle = {
     animation: "rotation 20s infinite linear",
@@ -43,7 +42,7 @@ function Homepage() {
   };
 
   return (
-    <div style={homepageStyle}>
+    <div style={{ ...pageStyle, ...homepageStyle }}>
       <div style={homepageHeaderStyle}>
         <h1 style={titleStyle}>My Vinyl Collection</h1>
         <div style={{ display: "flex" }}>
