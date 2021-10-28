@@ -1,16 +1,11 @@
 import React from "react";
 
-export function useWindowSize() {
-  const [windowSize, setWindowSize] = React.useState({
-    width: undefined,
-    height: undefined,
-  });
+export function IsMobile() {
+  const [width, setWidth] = React.useState(undefined);
+
   React.useEffect(() => {
     function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      setWidth(window.innerWidth);
     }
 
     window.addEventListener("resize", handleResize);
@@ -18,5 +13,5 @@ export function useWindowSize() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  return windowSize;
+  return width < 768;
 }
