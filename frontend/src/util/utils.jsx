@@ -15,3 +15,7 @@ export function IsMobile() {
   }, []);
   return width < 768;
 }
+
+export const ColorModeContext = React.createContext({
+  toggleColorMode: () => {},
+});

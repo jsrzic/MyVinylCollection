@@ -1,9 +1,10 @@
 import React from "react";
 import vinyl from "../assets/vinyl.png";
 import "../index.css";
-import Button from "../components/Button";
 import { IsMobile } from "../util/utils";
 import { pageStyle } from "../styles/globalStyles";
+import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 function Homepage() {
   const homepageStyle = {
@@ -41,13 +42,19 @@ function Homepage() {
     margin: 0,
   };
 
+  const history = useHistory();
+
   return (
     <div style={{ ...pageStyle, ...homepageStyle }}>
       <div style={homepageHeaderStyle}>
         <h1 style={titleStyle}>My Vinyl Collection</h1>
         <div style={{ display: "flex" }}>
-          <Button variant="primary" text="Log In" path="/login" />
-          <Button variant="secondary" text="Sign Up" path="/signup" />
+          <Button onClick={() => history.push("/login")} variant="contained">
+            Login
+          </Button>
+          <Button onClick={() => history.push("/signup")} variant="outlined">
+            Signup
+          </Button>
         </div>
       </div>
       <img style={imageStyle} alt="vinyl" src={vinyl} />
