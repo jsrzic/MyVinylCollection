@@ -17,6 +17,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleIcon from "@mui/icons-material/People";
 
 import { IsMobile } from "../util/utils";
+import UserTab from "./UserTab";
 
 function SideNavBar() {
   return !IsMobile() ? (
@@ -29,6 +30,7 @@ function SideNavBar() {
       }}
     >
       <Tabs orientation="vertical" style={{ width: "15rem" }}>
+        <UserTab />
         <Tab
           style={{ display: "flex", justifyContent: "start" }}
           icon={<HomeIcon />}
