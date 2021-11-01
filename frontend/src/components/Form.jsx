@@ -1,5 +1,6 @@
 import React from "react";
 import { IsMobile } from "../util/utils";
+import { TextField } from "@mui/material";
 
 function Form({ children, style }) {
   const formStyle = IsMobile()
@@ -14,24 +15,13 @@ function Form({ children, style }) {
 }
 
 function FormRow({ label, type }) {
-  const labelStyle = {
-    color: "white",
-    display: "flex",
-    flexDirection: "column",
-    marginTop: "1rem",
-  };
-
-  const inputStyle = {
-    padding: "0.5rem",
-    borderRadius: "5px",
-    background: "rgb(68,67,67)",
-  };
-
   return (
-    <label style={labelStyle}>
-      {label}
-      <input style={inputStyle} type={type} name={label} />
-    </label>
+    <TextField
+      variant="outlined"
+      value={label}
+      type={type}
+      style={{ margin: "0.5rem" }}
+    />
   );
 }
 

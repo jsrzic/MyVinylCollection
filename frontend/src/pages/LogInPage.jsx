@@ -25,8 +25,8 @@ function LogInPage() {
     <div style={{ ...pageStyle, ...loginPageStyle }}>
       <img src={logoImg} style={imageStyle} alt="login_image" />
       <Form style={formStyle}>
-        <Form.Row label="e-mail" type="text" />
-        <Form.Row label="Password" type="text" />
+        <Form.Row label="e-mail" />
+        <Form.Row label="Password" type="password" />
         <Form.Submit />
       </Form>
     </div>
