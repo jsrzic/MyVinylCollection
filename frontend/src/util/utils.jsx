@@ -1,4 +1,25 @@
 import React from "react";
+import {
+  amber,
+  blue,
+  blueGrey,
+  brown,
+  cyan,
+  deepOrange,
+  deepPurple,
+  green,
+  grey,
+  indigo,
+  lightBlue,
+  lightGreen,
+  lime,
+  orange,
+  pink,
+  purple,
+  red,
+  teal,
+  yellow,
+} from "@mui/material/colors";
 
 export function IsMobile() {
   const [width, setWidth] = React.useState(undefined);
@@ -19,3 +40,38 @@ export function IsMobile() {
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });
+
+const colors = [
+  red,
+  pink,
+  purple,
+  deepPurple,
+  indigo,
+  blue,
+  lightBlue,
+  cyan,
+  teal,
+  green,
+  lightGreen,
+  lime,
+  yellow,
+  amber,
+  orange,
+  deepOrange,
+  brown,
+  grey,
+  blueGrey,
+];
+
+const shades = ["300", "400", "500", "600"];
+
+export function getRandomColor() {
+  const shadeIndex = Math.round(Math.random() * (shades.length - 1));
+  const shade = shades[shadeIndex];
+  const colorIndex = Math.round(Math.random() * (colors.length - 1));
+  const color = colors[colorIndex];
+  console.log(
+    color[shade] + " INDEX: [" + colorIndex + "][" + shadeIndex + "]"
+  );
+  return color[shade];
+}

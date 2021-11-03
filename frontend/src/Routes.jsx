@@ -2,7 +2,7 @@ import React from "react";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { createTheme } from "@mui/material";
+import { alpha, createTheme } from "@mui/material";
 
 import { ThemeProvider } from "@emotion/react";
 
@@ -23,6 +23,9 @@ function Routes() {
     }),
     []
   );
+
+  const contrast = mode === "dark" ? "rgb(35,35,35)" : "rgb(196,196,196)";
+  const color = mode === "dark" ? "rgb(196,196,196)" : "rgb(35,35,35)";
 
   const theme = React.useMemo(
     () =>
@@ -52,6 +55,16 @@ function Routes() {
                 },
               },
             ],
+          },
+          MuiTab: {
+            styleOverrides: {
+              root: {
+                "&:hover": {
+                  background: alpha(contrast, 0.5),
+                },
+                color: color,
+              },
+            },
           },
         },
       }),
