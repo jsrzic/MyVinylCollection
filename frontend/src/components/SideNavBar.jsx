@@ -19,6 +19,15 @@ import PeopleIcon from "@mui/icons-material/People";
 import { IsMobile } from "../util/utils";
 import UserTab from "./UserTab";
 
+const tabsStyle = { width: "15rem" };
+const bottomNavStyle = { width: "100%", position: "absolute", bottom: 0 };
+const tabStyle = {
+  display: "flex",
+  justifyContent: "start",
+  margin: "0.5rem",
+  borderRadius: "0.5rem",
+};
+
 function SideNavBar() {
   return !IsMobile() ? (
     <Paper
@@ -29,35 +38,36 @@ function SideNavBar() {
         position: "relative",
       }}
     >
-      <Tabs orientation="vertical" style={{ width: "15rem" }}>
+      <Tabs orientation="vertical" style={tabsStyle}>
         <UserTab />
+        <Divider />
         <Tab
-          style={{ display: "flex", justifyContent: "start" }}
+          style={tabStyle}
           icon={<HomeIcon />}
           label="Home Page"
           iconPosition="start"
         />
         <Tab
-          style={{ display: "flex", justifyContent: "start" }}
+          style={tabStyle}
           icon={<AlbumIcon />}
           label="Collection"
           iconPosition="start"
         />
         <Tab
-          style={{ display: "flex", justifyContent: "start" }}
+          style={tabStyle}
           icon={<FeaturedPlayListIcon />}
           label="Ads"
           iconPosition="start"
         />
         <Divider />
         <Tab
-          style={{ display: "flex", justifyContent: "start" }}
+          style={tabStyle}
           icon={<SettingsIcon />}
           label="Settings"
           iconPosition="start"
         />
         <Tab
-          style={{ display: "flex", justifyContent: "start" }}
+          style={tabStyle}
           icon={<PeopleIcon />}
           label="Friends"
           iconPosition="start"
@@ -65,7 +75,7 @@ function SideNavBar() {
       </Tabs>
     </Paper>
   ) : (
-    <Box style={{ width: "100%", position: "absolute", bottom: 0 }}>
+    <Box style={bottomNavStyle}>
       <BottomNavigation>
         <BottomNavigationAction icon={<HomeIcon />} label="Home Page" />
         <BottomNavigationAction icon={<FeaturedPlayListIcon />} label="Ads" />
