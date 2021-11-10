@@ -33,7 +33,7 @@ const helpBarStyle = {
   justifyContent: "space-between",
 };
 
-function TopNavBar({ colorMode, theme }) {
+function TopNavBar() {
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
 
@@ -55,7 +55,7 @@ function TopNavBar({ colorMode, theme }) {
             </h2>
           </div>
           <div>
-            <ToggleTheme colorMode={colorMode} theme={theme} />
+            <ToggleTheme />
             {IsMobile() ? (
               <IconButton onClick={() => setOpen(!open)}>
                 {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -65,6 +65,7 @@ function TopNavBar({ colorMode, theme }) {
                 <Button
                   style={logOutButtonStyle}
                   variant="contained"
+                  disableElevation
                   startIcon={<LogoutIcon />}
                 >
                   Log out

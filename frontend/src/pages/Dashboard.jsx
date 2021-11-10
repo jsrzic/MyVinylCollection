@@ -19,7 +19,7 @@ const scrollContainerStyle = {
   justifyContent: "space-between",
 };
 
-function Dashboard({ colorMode, theme }) {
+function Dashboard() {
   return (
     <Paper
       style={{
@@ -27,12 +27,12 @@ function Dashboard({ colorMode, theme }) {
         overflow: "hidden",
       }}
     >
-      <TopNavBar colorMode={colorMode} theme={theme} />
+      <TopNavBar />
       <div style={subScreenStyle}>
         <SideNavBar />
         <div style={scrollContainerStyle}>
-          <VinylCard name="Ime" forSale />
-          <VinylCard name="Ime" forSale />
+          <VinylCard name="Euforija" forSale />
+          <VinylCard name="Bohemian Rhapsody" forSale />
           <VinylCard name="Dugo neko ime" ad />
           <VinylCard name="Ime" forSale />
           <VinylCard name="Ime" />
