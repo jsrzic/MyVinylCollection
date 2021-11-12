@@ -15,5 +15,54 @@
 %		\textit{Za pomoć pogledati reference navedene u poglavlju „Popis literature“, a po potrebi konzultirati sadržaj na internetu koji nudi dobre smjernice u tom pogledu.}
 %		\eject
 	
+		\text Cilj ovog projekta je stvaranje web aplikacije \textit{"My Vinyl Collection"} koja će služiti kao mjesto na kojem će se korisnici, koji su zainteresirani, ljubitelji ili kolekcionari, registrirati kako bi pronalazili nove vinile, prodavali, kupovali ili razmjenjivali vinile s drugima.
+		Prilikom pokretanja aplikacije korisnicima će automatski biti ponuđene kolekcije i vinili iz Zagreba te će moći pretraživati tuđe kolekcije i podkolekcije.\\
 		
-	
+		\textit{\underline{Neregistrirani korisnici}} mogu samo pregledavati i pretraživati tuđe kolekcije i korisnike. Neregistriranom korisniku je omogućeno prijavljivanje postojećim računom (upisivanjem korisničkog imena i lozinke) ili kreiranjem novog računa. Za kreiranje novog računa potrebni su: 
+		\begin{packed_item}
+			\item ime
+			\item prezime
+			\item korisničko ime
+			\item email adresa
+			\item lozinka
+			\item potvrda lozinke
+			\item odabir preferiranih žanrova
+			\item lokacija povezana s uređajem
+		\end{packed_item}
+Registracijom u sustav korisniku se dodijeljuju određene mogućnosti i značajke.\\
+
+	 \textit{\underline{Registrirani korisnici}} imaju mogućnosti pregledavanja, mienjanja osobnih podataka i brisanja profila. Također mogu izrađivati kolekcije i podkolekcije vinila koje posjeduju, objavljivati oglase za prodaju ili razmjenu vinila te imaju pregled kupljenih, aktivnih i prodanih oglasa, tj. vinila. Prilikom objavljivanja oglasa, ako korisnik nema odabranu lokaciju na profilu, od njega se traži odabir lokacije vinila. S obzirom na kojoj su korisnici lokaciji, koju će moći promijeniti ručno u postavkama, na početnoj stranici će im se prikazivati svi vinili koji su fizički u njihovoj blizini. Na početnoj stranici će također korisnici imat mogućnost pretraživanja drugih korisnika te pretraživanja i filtriranja vinila. Prilikom dodavanja vinila u kolekcije i podkolekcije korisnici će biti obvezni napisati naziv izvođača, naziv albuma, godinu izdanja, žanr vinila te osnovne parametre o samom fizičkom vinilu kao što su: promjer, RPM (\textit{revolutions per minute}), kapacitet, kvaliteta reprodukcije i broj audio kanala. Vezano uz glavne karakteristike vinila korisnici mogu opcionalno napisati podžanr, ocjenu stanja [Poor (P)/Fair (F), Good (G), Very Good (VG), Very Good Plus (VG+), Excellent (E), Near Mint (NM), Mint (M)], sliku, te kao dodatak raritet, opis i vrijednost vinila u kunama. Svaka vrijednost vinila će automatski biti preračunata i prikazana, ispod cijene u kunama, u eurima. Kad je registrirani korisnik zainteresiran za oglas može napisati poruku vlasniku oglasa kojem se poruka šalje na mail s kojim se registrirao. E-mail adresa za primanje poruka i sličnih obavijesti se može promijeniti u postavkama te može se razlikovati od registracijskog e-maila.\\
+	 
+	  \text Tijekom razmjene ili kupovine, tj. prodaje kad vinil promijeni vlasnika, ne nalazi se više u kolekciji prodavatelja. Na profilu korisnika postoji lista svih vinila koje je korisnik prodao ili zamijenio. Vinili se također mogu prodavati na "crno", tj. prodavatelj može ručno označiti vinil kao prodan da se više ne prikazuje na stranici.\\
+	 
+	 Uloga \textit{\underline{administratora}} je potrebna za vođenje računa o objavljenim oglasima i o tome kakav je objavljeni sadržaj. Administratori imaju ovlasti brisanja oglasa, blokiranja i aktiviranja korisničkog računa. Također su u mogućnosti kreiranja događaja iz vanjskih usluga kao što je \textit{Facebook} o raznim događajima vezanim za ovu temu (npr. buvljaci, slušaone i slično) koje registrirani korisnici mogu pretraživati.\\
+	 
+	 
+	 \section {Primjeri sličnih rješenja}
+	 
+	 \item[] \begin{packed_enum}
+	 		\item Njuškalo
+	 		
+	 		\text Njuškalo je web stranica na kojoj se objavljaju raznovrsni oglasi od automobila i drugih motornih vozila,  nekretnina, pa sve do hrane i pića i popusta u raznim trgovinama. Služi kao mjesto za trgovinu ne samo za korisnike nego i za tvrtke, obrtnike, udruge te agencije, dok je naš projekt web stranica za ljubitelje, kolekcionare i prodavače vinila.\\
+	 		
+	 		\begin{figure}[H]
+	 			\includegraphics[width = \linewidth]{slike/njuskalo.png}
+	 			\centering
+	 			\caption{Početna stranica Njuškala}
+	 			\label{fig:njuškalo}
+	 		\end{figure}
+	 		
+	 		
+		 	\item Oglasnik
+	 		
+	 		\text Oglasnik je slična web stranica kao i Njuškalo koja ima malo drugačijih značajki za razliku od naših. Od mogućnosti procjene vrijednosti auta, kalkulatora uvoza vozila, online plaćanja pa do korisničke podrške, pravila o postupanju kolačića, uvjeta korištenja i uvjeta kupnje. Također postoji opcija prijave oglasa u slučaju da krši pravila oglašavanja, mogućnost pronalaska ostalih oglasa u blizini (koji se na karti prikažu ovisno o tome koliko se umanji/uveća karta). \\
+	 		
+	 		\begin{figure}[H]
+	 			\includegraphics[width = \linewidth]{slike/oglasnik.png}
+	 			\centering
+	 			\caption{Početna stranica Oglasnika}
+	 			\label{fig:oglasnik}
+	 		\end{figure}
+	 		
+	 		\text Sljedeći korak bi mogao biti proširenje na oglašavanje, tj. prodaju, kupovinu ili razmjenu gramofona te suradnja s tvrtkama, obrtnicima i ostalima za promoviranje njihovih proizvoda i usluga.
+	 		
