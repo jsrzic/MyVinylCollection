@@ -18,13 +18,22 @@ public class User {
     private Long id;
 
     private String name;
+
     private String surname;
+
+    @Column(unique=true, nullable=false)
     private String username;
+
     private String password;
+
     @Email(message = "Email not in correct format")
     private String email;
+
     @Column(name="contact_email")
     private String contactEmail;
+
+    @Column(name="is_active")
+    private boolean isActive;
 
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "location_id")
@@ -43,6 +52,7 @@ public class User {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.contactEmail = user.getEmail();
+        this.isActive = true;
         this.preferedGenres = user.getPreferedGenres().stream().map(genreName->
         {
             Genre genre = new Genre();
@@ -105,6 +115,14 @@ public class User {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
     }
 
     public Location getLocation() {

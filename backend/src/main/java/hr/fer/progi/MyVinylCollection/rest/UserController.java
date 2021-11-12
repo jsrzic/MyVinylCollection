@@ -34,7 +34,7 @@ public class UserController {
         if (userService.checkUsernameUnique(user)) {
             return userService.registerUser(user);
         } else {
-            throw new RequestDeniedException("Username already exists.");
+            throw new IllegalArgumentException("Username already exists.");
         }
     }
 
@@ -43,7 +43,30 @@ public class UserController {
         if (userService.checkUsernameExists(user) && userService.checkPassword(user)) {
             return new ResponseEntity<Object>(user, HttpStatus.OK);
         } else {
-            throw new RequestDeniedException("Invalid username/password.");
+            throw new IllegalArgumentException("Invalid username/password.");
+        }
+    }
+
+    @GetMapping("/email/{id}")
+    public String getUserEmail(@PathVariable("id") Long userId){
+        try{
+            String email = userService.getUserEmail(userId);
+            return email;
+        }catch(RequestDeniedException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    @PostMapping("/status/{id}")
+    public ResponseEntity<Object> updateUserStatus(@PathVariable("id") Long userId, @RequestParam boolean status){
+        try{
+            if(userService.updateUserStatus(userId, status)){
+                return new ResponseEntity<Object>(userId, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<Object>(userId, HttpStatus.EXPECTATION_FAILED);
+            }
+        }catch(RequestDeniedException e){
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }

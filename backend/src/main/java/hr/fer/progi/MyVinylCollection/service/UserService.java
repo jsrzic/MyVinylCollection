@@ -5,6 +5,7 @@ import hr.fer.progi.MyVinylCollection.rest.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.RegisterUserDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -13,4 +14,7 @@ public interface UserService {
     User registerUser(RegisterUserDTO user);
     boolean checkUsernameExists(LoginUserDTO user);
     boolean checkPassword(LoginUserDTO user);
+    String getUserEmail(Long userId);
+    boolean updateUserStatus(Long userId, boolean status);
+
 }
