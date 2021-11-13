@@ -63,7 +63,7 @@ const colors = [
   blueGrey,
 ];
 
-const shades = ["300", "400", "500", "600"];
+const shades = ["200", "300", "400"];
 
 export function getRandomColor() {
   const shadeIndex = Math.round(Math.random() * (shades.length - 1));
@@ -75,3 +75,5 @@ export function getRandomColor() {
   );
   return color[shade];
 }
+
+export const ThemeContext = React.createContext();
