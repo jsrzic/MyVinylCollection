@@ -1,6 +1,6 @@
 import React from "react";
 import { IsMobile } from "../util/utils";
-import { TextField } from "@mui/material";
+import {Button, TextField} from "@mui/material";
 
 function Form({ children, style }) {
   const formStyle = IsMobile()
@@ -14,29 +14,26 @@ function Form({ children, style }) {
   return <form style={{ ...formStyle, ...style }}>{children}</form>;
 }
 
-function FormRow({ label, type }) {
+function FormRow({ type, required, label }) {
   return (
     <TextField
-      variant="outlined"
-      value={label}
+      variant="filled"
       type={type}
-      style={{ margin: "0.5rem" }}
+      style={{ margin: "0.5rem", backgroundColor: "white", borderRadius: "4px"}}
+      required={required}
+      label={label}
     />
   );
 }
 
 function FormSubmit() {
   const submitStyle = {
-    height: "2.5rem",
-    width: "7rem",
-    borderRadius: "5px",
-    background: "white",
-    fontSize: "14px",
-    margin: "auto",
-    marginTop: "2rem",
+    backgroundColor: "#e25c3b",
+    marginLeft: "auto",
+    marginTop: "auto",
   };
 
-  return <input style={submitStyle} type="submit" value="Submit" />;
+  return <Button variant="contained" sx={submitStyle} type="submit">Submit</Button>;
 }
 
 Form.Row = FormRow;
