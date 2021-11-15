@@ -1,6 +1,7 @@
 import React from "react";
 
-import { getRandomColor } from "../util/utils";
+import { getRandomColor, ThemeContext } from "../util/utils";
+import { Grow } from "@mui/material";
 
 const flexedCenterStyle = {
   display: "flex",
@@ -21,13 +22,25 @@ function VinylComponent({ size, name }) {
     width: 0.5 * size,
     background: getRandomColor(),
   };
+  const { theme } = React.useContext(ThemeContext);
+  const outline = theme.palette.mode === "dark" ? "black" : "white";
 
   return (
-    <div style={{ ...containerStyle, ...flexedCenterStyle }}>
-      <div style={{ ...vinylStyle, ...flexedCenterStyle }}>
-        <p align="center">{name}</p>
+    <Grow in timeout={500}>
+      <div style={{ ...containerStyle, ...flexedCenterStyle }}>
+        <div style={{ ...vinylStyle, ...flexedCenterStyle }}>
+          <h3
+            align="center"
+            style={{
+              textShadow: `-1px -1px 0 ${outline}, 
+          1px -1px 0 ${outline}, -1px 1px 0 ${outline}, 1px 1px 0 ${outline}`,
+            }}
+          >
+            {name}
+          </h3>
+        </div>
       </div>
-    </div>
+    </Grow>
   );
 }
 

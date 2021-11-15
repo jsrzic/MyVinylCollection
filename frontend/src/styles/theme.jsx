@@ -1,10 +1,9 @@
-import React from "react";
 import { createTheme } from "@mui/material";
 
 export const themeLight = createTheme({
   palette: {
     primary: {
-      main: "rgb(213,212,212)",
+      main: "#b66857",
     },
     secondary: {
       main: "rgb(164,164,164)",

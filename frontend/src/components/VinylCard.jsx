@@ -30,14 +30,14 @@ function VinylCard({ name, ad, forSale }) {
     justifyContent: "space-between",
     alignItems: "center",
     width: "90%",
-    marginTop: "-1rem",
+    marginTop: "-1.5rem",
   };
 
   return (
     <Card style={cardStyle}>
       {forSale && (
         <div style={saleHeaderStyle}>
-          <IconButton disabled style={{ background: "green" }}>
+          <IconButton size="small" disabled style={{ background: "green" }}>
             <AttachMoneyIcon />
           </IconButton>
           <FavoriteBorderIcon />

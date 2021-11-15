@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useHistory } from "react-router-dom";
+
 import {
   BottomNavigation,
   BottomNavigationAction,
@@ -16,19 +18,61 @@ import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PeopleIcon from "@mui/icons-material/People";
 
-import { IsMobile } from "../util/utils";
+import { IsMobile, ThemeContext } from "../util/utils";
 import UserTab from "./UserTab";
 
-const tabsStyle = { width: "15rem" };
-const bottomNavStyle = { width: "100%", position: "absolute", bottom: 0 };
-const tabStyle = {
-  display: "flex",
-  justifyContent: "start",
-  margin: "0.5rem",
-  borderRadius: "0.5rem",
-};
+const tabsIcons = [
+  <HomeIcon />,
+  <AlbumIcon />,
+  <FeaturedPlayListIcon />,
+  <SettingsIcon />,
+  <PeopleIcon />,
+];
+const tabs = ["Home Page", "Collection", "Ads", "Settings", "Friends"];
+const tabToPath = new Map();
+tabToPath.set("Home Page", "homepage");
+tabToPath.set("Collection", "collection");
+tabToPath.set("Ads", "ads");
+tabToPath.set("Settings", "settings");
+tabToPath.set("Friends", "friends");
+
+const url = window.location.href.substring(
+  window.location.href.lastIndexOf("/") + 1
+);
 
 function SideNavBar() {
+  const [active, setActive] = React.useState(url);
+
+  const { theme } = React.useContext(ThemeContext);
+
+  const color =
+    theme.palette.mode === "dark" ? "rgb(44,44,44)" : "rgb(222,222,222)";
+
+  const tabStyle = {
+    display: "flex",
+    justifyContent: "start",
+    margin: "0.5rem",
+    borderRadius: "0.5rem",
+  };
+  const activeTabStyle = {
+    display: "flex",
+    justifyContent: "start",
+    margin: "0.5rem",
+    fontWeight: "750",
+    borderRadius: "0.5rem",
+    fontSize: "17px",
+    animation: "grow 0.15s",
+    background: color,
+  };
+  const tabsStyle = { width: "15rem" };
+  const bottomNavStyle = { width: "100%", position: "absolute", bottom: 0 };
+
+  const history = useHistory();
+
+  function isActive(tab) {
+    return tab === active;
+  }
+
   return !IsMobile() ? (
     <Paper
       variant="outlined"
@@ -41,37 +85,19 @@ function SideNavBar() {
       <Tabs orientation="vertical" style={tabsStyle}>
         <UserTab />
         <Divider />
-        <Tab
-          style={tabStyle}
-          icon={<HomeIcon />}
-          label="Home Page"
-          iconPosition="start"
-        />
-        <Tab
-          style={tabStyle}
-          icon={<AlbumIcon />}
-          label="Collection"
-          iconPosition="start"
-        />
-        <Tab
-          style={tabStyle}
-          icon={<FeaturedPlayListIcon />}
-          label="Ads"
-          iconPosition="start"
-        />
-        <Divider />
-        <Tab
-          style={tabStyle}
-          icon={<SettingsIcon />}
-          label="Settings"
-          iconPosition="start"
-        />
-        <Tab
-          style={tabStyle}
-          icon={<PeopleIcon />}
-          label="Friends"
-          iconPosition="start"
-        />
+        {tabs.map((tab, index) => (
+          <Tab
+            label={<p>{tabs[index]}</p>}
+            style={isActive(tabToPath.get(tab)) ? activeTabStyle : tabStyle}
+            onClick={() => {
+              setActive(tabToPath.get(tabs[index]));
+              history.push(`/dashboard/${tabToPath.get(tabs[index])}`);
+              console.log(active);
+            }}
+            icon={tabsIcons[index]}
+            iconPosition="start"
+          />
+        ))}
       </Tabs>
     </Paper>
   ) : (
