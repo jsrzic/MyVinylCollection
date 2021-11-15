@@ -1,0 +1,585 @@
+\chapter{Specifikacija programske potpore}
+		
+	\section{Funkcionalni zahtjevi}
+			
+%			\textbf{\textit{dio 1. revizije}}\\
+%			
+%			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
+%				
+%			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
+			
+			
+			\noindent \textbf{Dionici:}
+			
+			\begin{packed_enum}
+				
+				\item Korisnici
+				
+					\begin{packed_enum}
+					
+						\item Neregistrirani
+						\item Registrirani
+						
+					\end{packed_enum}
+					
+				\item Administrator			
+				\item Razvojni tim
+				
+			\end{packed_enum}
+			
+			\noindent \textbf{Aktori i njihovi funkcionalni zahtjevi:}
+			
+			\begin{packed_enum}
+			
+				\item  \underbar{Neregistrirani/neprijavljeni (inicijator) može:}
+				
+				\begin{packed_enum}
+				
+					\item pregledavati i pretraživati tuđe kolekcije
+					\item pregledavati i pretraživati korisnike
+					\item registrirati se u sustav, stvoriti novi korisnički račun za koji su mu potrebni ime, prezime, korisničko ime, e-mail adresa, lozinka, odabir preferiranih žanrova i lokacija uređaja
+					
+				\end{packed_enum}
+			
+				\item  \underbar{Registrirani/prijavljeni (sudionik) može:}
+				
+				\begin{packed_enum}
+				
+					\item pregledavati i mijenjati osobne podatke
+					
+						\begin{packed_enum}
+						
+								\item promijeniti e-mail adresu za primanje poruka
+								
+						\end{packed_enum}
+						
+					\item izbrisati profil
+					\item stvarati kolekcije i podkolekcije vinila
+					\item objavljivati oglase za prodaju ili razmjenu
+					\item pregledati kupljene, aktivne i prodane oglase (vinile)
+					\item dodavati vinile u kolekcije i podkolekcije uz koje će biti obvezni napisati naziv izvođača, albuma, godinu izdanja te žanr vinila
+					
+					\begin{packed_enum}
+					
+						\item napisati osnovne parametre fizičkog vinila: promjer, RPM, kapacitet, kvaliteta reprodukcije, broj audio kanala
+						\item opcionalno napisati glavne karakteristike vinila: podžanr, ocjena stanja, slika, raritet, opis, cijena 
+						
+					\end{packed_enum}
+					
+					\item poslati poruku korisniku za zainteresiranost u oglas
+					\item označiti oglas (vinil) kao da je prodan da se više ne prikazuje na stranici
+							
+				\end{packed_enum}
+				
+				\item  \underbar{Administrator (inicijator) može:}
+				
+					\begin{packed_enum}
+					
+						\item vidjeti popis svih registriranih korisnika i njihovih podataka
+						\item brisati oglase koji su u suprotnosti s pravilima korištenja aplikacije
+						\item blokirati i aktivirati korisnički račun
+						\item kreirati događaje iz vanjskih usluga (npr. Facebook, Instagram, Twitter i slično) o raznim događanjima (npr. buvljaci, slušaone i slično)
+						
+					\end{packed_enum}
+					
+				\item  \underbar{Baza podataka (inicijator):}
+				
+					\begin{packed_enum}
+					
+						\item pohranjuje sve podatke o korisnicima i njihovim ovlastima
+						\item pohranjuje sve podatke o vinilima, njihovim karakteristikama i vlasnicima
+						
+					\end{packed_enum}	
+									
+				
+			\end{packed_enum}
+			
+			\eject 
+			
+			
+				
+			\subsection{Obrasci uporabe}
+				
+%				\textbf{\textit{dio 1. revizije}}
+				
+				\subsubsection{Opis obrazaca uporabe}
+%					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
+					
+
+					\noindent \underbar{\textbf{UC1 - Pregled kolekcija i korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
+						\item  \textbf{Cilj:} Pregledati tuđe vinile
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Automatski su prikazani oglasi, za neregistrirane korisnike, iz Zagreba prilikom učitavanja aplikacije
+							\item Korisnik može pretraživati korisnike
+							\item Korisnik može vidjeti kolekcije i podkolekcije pretraženog korisnika
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[1.a] Za registriranog korisnika se prikazuju oglasi ovisno o njegovoj lokaciji
+							
+						\end{packed_item}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC2 - Registracija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Neregistrirani korisnik
+						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za registraciju
+							\item Korisnik unosi potrebne korisničke podatke
+							\item Korisnik prima obavijest o uspješnoj registraciji
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkih podataka u nedozvoljenom formatu ili pružanje neispravnih podataka
+							
+								\begin{packed_item}
+								
+									\item Sustav obavještava korisnika o neuspjeloj registraciji i vraća ga na stranicu registracije
+									\item Korisnik mijenja podatke i završava registraciju ili odustaje od registracije
+								
+								\end{packed_item}
+							
+						\end{packed_item}					
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC3 - Prijava}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Dobiti pristup korinsičkom sučelju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Registracija
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Unos korisničkog imena i lozinke
+							\item Potvrda o ispravnosti unesenih podataka
+							\item Pristup korisničkim funkcijama
+							
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Neispravno korisničko ime/lozinka
+							
+								\begin{packed_item}
+								
+									\item Sustav obavještava korisnika o neuspjelom upisu
+									
+								\end{packed_item}
+							
+						\end{packed_item}				
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC4 - Pregled osobnih podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Promjeniti osobne podatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korsnik odabire opciju za pregled podataka
+							\item Otvara se stranica s osobnim podacima korisnika
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC5 - Promjena osobnih podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Promijeniti/ažurirati osobne podatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za promjenu podataka
+							\item Otvara se stranica s osobnim podacima korisnika
+							\item Korisnik mijenja svoje osobne podatke
+							\item Korisnik sprema promjene
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjenu"
+							
+								\begin{packed_item}
+									\item Sustav obavještava korisnika da nije spremio podatke prije izlaska iz prozora
+								\end{packed_item}
+							
+						\end{packed_item}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC6 - Brisanje korisničkog računa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Izbrisati svoj korisnički račun
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled podataka
+							\item Otvara se stranica s osobnim podacima korisnika
+							\item Korisnik sprema promjene
+							\item Baza podataka se ažurira
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik promijeni svoje osobne podatke, ali ne odabere opciju "Spremi promjenu"
+							
+								\begin{packed_item}
+									\item Sustav obavještava korisnika da nije spremio podatke prije izlaska iz prozora
+								\end{packed_item}
+							
+						\end{packed_item}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC7 - Pregled aktivnih/neaktivnih oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Pogledati trenutno aktivne/neaktivne oglase
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled oglasa
+							\item Otvara se stranica sa svim oglasima
+							\item Korisnik filtrira koje oglase hoće pregledati
+							\item Aplikacija prikazuje filtrirane oglase
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Korisnik nema aktivnih/neaktivih oglasa
+							
+						\end{packed_item}					
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC8 - Dodavanje oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Dodati novi oglas
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled oglasa
+							\item Otvara se stranica sa svim oglasima
+							\item Korisnik odabire opciju za dodavanje oglasa
+							\item Korisnik odabire je li vinil u oglasu za prodaju ili zamjenu
+							\item Promjene se upisuju u bazu podataka
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC9 - Uređivanje oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Urediti/ažurirati oglas
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled oglasa
+							\item Otvara se stranica sa svim oglasima
+							\item Korisnik odabire opciju uređivanja nad određenim oglasom
+							\item Korisnik dodaje/izmjenjuje neke informacije u oglasu
+							\item Nakon uređivanja sprema promjenu
+							\item Promjene se upisuju u bazu podataka
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC10 - Uklanjanje oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik, administrator
+						\item  \textbf{Cilj:} Urediti/ažurirati oglas
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled oglasa
+							\item Otvara se stranica sa svim oglasima
+							\item Korisnik odabire opciju uklanjanja nad određenim oglasom
+							\item Nakon uklanjanja sprema promjenu
+							\item Promjene se upisuju u bazu podataka
+
+						\end{packed_enum}					
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC11 - Stvaranje kolekcije/podkolekcije}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Grupirati vinile u novu kolekciju/podkolekciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled oglasa
+							\item Otvara se stranica sa svim oglasima
+							\item Korisnik odabire opciju stvaranja kolekcije/podkolekcije
+							\item Korisnik dodaje vinile u kolekciju/podkolekciju
+							\item Nakon dodavanja sprema promjenu
+							\item Promjene se upisuju u bazu podataka
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC12 - Uređivanje kolekcije/podkolekcije}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Uređivati/ažurirati vinile u novu kolekciju/podkolekciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled oglasa
+							\item Otvara se stranica sa svim oglasima i kolekcijama/podkolekcijama
+							\item Korisnik odabire opciju uređivanja kolekcije/podkolekcije
+							\item Korisnik dodaje/uklanja vinile u/iz kolekciju/podkolekciju
+							\item Nakon ažuriranja sprema promjenu
+							\item Promjene se upisuju u bazu podataka
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC13 - Uklanjanje kolekcije/podkolekcije}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Grupirati vinile u novu kolekciju/podkolekciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled oglasa
+							\item Otvara se stranica sa svim oglasima i kolekcijama/podkolekcijama
+							\item Korisnik odabire opciju brisanja kolekcije/podkolekcije
+							\item Nakon dodavanja sprema promjenu
+							\item Promjene se upisuju u bazu podataka
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC14 - Javljanje na oglas}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Registrirani korisnik
+						\item  \textbf{Cilj:} Javiti drugom korisniku za interesiranje u oglas
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire korisnički profil iz oglasa
+							\item Otvara se stranica odabranog korisnika
+							\item Korisnik šalje e-mail
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC15 - Pregled korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Pregledati registrirane korisnike
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator odabire opciju pregledavanja korisnika
+							\item Prikaže se lista svih ispravno registriranih korisnika s osobnim podacima
+
+						\end{packed_enum}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC16 - Blokiranje korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Pregledati registrirane korisnike
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator odabire opciju blokiranja korisnika
+							\item Administrator pronalazi željenog korisnika
+							\item Administrator blokira željenog korisnika
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[3.a] Korisnik je već blokiran
+							
+								\begin{packed_item}
+								
+									\item Sustav javlja administratoru da je korisnik već blokiran
+								
+								\end{packed_item}
+							
+						\end{packed_item}						
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC17 - Aktivacija korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Pregledati registrirane korisnike
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator odabire opciju aktivacije korisnika
+							\item Administrator pronalazi željenog korisnika
+							\item Administrator aktivira željenog korisnika
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[3.a] Korisnik je aktivan
+							
+								\begin{packed_item}
+								
+									\item Sustav javlja administratoru da je korisnik već aktiviran
+								
+								\end{packed_item}
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					
+				\noindent \underbar{\textbf{UC18 - Kreiranje događaja}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Administrator
+						\item  \textbf{Cilj:} Kreirati događaj
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Administrator odabire opciju stvaranja događaja
+							\item Administrator upisuje datum i naziv događaja te stavlja neke slike, kratki opis i link na događaj
+							\item Administrator objavljuje događaj na početnu stranicu
+							\item Promjene se upisuju u bazu podataka
+
+						\end{packed_enum}	
+					\end{packed_item}
+					
+				
+					
+				\subsubsection{Dijagrami obrazaca uporabe}
+					
+					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
+				\eject		
+				
+			\subsection{Sekvencijski dijagrami}
+				
+				\textbf{\textit{dio 1. revizije}}\\
+				
+				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+				\eject
+	
+		\section{Ostali zahtjevi}
+		
+%			\textbf{\textit{dio 1. revizije}}\\
+%		 
+%			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+%			 
+
+		\begin{packed_item}
+		
+			\item Sustav treba omogućiti rad više korisnika u stvarnom vremenu
+			\item 	Korisničko sučelje i sustav moraju podržavati hrvatsku abecedu (dijakirtičke znakove) pri unosu i prikazu tekstualnog sadržaja
+			\item Neispravno korištenje korisničkog sučelja ne smije narušiti funkcionalnosti i rad sustava
+			\item Sustav treba biti implementiran kao web aplikacija koristeći skriptne jezike
+			\item Veza s bazom podataka mora biti zaštićena, brza i otporna na greške.
+			\item Sustav treba biti jednostavan za korištenje, korisnici se moraju znati koristiti sučeljem bez opširnih uputa
+			\item Nadogradnja sustava ne smije narušavati posotjeće funcionalnosti sustava
+			\item Pristup bazi podataka ne smije dugo trajati
+			\item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS.
+		
+		\end{packed_item}
+			 
+			 
+	
