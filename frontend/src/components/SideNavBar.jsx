@@ -36,11 +36,11 @@ tabToPath.set("Ads", "ads");
 tabToPath.set("Settings", "settings");
 tabToPath.set("Friends", "friends");
 
-const url = window.location.href.substring(
-  window.location.href.lastIndexOf("/") + 1
-);
-
 function SideNavBar() {
+  const url = window.location.href.substring(
+    window.location.href.lastIndexOf("/") + 1
+  );
+
   const [active, setActive] = React.useState(url);
 
   const { theme } = React.useContext(ThemeContext);

@@ -3,16 +3,21 @@ import React from "react";
 import { Fade } from "@mui/material";
 
 import VinylCard from "../components/VinylCard";
-
-const scrollContainerStyle = {
-  display: "flex",
-  flexWrap: "wrap",
-  maxHeight: "90vh",
-  overflowY: "scroll",
-  justifyContent: "space-between",
-};
+import { IsMobile } from "../util/utils";
 
 function HomePage() {
+  const scrollContainerStyle = IsMobile()
+    ? {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+      }
+    : {
+        display: "flex",
+        flexWrap: "wrap",
+        maxHeight: "90vh",
+        overflowY: "scroll",
+        justifyContent: "space-between",
+      };
   return (
     <Fade in>
       <div style={scrollContainerStyle}>
