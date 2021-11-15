@@ -106,7 +106,7 @@
 %					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
 					
 
-					\noindent \underbar{\textbf{UC1 - Pregled kolekcija i korisnika}}
+				\noindent \underbar{\textbf{UC1 - Pregled kolekcija}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
@@ -118,8 +118,8 @@
 						\item[] \begin{packed_enum}
 	
 							\item Automatski su prikazani oglasi, za neregistrirane korisnike, iz Zagreba prilikom učitavanja aplikacije
-							\item Korisnik može pretraživati korisnike
-							\item Korisnik može vidjeti kolekcije i podkolekcije pretraženog korisnika
+							\item Korisnik može pretraživati kolekcije
+							\item Korisnik može pregledavati pretražene kolekcije
 
 						\end{packed_enum}
 						
@@ -132,7 +132,32 @@
 						\end{packed_item}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC2 - Registracija}}
+				\noindent \underbar{\textbf{UC2 - Pretraga korisnika}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
+						\item  \textbf{Cilj:} Pregledati tuđe vinile
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik može upisati korisničko ime u tražilicu
+							\item Aplikacija izbaci rezultat pretrage
+
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Sustav obavještava korisnika o neuspjeloj pretrazi 
+							
+						\end{packed_item}					
+					\end{packed_item}
+					
+				\noindent \underbar{\textbf{UC3 - Registracija}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Neregistrirani korisnik
@@ -165,7 +190,7 @@
 						\end{packed_item}					
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC3 - Prijava}}
+				\noindent \underbar{\textbf{UC4 - Prijava}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -197,7 +222,7 @@
 						\end{packed_item}				
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC4 - Pregled osobnih podataka}}
+				\noindent \underbar{\textbf{UC5 - Pregled osobnih podataka}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -214,7 +239,7 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC5 - Promjena osobnih podataka}}
+				\noindent \underbar{\textbf{UC6 - Promjena osobnih podataka}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -246,7 +271,7 @@
 						\end{packed_item}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC6 - Brisanje korisničkog računa}}
+				\noindent \underbar{\textbf{UC7 - Brisanje korisničkog računa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -277,7 +302,7 @@
 						\end{packed_item}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC7 - Pregled aktivnih/neaktivnih oglasa}}
+				\noindent \underbar{\textbf{UC8 - Pregled aktivnih/neaktivnih oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -304,7 +329,7 @@
 						\end{packed_item}					
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC8 - Dodavanje oglasa}}
+				\noindent \underbar{\textbf{UC9 - Dodavanje oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -324,7 +349,7 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC9 - Uređivanje oglasa}}
+				\noindent \underbar{\textbf{UC10 - Uređivanje oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -345,7 +370,7 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC10 - Uklanjanje oglasa}}
+				\noindent \underbar{\textbf{UC11 - Uklanjanje oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik, administrator
@@ -365,7 +390,7 @@
 						\end{packed_enum}					
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC11 - Stvaranje kolekcije/podkolekcije}}
+				\noindent \underbar{\textbf{UC12 - Stvaranje kolekcije/podkolekcije}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -386,7 +411,7 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC12 - Uređivanje kolekcije/podkolekcije}}
+				\noindent \underbar{\textbf{UC13 - Uređivanje kolekcije/podkolekcije}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -407,7 +432,7 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC13 - Uklanjanje kolekcije/podkolekcije}}
+				\noindent \underbar{\textbf{UC14 - Uklanjanje kolekcije/podkolekcije}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -427,7 +452,7 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC14 - Javljanje na oglas}}
+				\noindent \underbar{\textbf{UC15 - Javljanje na oglas}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -445,7 +470,7 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC15 - Pregled korisnika}}
+				\noindent \underbar{\textbf{UC16 - Pregled korisnika}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Administrator
@@ -462,18 +487,18 @@
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC16 - Blokiranje korisnika}}
+				\noindent \underbar{\textbf{UC17 - Blokiranje korisnika}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Administrator
-						\item  \textbf{Cilj:} Pregledati registrirane korisnike
+						\item  \textbf{Cilj:} Blokirati korisnika koji je prekršio bilo koja pravila
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator odabire opciju blokiranja korisnika
+							\item Administrator odabire opciju pregledavanja korisnika
 							\item Administrator pronalazi željenog korisnika
 							\item Administrator blokira željenog korisnika
 
@@ -494,20 +519,20 @@
 						\end{packed_item}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC17 - Aktivacija korisnika}}
+				\noindent \underbar{\textbf{UC18 - Aktivacija korisnika}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Administrator
-						\item  \textbf{Cilj:} Pregledati registrirane korisnike
+						\item  \textbf{Cilj:} Aktivirati blokirane korisnike
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator odabire opciju aktivacije korisnika
-							\item Administrator pronalazi željenog korisnika
-							\item Administrator aktivira željenog korisnika
+							\item Administrator odabire opciju pregledavanja korisnika
+							\item Administrator pronalazi željenog blokiranog korisnika
+							\item Administrator aktivira korisnika
 
 						\end{packed_enum}
 						
@@ -526,8 +551,7 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					
-				\noindent \underbar{\textbf{UC18 - Kreiranje događaja}}
+				\noindent \underbar{\textbf{UC19 - Kreiranje događaja}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Administrator
@@ -546,18 +570,68 @@
 						\end{packed_enum}	
 					\end{packed_item}
 					
+				\eject
 				
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
+%					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
+
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UCD_neprijavljeni_korisnik.png}
+					\centering
+					\caption{Dijagram obrasca uporabe, funkcionalnost neprijavljenog korisnika}
+					\label{fig:neprijavljeni_korisnik}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UCD_prijavljeni_korisnik.png}
+					\centering
+					\caption{Dijagram obrasca uporabe, funkcionalnost prijavljenog korisnika}
+					\label{fig:prijavljeni_korisnik}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/UCD_admin.png}
+					\centering
+					\caption{Dijagram obrasca uporabe, funkcionalnost administratora}
+					\label{fig:admin}
+				\end{figure}
+
 				\eject		
 				
 			\subsection{Sekvencijski dijagrami}
 				
-				\textbf{\textit{dio 1. revizije}}\\
+%				\textbf{\textit{dio 1. revizije}}\\
+%				
+%				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+
+				\textbf{Obrazac uporabe UC6 - Promjena osobnih podataka}
 				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+				\text Korisnik pošalje zahtjev za odabir svojeg profila. Poslužitelj dohvaća podatke iz baze podataka i prikazuje ih korisniku. Korisnik šalje zahtjev za promjenu osobnih podataka. Poslužitelj mu daje pristup i korisnik unosi nove osobne podatke. Kad korisnik završi sa izmjenom podataka i spremi promjenu, poslužitelj izmjeni podatke u bazi podataka i vraća potvrdu. Ukoliko korisnik nije spremio promjenu ispisuje se poruka prilikom koje može nastaviti dalje i ne spremiti promjene ili vratiti se nazad i spremiti promjene.
+				
+				
+				\eject
+				
+				\textbf{Obrazac uporabe UC8 - Pregled aktivnih/neaktivnih oglasa}
+				
+				\text Korisnik šalje zahtjev za prikaz stranice sa svim oglasima. Poslužitelj dohvaća stranicu i prikazuje sve rezultate. Odabirom na određeni oglas, poslužitelj dohvaća osnovne podatke iz baze podataka o oglasu i prikazuje ih klijentu. Ukoliko korisnik ne želi vidjeti neaktivne oglase, šalje zahtjev prikaz aktivnih oglasa. Poslužitelj dohvaća listu aktivnih oglasa iz baze podataka i ukoliko postoji barem jedan aktivni oglas vraća je korisniku.
+				
+				
+				\eject
+				
+				\textbf{Obrazac uporabe UC13 - Uređivanje kolekcije/podkolekcije}
+				
+				\text Korisnik pošalje zahtjev za odabir određene kolekcije/podkolekcije. Poslužitelj dohvaća podatke iz baze podataka te prikazuje ih korisniku. Korisnik šalje zahtjev za promjenu proizvoda. Poslužitelj mu daje pristup i korisnik dodaje/izbacuje vinile iz kolekcije/podkolekcije te sprema promjenu. Poslužitelj izmjeni proizvod u bazi podataka koja vraća potvrdu.  Ukoliko korisnik nije spremio promjenu ispisuje se poruka prilikom koje može nastaviti dalje i ne spremiti promjene ili vratiti se nazad i spremiti promjene.
+				
+				
+				\eject
+				
+				\textbf{Obrazac uporabe UC17 - Blokiranje korisnika}
+				
+				\text 	Administrator pošalje zahtjev za pregled korisnika. Polužitelj dohvaća popis iz baze podataka te ih prikazuje administratoru. Administrator odabire željenog korisnika. Polužitelj dohvaća podatke korisnika iz baze podataka i prikazuje ih administratoru. Administrator šalje zahtjev za blokiranje korisnika. Poslužitelj mu daje pristup i administrator blokira korisnika te sprema promjene. Poslužitelj izmjeni podatke korisnika u bazi podataka i vraća potvrdu. Ukoliko administrator nije spremio promjenu ispisuje se poruka prilikom koje može nastaviti dalje i ne spremiti promjene ili vratiti se nazad i spremiti promjene.
+				
+				
 				\eject
 	
 		\section{Ostali zahtjevi}
