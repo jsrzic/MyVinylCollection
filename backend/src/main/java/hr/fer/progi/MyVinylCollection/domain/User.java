@@ -41,7 +41,7 @@ public class User {
     private Location location;
 
     @OneToMany(cascade=CascadeType.ALL)
-    private List<Genre> preferedGenres;
+    private List<Genre> preferredGenres;
 
     public User() {
     }
@@ -54,7 +54,7 @@ public class User {
         this.password = user.getPassword();
         this.contactEmail = user.getEmail();
         this.isActive = true;
-        this.preferedGenres = userGenrePreference;
+        this.preferredGenres = userGenrePreference;
 
     }
 
@@ -130,11 +130,11 @@ public class User {
         this.location = location;
     }
 
-    public List<Genre> getPreferedGenres() {
-        return preferedGenres;
+    public List<Genre> getPreferredGenres() {
+        return preferredGenres;
     }
 
-    public void setPreferedGenres(List<Genre> preferedGenres) {
-        this.preferedGenres = preferedGenres;
+    public void setPreferredGenres(List<Genre> preferredGenres) {
+        this.preferredGenres = preferredGenres;
     }
 }
