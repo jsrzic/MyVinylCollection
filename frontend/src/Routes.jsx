@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import LogInPage from "./pages/LogInPage";
 import SignUpPage from "./pages/SignUpPage";
-import { themeLight } from "./styles/theme";
+import {themeLanding, themeLight} from "./styles/theme";
 import { ThemeContext } from "./util/utils";
 
 function Routes() {
@@ -17,15 +17,18 @@ function Routes() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Homepage />
-        </Route>
-        <Route exact path="/login">
-          <LogInPage />
-        </Route>
-        <Route exact path="/signup">
-          <SignUpPage />
-        </Route>
+        <ThemeProvider theme={themeLanding}>
+          <Route exact path="/">
+            <Homepage />
+          </Route>
+          <Route exact path="/login">
+            <LogInPage />
+          </Route>
+          <Route exact path="/signup">
+            <SignUpPage />
+          </Route>
+        </ThemeProvider>
+
         {/*stranice koje imaju light/dark*/}
         <ThemeContext.Provider value={{ theme, setTheme }}>
           <ThemeProvider theme={theme}>
