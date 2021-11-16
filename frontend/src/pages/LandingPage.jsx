@@ -1,12 +1,15 @@
 import React from "react";
-import vinyl from "../assets/vinyl.png";
-import "../index.css";
-import { IsMobile } from "../util/utils";
-import { pageStyle } from "../styles/globalStyles";
-import { Button } from "@mui/material";
+
 import { useHistory } from "react-router-dom";
 
-function Homepage() {
+import { Button } from "@mui/material";
+
+import "../index.css";
+import vinyl from "../assets/vinyl.png";
+import { IsMobile } from "../util/utils";
+import { pageStyle } from "../styles/globalStyles";
+
+function LandingPage() {
   const homepageStyle = {
     display: "flex",
     flexDirection: "column",
@@ -62,4 +65,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default LandingPage;
