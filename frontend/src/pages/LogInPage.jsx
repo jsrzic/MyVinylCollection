@@ -1,9 +1,10 @@
 import React from "react";
 import { pageStyle } from "../styles/globalStyles";
 import logoImg from "../assets/login.png";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+
+import Form from "../components/Form";
 
 function LogInPage() {
   const loginPageStyle = {
@@ -17,6 +18,7 @@ function LogInPage() {
     position: "absolute",
     bottom: "-20%",
     animation: "floatUp 1s",
+    zIndex: 0,
   };
 
   const formStyle = {
@@ -26,54 +28,56 @@ function LogInPage() {
     flexDirection: "column",
   };
 
-  const textFieldStyle = {
-    backgroundColor: "grey",
+  const btnStyle = {
+    width: "50%",
+    margin: "auto",
   };
 
-  const btnStyle = {
-    backgroundColor: "white",
-  };
-  const labelStyle = {
-    color: "white",
-  };
   return (
     <div style={{ ...pageStyle, ...loginPageStyle }}>
       <img src={logoImg} style={imageStyle} alt="login_image" />
-
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ username: "", password: "" }}
         onSubmit={(values) => {
-          console.log(values);
-        }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.email) errors.email = "Required";
-          else if (!values.password) errors.password = "Required";
-          return errors;
+          const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...values }, null, 2),
+          };
+          fetch("http://localhost:8080/users/login", requestOptions)
+            .then((response) => {
+              console.log(response.json());
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }}
       >
-        <Form style={formStyle}>
-          <label style={labelStyle}>E-mail</label>
-          <TextField
-            required
-            id="email"
-            label="Email Address"
-            name="email"
-            style={textFieldStyle}
-          />
-          <label style={labelStyle}>Password</label>
-          <TextField
-            required
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            style={textFieldStyle}
-          />
-          <Button type="submit" style={btnStyle}>
-            OK
-          </Button>
-        </Form>
+        {(formik) => {
+          return (
+            <Form style={formStyle}>
+              <Form.Row
+                label="Username"
+                type="text"
+                value={formik.values.username}
+                name="username"
+                onChange={formik.handleChange}
+                required
+              />
+              <Form.Row
+                label="Password"
+                type="password"
+                value={formik.values.password}
+                name="password"
+                onChange={formik.handleChange}
+                required
+              />
+              <Button onClick={formik.handleSubmit} style={btnStyle}>
+                Log in
+              </Button>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );
