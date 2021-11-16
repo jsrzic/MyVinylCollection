@@ -40,7 +40,7 @@ public class User {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
     public User() {

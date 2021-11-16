@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping("/register")
     public User registerUser(@RequestBody RegisterUserDTO user) {
         if (userService.checkUsernameUnique(user)) {
-            List<Genre> userGenrePreference = genreService.getGenresById(user.getPreferedGenres());
+            List<Genre> userGenrePreference = genreService.getGenresById(user.getPreferredGenres());
             return userService.registerUser(user, userGenrePreference);
         } else {
             throw new IllegalArgumentException("Username already exists.");
