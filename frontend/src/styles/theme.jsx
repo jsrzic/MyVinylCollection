@@ -56,7 +56,7 @@ export const themeDark = createTheme({
   },
 });
 
-export const themeLanding = createTheme({
+export const themeForms = createTheme({
   palette: {
     primary: {
       main: "rgb(226,92,59)",
@@ -105,4 +105,12 @@ export const themeLanding = createTheme({
       }
     }
   },
+});
+
+export const themeLanding = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(0,0,0)",
+    },
+  }
 });

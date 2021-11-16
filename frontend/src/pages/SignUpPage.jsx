@@ -17,6 +17,7 @@ import * as yup from 'yup'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import {useHistory} from "react-router-dom";
+import {IsMobile} from "../util/utils";
 
 
 
@@ -90,6 +91,7 @@ function SignUpPage() {
     repeatpassword: yup
       .string('Repeat your password')
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Password is required')
   });
 
   function MultipleSelectCheckmarks() {
@@ -105,7 +107,7 @@ function SignUpPage() {
 
     return (
       <div style={{marginTop: "2rem"}}>
-        <FormControl sx={{ m: 1, width: 300 }}>
+        <FormControl sx={{ m: 1, width: "95%" }}>
           <InputLabel sx={{color: "white"}} id="demo-multiple-checkbox-label">Preferred genres</InputLabel>
           <Select
             labelId="demo-multiple-checkbox-label"
@@ -144,20 +146,16 @@ function SignUpPage() {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    function determineButtonAction(formik, activeStep, steps){
-      if(activeStep === steps.length - 1){
-        if(!formik.isValid) {
-          return handleBack;
-        }
-        return formik.handleSubmit;
-      }
-
-      return handleNext;
-    }
-
     return (
-      <Box heigth="500px" width="50%" sx={{zIndex: 1, position: "absolute", top: "8rem"}}>
+      <Box heigth="500px" width={IsMobile() ? "100%" : "50%"} sx={{zIndex: 1, position: "absolute", top: "8rem"}}>
         <Stepper activeStep={activeStep} sx={
+          IsMobile() ?
+          {
+            "& .MuiStepLabel-label": {color: "white"},
+            "& .MuiStepLabel-label.Mui-active": {color: "#e25c3b"},
+            "& .MuiStepLabel-label.Mui-completed": {color: "#e25c3b"},
+            width: "100%"
+          } :
           {
             "& .MuiStepLabel-label": {color: "white"},
             "& .MuiStepLabel-label.Mui-active": {color: "#e25c3b"},
@@ -196,6 +194,7 @@ function SignUpPage() {
                 repeatpassword: '',
               }}
               validationSchema={validationSchema}
+              validateOnMount
               onSubmit={(values) => {
                 genresData = genresData.map(genre => genres.indexOf(genre) + 1);
                 delete values['repeatpassword'];
@@ -222,29 +221,41 @@ function SignUpPage() {
                   {activeStep === 0 ?
                     <>
                       <Form.Row label="Name" type="text" value={formik.values.name} name="name"
-                                onChange={formik.handleChange} error={formik.touched.name && Boolean(formik.errors.name)}
+                                onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                onClick={() => formik.setFieldTouched("name", true)}
+                                error={formik.touched.name && Boolean(formik.errors.name)}
                                 helperText={formik.touched.name && formik.errors.name} required/>
                       <Form.Row label="Surname" type="text" value={formik.values.surname} name="surname"
-                                onChange={formik.handleChange} error={formik.touched.surname && Boolean(formik.errors.surname)}
+                                onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                onClick={() => formik.setFieldTouched("surname", true)}
+                                error={formik.touched.surname && Boolean(formik.errors.surname)}
                                 helperText={formik.touched.surname && formik.errors.surname} required/>
                       <Form.Row label="Username" type="text" value={formik.values.username} name="username"
-                                onChange={formik.handleChange} error={formik.touched.username && Boolean(formik.errors.username)}
+                                onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                onClick={() => formik.setFieldTouched("username", true)}
+                                error={formik.touched.username && Boolean(formik.errors.username)}
                                 helperText={formik.touched.username && formik.errors.username} required/>
                       <Form.Row label="Email" type="text" value={formik.values.email} name="email"
-                                onChange={formik.handleChange} error={formik.touched.email && Boolean(formik.errors.email)}
+                                onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                onClick={() => formik.setFieldTouched("email", true)}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
                                 helperText={formik.touched.email && formik.errors.email} required/>
                       <Form.Row label="Password" type="password" value={formik.values.password} name="password"
-                                onChange={formik.handleChange} error={formik.touched.password && Boolean(formik.errors.password)}
+                                onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                onClick={() => formik.setFieldTouched("password", true)}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
                                 helperText={formik.touched.password && formik.errors.password} required/>
                       <Form.Row label="Repeat password" type="password" value={formik.values.repeatpassword} name="repeatpassword"
-                                onChange={formik.handleChange} error={formik.touched.repeatpassword && Boolean(formik.errors.repeatpassword)}
+                                onChange={formik.handleChange} onBlur={formik.handleBlur}
+                                onClick={() => formik.setFieldTouched("repeatpassword", true)}
+                                error={formik.touched.repeatpassword && Boolean(formik.errors.repeatpassword)}
                                 helperText={formik.touched.repeatpassword && formik.errors.repeatpassword} required/>
                     </>
                   :
                     <>
                       <MultipleSelectCheckmarks/>
                       {errorMessage && (
-                        <p style={{color: "red", fontSize: "13.5px", margin:"auto", marginTop: "20px"}}>User with that email is already registered.</p>
+                        <p style={{color: "red", fontSize: "13.5px", margin:"auto", marginTop: "20px"}}>User with that username is already registered.</p>
                       )}
                     </>
                     }
@@ -260,7 +271,7 @@ function SignUpPage() {
                       Back
                     </Button>}
                     <Box sx={{ width: "30%"}} />
-                    <Button onClick={determineButtonAction(formik, activeStep, steps)} sx={{color: "#e25c3b"}}>
+                    <Button disabled={Boolean(!formik.isValid)} onClick={activeStep === steps.length - 1 ? formik.handleSubmit : handleNext} sx={{color: "#e25c3b"}}>
                       {activeStep === steps.length - 1 ? "Submit" : "Next"}
                     </Button>
                   </Box>
