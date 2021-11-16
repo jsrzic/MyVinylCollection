@@ -1,5 +1,6 @@
 package hr.fer.progi.MyVinylCollection.rest;
 
+import java.util.List;
 import java.util.Set;
 
 public class RegisterUserDTO {
@@ -9,7 +10,7 @@ public class RegisterUserDTO {
     private String username;
     private String password;
     private String email;
-    private Set<String> preferedGenres;
+    private List<Long> preferedGenres;
 
     public String getName() {
         return name;
@@ -51,11 +52,11 @@ public class RegisterUserDTO {
         this.email = email;
     }
 
-    public Set<String> getPreferedGenres() {
+    public List<Long> getPreferedGenres() {
         return preferedGenres;
     }
 
-    public void setPreferedGenres(Set<String> preferedGenres) {
+    public void setPreferedGenres(List<Long> preferedGenres) {
         this.preferedGenres = preferedGenres;
     }
 }

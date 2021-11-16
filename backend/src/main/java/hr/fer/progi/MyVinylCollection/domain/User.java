@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,12 +41,12 @@ public class User {
     private Location location;
 
     @OneToMany(cascade=CascadeType.ALL)
-    private Set<Genre> preferedGenres;
+    private List<Genre> preferredGenres;
 
     public User() {
     }
 
-    public User(RegisterUserDTO user) {
+    public User(RegisterUserDTO user, List<Genre> userGenrePreference) {
         this.name = user.getName();
         this.surname = user.getSurname();
         this.username = user.getUsername();
@@ -53,12 +54,8 @@ public class User {
         this.password = user.getPassword();
         this.contactEmail = user.getEmail();
         this.isActive = true;
-        this.preferedGenres = user.getPreferedGenres().stream().map(genreName->
-        {
-            Genre genre = new Genre();
-            genre.setName(genreName);
-            return genre;
-        }).collect(Collectors.toSet());
+        this.preferredGenres = userGenrePreference;
+
     }
 
     public Long getId() {
@@ -133,11 +130,11 @@ public class User {
         this.location = location;
     }
 
-    public Set<Genre> getPreferedGenres() {
-        return preferedGenres;
+    public List<Genre> getPreferredGenres() {
+        return preferredGenres;
     }
 
-    public void setPreferedGenres(Set<Genre> preferedGenres) {
-        this.preferedGenres = preferedGenres;
+    public void setPreferredGenres(List<Genre> preferredGenres) {
+        this.preferredGenres = preferredGenres;
     }
 }

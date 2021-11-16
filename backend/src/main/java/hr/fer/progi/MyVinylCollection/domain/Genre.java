@@ -3,19 +3,16 @@ package hr.fer.progi.MyVinylCollection.domain;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
+@Entity(name="genres")
 public class Genre {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    private Genre parentGenre;
-
-    @OneToMany(mappedBy="parentGenre", cascade=CascadeType.ALL)
-    private Set<Genre> subgenres;
+    @OneToMany(mappedBy="genre", cascade=CascadeType.ALL)
+    private Set<Subgenre> subgenres;
 
     public Long getId() {
         return id;
@@ -33,11 +30,11 @@ public class Genre {
         this.name = name;
     }
 
-    public Set<Genre> getSubgenres() {
+    public Set<Subgenre> getSubgenres() {
         return subgenres;
     }
 
-    public void setSubgenres(Set<Genre> subgenres) {
+    public void setSubgenres(Set<Subgenre> subgenres) {
         this.subgenres = subgenres;
     }
 }

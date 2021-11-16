@@ -1,6 +1,7 @@
 package hr.fer.progi.MyVinylCollection.service.impl;
 
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
+import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.rest.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.RegisterUserDTO;
@@ -32,8 +33,8 @@ public class UserServiceJpa implements UserService {
     }
 
     @Override
-    public User registerUser(RegisterUserDTO user) {
-        return userRepo.save(new User(user));
+    public User registerUser(RegisterUserDTO user, List<Genre> userGenrePreference) {
+        return userRepo.save(new User(user, userGenrePreference));
     }
 
     @Override
@@ -53,11 +54,11 @@ public class UserServiceJpa implements UserService {
     }
 
     @Override
-    public String getUserEmail(Long userId) {
+    public String getUserContactEmail(Long userId) {
         if(userRepo.findById(userId).isEmpty())
             throw new RequestDeniedException("No user with id:" + userId);
 
-        return userRepo.getById(userId).getEmail();
+        return userRepo.getById(userId).getContactEmail();
     }
 
 

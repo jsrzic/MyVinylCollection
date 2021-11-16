@@ -1,6 +1,8 @@
 package hr.fer.progi.MyVinylCollection.rest;
 
+import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.service.GenreService;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private GenreService genreService;
+
     @GetMapping("")
     public List<User> listUsers() {
         return userService.listAll();
@@ -32,7 +37,8 @@ public class UserController {
     @PostMapping("/register")
     public User registerUser(@RequestBody RegisterUserDTO user) {
         if (userService.checkUsernameUnique(user)) {
-            return userService.registerUser(user);
+            List<Genre> userGenrePreference = genreService.getGenresById(user.getPreferedGenres());
+            return userService.registerUser(user, userGenrePreference);
         } else {
             throw new IllegalArgumentException("Username already exists.");
         }
@@ -47,11 +53,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/email/{id}")
-    public String getUserEmail(@PathVariable("id") Long userId){
+    @GetMapping("/contact_email/{id}")
+    public String getUserContactEmail(@PathVariable("id") Long userId){
         try{
-            String email = userService.getUserEmail(userId);
-            return email;
+            String contactEmail = userService.getUserContactEmail(userId);
+            return contactEmail;
         }catch(RequestDeniedException e){
             throw new IllegalArgumentException(e.getMessage());
         }
