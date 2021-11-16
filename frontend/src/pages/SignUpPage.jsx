@@ -32,6 +32,8 @@ function SignUpPage() {
     },
   };
 
+  const [errorMessage, setErrorMessage] = React.useState(false);
+
   let genres = [];
   React.useEffect(() => {
     fetch("http://localhost:8080/genres")
@@ -102,7 +104,7 @@ function SignUpPage() {
     };
 
     return (
-      <div>
+      <div style={{marginTop: "2rem"}}>
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel sx={{color: "white"}} id="demo-multiple-checkbox-label">Preferred genres</InputLabel>
           <Select
@@ -129,21 +131,29 @@ function SignUpPage() {
 
   function HorizontalLinearStepper() {
     const [activeStep, setActiveStep] = React.useState(0);
-    const [skipped, setSkipped] = React.useState(new Set());
 
     const isStepOptional = (step) => {
       return step === 1;
     };
 
-    const isStepSkipped = (step) => {
-      return skipped.has(step);
+    const handleNext = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
-
-
 
     const handleBack = () => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
+
+    function determineButtonAction(formik, activeStep, steps){
+      if(activeStep === steps.length - 1){
+        if(!formik.isValid) {
+          return handleBack;
+        }
+        return formik.handleSubmit;
+      }
+
+      return handleNext;
+    }
 
     return (
       <Box heigth="500px" width="50%" sx={{zIndex: 1, position: "absolute", top: "8rem"}}>
@@ -161,9 +171,6 @@ function SignUpPage() {
               labelProps.optional = (
                 <Typography color="white" variant="caption">Optional</Typography>
               );
-            }
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
             }
             return (
               <Step key={label} {...stepProps}>
@@ -189,8 +196,6 @@ function SignUpPage() {
                 repeatpassword: '',
               }}
               validationSchema={validationSchema}
-              validateOnChange
-              validateOnBlur
               onSubmit={(values) => {
                 genresData = genresData.map(genre => genres.indexOf(genre) + 1);
                 delete values['repeatpassword'];
@@ -201,33 +206,18 @@ function SignUpPage() {
                 };
                 fetch('http://localhost:8080/users/register', requestOptions)
                   .then(response => {
-                    console.log(response.json());
+                    if(response.ok){
+                      history.push("/login");
+                    } else {
+                      setErrorMessage(true);
+                    }
                 })
                   .catch(err => {
                     console.log(err);
                   });
-                console.log(JSON.stringify({...values, preferredGenres: genresData}, null, 2));
-                history.push("/login");
+
               }}>
               {(formik) => {
-                const handleNext = () => {
-                  formik.validateForm().then(() => {
-                    console.log(formik.errors);
-                    console.log(formik.touched);
-                    if(formik.isValid){
-                      let newSkipped = skipped;
-                      if (isStepSkipped(activeStep)) {
-                        newSkipped = new Set(newSkipped.values());
-                        newSkipped.delete(activeStep);
-                      }
-
-                      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                      setSkipped(newSkipped);
-                    }
-                  }
-                  );
-                };
-
                 return(<Form style={formStyle}>
                   {activeStep === 0 ?
                     <>
@@ -251,7 +241,13 @@ function SignUpPage() {
                                 helperText={formik.touched.repeatpassword && formik.errors.repeatpassword} required/>
                     </>
                   :
-                    <MultipleSelectCheckmarks/>}
+                    <>
+                      <MultipleSelectCheckmarks/>
+                      {errorMessage && (
+                        <p style={{color: "red", fontSize: "13.5px", margin:"auto", marginTop: "20px"}}>User with that email is already registered.</p>
+                      )}
+                    </>
+                    }
 
 
                   <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "center", pt: 2 }}>
@@ -264,7 +260,7 @@ function SignUpPage() {
                       Back
                     </Button>}
                     <Box sx={{ width: "30%"}} />
-                    <Button onClick={activeStep === steps.length - 1 ? formik.handleSubmit : handleNext} sx={{color: "#e25c3b"}}>
+                    <Button onClick={determineButtonAction(formik, activeStep, steps)} sx={{color: "#e25c3b"}}>
                       {activeStep === steps.length - 1 ? "Submit" : "Next"}
                     </Button>
                   </Box>
