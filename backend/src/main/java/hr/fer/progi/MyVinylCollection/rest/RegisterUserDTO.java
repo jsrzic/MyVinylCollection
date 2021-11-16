@@ -10,7 +10,7 @@ public class RegisterUserDTO {
     private String username;
     private String password;
     private String email;
-    private List<Long> preferedGenres;
+    private List<Long> preferredGenres;
 
     public String getName() {
         return name;
@@ -52,11 +52,11 @@ public class RegisterUserDTO {
         this.email = email;
     }
 
-    public List<Long> getPreferedGenres() {
-        return preferedGenres;
+    public List<Long> getPreferredGenres() {
+        return preferredGenres;
     }
 
-    public void setPreferedGenres(List<Long> preferedGenres) {
-        this.preferedGenres = preferedGenres;
+    public void setPreferredGenres(List<Long> preferredGenres) {
+        this.preferredGenres = preferredGenres;
     }
 }
