@@ -7,7 +7,7 @@ import { ThemeProvider } from "@emotion/react";
 import LandingPage from "./pages/LandingPage";
 import LogInPage from "./pages/LogInPage";
 import SignUpPage from "./pages/SignUpPage";
-import {themeLanding, themeLight} from "./styles/theme";
+import { themeLanding, themeLight } from "./styles/theme";
 import { ThemeContext } from "./util/utils";
 import SubRoutes from "./SubRoutes";
 
@@ -17,17 +17,21 @@ function Routes() {
   return (
     <Router>
       <Switch>
-        <ThemeProvider theme={themeLanding}>
-          <Route exact path="/">
+        <Route exact path="/">
+          <ThemeProvider theme={themeLanding}>
             <LandingPage />
-          </Route>
-          <Route path="/login">
+          </ThemeProvider>
+        </Route>
+        <Route path="/login">
+          <ThemeProvider theme={themeLanding}>
             <LogInPage />
-          </Route>
-          <Route path="/signup">
+          </ThemeProvider>
+        </Route>
+        <Route path="/signup">
+          <ThemeProvider theme={themeLanding}>
             <SignUpPage />
-          </Route>
-        </ThemeProvider>
+          </ThemeProvider>
+        </Route>
         <ThemeContext.Provider value={{ theme, setTheme }}>
           <ThemeProvider theme={theme}>
             <SubRoutes />
