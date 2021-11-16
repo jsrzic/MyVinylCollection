@@ -38,6 +38,7 @@ function LandingPage() {
     animation: "rotation 20s infinite linear",
     position: "absolute",
     bottom: "-55%",
+    pointerEvents: "none"
   };
 
   const titleStyle = {

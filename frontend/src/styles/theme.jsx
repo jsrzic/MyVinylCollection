@@ -55,3 +55,54 @@ export const themeDark = createTheme({
     },
   },
 });
+
+export const themeLanding = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(226,92,59)",
+    },
+    secondary: {
+      main: "rgb(225,168,168)",
+    },
+    mode: "dark",
+  },
+  components: {
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: "#e25c3b",
+        }
+      }
+    },
+    MuiStepper: {
+      styleOverrides: {
+        root: {
+          width: "50%",
+          margin: "auto"
+        }
+      }
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginTop: 0,
+          height: 0,
+        }
+      }
+    },
+    MuiFilledInput: {
+      styleOverrides: {
+        input: {
+          color: "black"
+        }
+      }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: "black"
+        }
+      }
+    }
+  },
+});
