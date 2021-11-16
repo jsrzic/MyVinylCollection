@@ -32,13 +32,14 @@ function SignUpPage() {
     },
   };
 
-  const genres = [
-    'Rock',
-    'Pop',
-    'R&B',
-    'Soul',
-    'Metal'
-  ];
+  let genres = [];
+  React.useEffect(() => {
+    fetch("http://localhost:8080/genres")
+      .then(response => response.json())
+      .then(data => {
+        genres = data.map(g => g["name"]);
+      });
+  }, []);
 
   let genresData = [];
 
@@ -191,11 +192,12 @@ function SignUpPage() {
               validateOnChange
               validateOnBlur
               onSubmit={(values) => {
+                genresData = genresData.map(genre => genres.indexOf(genre) + 1);
                 delete values['repeatpassword'];
                 const requestOptions = {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({...values, preferedGenres: genresData}, null, 2)
+                  body: JSON.stringify({...values, preferredGenres: genresData}, null, 2)
                 };
                 fetch('http://localhost:8080/users/register', requestOptions)
                   .then(response => {
@@ -204,7 +206,7 @@ function SignUpPage() {
                   .catch(err => {
                     console.log(err);
                   });
-                alert(JSON.stringify({...values, preferedGenres: genresData}, null, 2));
+                console.log(JSON.stringify({...values, preferredGenres: genresData}, null, 2));
                 history.push("/login");
               }}>
               {(formik) => {
