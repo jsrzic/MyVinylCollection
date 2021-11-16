@@ -5,8 +5,11 @@ import { Formik } from "formik";
 import Button from "@mui/material/Button";
 
 import Form from "../components/Form";
+import {useHistory} from "react-router-dom";
 
 function LogInPage() {
+    const history = useHistory();
+    const [errorMessage, setErrorMessage] = React.useState(false)
   const loginPageStyle = {
     display: "flex",
     justifyContent: "center",
@@ -31,6 +34,8 @@ function LogInPage() {
   const btnStyle = {
     width: "50%",
     margin: "auto",
+      marginTop: "1rem",
+      marginBottom: "1rem"
   };
 
   return (
@@ -46,16 +51,25 @@ function LogInPage() {
           };
           fetch("http://localhost:8080/users/login", requestOptions)
             .then((response) => {
-              console.log(response.json());
+                if(response.ok) {
+                    console.log(response.json());
+                    history.push("/dashboard/homepage")
+                }else {
+                setErrorMessage(true);
+                }
             })
             .catch((err) => {
-              console.log(err);
+                console.log(err);
             });
+
         }}
       >
         {(formik) => {
           return (
             <Form style={formStyle}>
+                {errorMessage && (
+                    <p style={{color: "red", fontSize: "13.5px", margin:"auto"}}>Invalid username/password. Try again</p>
+                )}
               <Form.Row
                 label="Username"
                 type="text"
@@ -75,6 +89,11 @@ function LogInPage() {
               <Button onClick={formik.handleSubmit} style={btnStyle}>
                 Log in
               </Button>
+                <p style={{color: "white", margin: "auto"}}>Don't have an account?
+                    <span onClick={() => history.push("/signup")}
+                          style={{color: "rgb(226,92,59)", cursor: "pointer"}}> Create one now.
+                    </span>
+                </p>
             </Form>
           );
         }}

@@ -67,6 +67,7 @@ function TopNavBar() {
                   variant="contained"
                   disableElevation
                   startIcon={<LogoutIcon />}
+                  onClick={() => history.push("/")}
                 >
                   Log out
                 </Button>

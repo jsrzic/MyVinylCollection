@@ -146,7 +146,7 @@ function SignUpPage() {
     };
 
     return (
-      <Box heigth="500px" width="50%" sx={{zIndex: 1, position: "absolute", top: "6rem"}}>
+      <Box heigth="500px" width="50%" sx={{zIndex: 1, position: "absolute", top: "8rem"}}>
         <Stepper activeStep={activeStep} sx={
           {
             "& .MuiStepLabel-label": {color: "white"},
@@ -282,7 +282,9 @@ function SignUpPage() {
   return (
     <div style={{ ...pageStyle, ...loginPageStyle }}>
       <img src={signupImg} style={imageStyle} alt="login_image" />
-      <HorizontalLinearStepper style={{height: "500px"}}/>
+      <HorizontalLinearStepper style={{
+        animation: "fadeIn 4s",
+      }}/>
     </div>
   );
 }
