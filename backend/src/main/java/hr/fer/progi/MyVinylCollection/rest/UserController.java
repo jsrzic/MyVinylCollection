@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -34,8 +36,19 @@ public class UserController {
         return userService.listAll();
     }
 
+    private Cookie createCookie(String username) {
+        Cookie cookie = new Cookie("username",username);
+
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+       return cookie;
+    }
+
     @PostMapping("/register")
-    public User registerUser(@RequestBody RegisterUserDTO user) {
+    public User registerUser(@RequestBody RegisterUserDTO user, HttpServletResponse response) {
         if (userService.checkUsernameUnique(user)) {
             List<Genre> userGenrePreference = genreService.getGenresById(user.getPreferredGenres());
             return userService.registerUser(user, userGenrePreference);
@@ -45,7 +58,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@RequestBody LoginUserDTO user) {
+    public ResponseEntity<Object> loginUser(@RequestBody LoginUserDTO user, HttpServletResponse response) {
+        response.addCookie(createCookie(user.getUsername()));
         if (userService.checkUsernameExists(user) && userService.checkPassword(user)) {
             return new ResponseEntity<Object>(user, HttpStatus.OK);
         } else {
