@@ -7,6 +7,7 @@
     <list default="true" id="7b20586f-4e73-4804-9955-22831e2a59ec" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../backend/src/main/java/hr/fer/progi/MyVinylCollection/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/hr/fer/progi/MyVinylCollection/rest/UserController.java" afterDir="false" />
     </list>
+    <list default="true" id="7b20586f-4e73-4804-9955-22831e2a59ec" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +51,7 @@
       <workItem from="1637163760709" duration="376000" />
       <workItem from="1637164160708" duration="1743000" />
       <workItem from="1637245422313" duration="576000" />
+      <workItem from="1637164160708" duration="1152000" />
     </task>
     <servers />
   </component>
