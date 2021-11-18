@@ -18,7 +18,7 @@ function Routes() {
     <Router>
       <Switch>
         <Route exact path="/">
-          <ThemeProvider theme={themeForms}>
+          <ThemeProvider theme={themeLanding}>
             <LandingPage />
           </ThemeProvider>
         </Route>
