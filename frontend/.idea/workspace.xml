@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b20586f-4e73-4804-9955-22831e2a59ec" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/hr/fer/progi/MyVinylCollection/MyVinylCollectionApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/hr/fer/progi/MyVinylCollection/MyVinylCollectionApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/hr/fer/progi/MyVinylCollection/config/WebConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/hr/fer/progi/MyVinylCollection/config/WebConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Routes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LandingPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LandingPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LogInPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LogInPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/SignUpPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SignUpPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/theme.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/theme.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
