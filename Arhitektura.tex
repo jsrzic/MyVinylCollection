@@ -17,55 +17,262 @@
 			\item Baza podataka
 		\end{packed_item}
 
-	
+		\begin{figure}[H]
+			\includegraphics[width=\textwidth]{slike/arhitektura.png}
+			\centering
+			\caption{Arhitektura sustava}
+			\label{fig:arhitektura}
+		\end{figure}
 		
-
+		\textit{\underline{Web preglednik}} je aplikacija koja omogućuje korisniku pristup \textit{World Wide Web}-u. Kada korisnik zatraži web stranicu, preglednik dohvaća potreban sadržaj, web stranicu i potrebne multimedijske sadržaje, s web poslužitelja i prikazuje na korisnikovom uređaju. Web stranica je hipertekstualni dokument koji se prikazuje korisniku na ekranu. Web stranice se sastoje od jedne ili više tekstualnih datoteka pisanih u jezicima: \textit{HTML (HyperText Markup Lagnuage), CSS (Cascade Style Sheets) te JS (JavaScript)}, koje web preglednik prevodi i prikazuje ih korisniku koji putem web preglednika šalje zahtjev web poslužitelju.
+		
+		\textit{\underline{Web poslužitelj}} je računalni hardveri sofver koji služi za komunikaciju klijenta s aplikacijom. Poslužitelj prima zahtjeve preko \textit{HTPP (Hyper Text Transfer Protocol)} mrežnog protokola stvorenog za distirbuciju web sadržaja. Korisnik preko web preglednika pokreće komunikaciju postavljanjem željenih zahtjeva koristeći \textit{HTTP}, a web poslužitelj, ovisno o zahtjevu koji obrađuje, odgovara sadržajem tog resursa (HTML dokumentom) ili porukom o pogrešci.
+		
+		Programski jezici koji su korišteni za izradu projekta su PostgreSQL, za baze podataka, te JavaScript (Node.js za backend), te React (za frontend). Odabrano razvojno okruženje je IntelliJ. Arhitektura sustava temelji se na MVC (Model-View-Controller) obrascu koji funkcionira na načelu dizajna \textit{Separation of Concerns (SoC)}. SoC omogućava odvajanje programa u različite odjeljke tako da se svaki odjeljak bavi svojim dijelom, što olakšava izradu i daljnji razvoj aplikacije.
+		
+		MVC sastoji se od:
+		\begin{packed_item}
+			\item \textbf{Model} - središnja komponenta sustava koja izravno upravlja podacima, logikom i pravilima aplikacije. Neovisna je o korisničkom sučelju te prima ulazne podatke od Controllera.
+			
+			\item \textbf{View} - definira kako se podaci aplikacije trebaju prikazivati
+			
+			\item \textbf{Controller} - zadužen je za primanje i uređivanje zahtjeva koje prosljeđuje na Model ili View. Upravalja korisničkim zahtjevima i na temelju njih izvodi daljnje korake potrebne s ostalim elementima.
+		\end{packed_item}
+		
+		\eject
 		
 
 				
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
+%			\textbf{\textit{dio 1. revizije}}\\
+%			
+%		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+
+			Za potrebe sustava našeg projekta korištena je relacijska baza podataka. Osnovna građa baze je relacija, odnosno tablica koja je definirana imenom i skupom atributa. Glavni zadatak baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za obradu. Baza podataka ove aplikacije sastoji se od tablica:
 			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+			\begin{packed_item}
+				\item User
+				\item Genre
+				\item Subgenre
+				\item Vinyl
+				\item Artist
+				\item Ad
+				\item Sale ad
+				\item Exchange ad
+				\item Event
+			\end{packed_item}
 		
 			\subsection{Opis tablica}
 			
-
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+%
+%				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
 				
+				\textbf{User}	Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: user\_ id, name, surname, username, password, email, contact\_ email i location. Ovaj entitet je u vezi \textit{Many-to-Many} sa samim sobom preko atributa user\_ id korisnika, \textit{Many-to-Many} sa entitetom Genre preko genre\_ id, \textit{One-to-Many} sa entitetom Ad preko user\_ id, \textit{Many-to-Many} sa Vinyl preko user\_ id te \textit{One-to-Many} sa Vinyl preko vinyl\_ id i \textit{Many-to-Many} sa Artist preko user\_ id.
 				
+				%User 
 				\begin{longtblr}[
 					label=none,
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \multicolumn{3}{|c|}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \multicolumn{3}{|c|}{\textbf{User}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}user\_ id & LONG	&  Jedinstveni identifikator korisnika 	\\ \hline
+					name	& STRING & Ime korisnika  	\\ \hline 
+					surname & STRING & Prezime korisnika  \\ \hline 
+					username & STRING	&  Korisničko ime	\\ \hline 
+					password & STRING & Lozinka \\ \hline
+					email & STRING & E-mail korisnika \\ \hline
+					contact\_ email & STRING & E-mail za stupanje u kontakt s korisnikom \\ \hline
+					location & GEOGRAPHY & Geografska lokacija uređaja \\ \hline
 				\end{longtblr}
 				
+				\textbf{Genre}	Ovaj entitet sadrži sve važne informacije o žanrovima. Sadrži atribute: genre\_ id i name. Ovaj entitet je u vezi \textit{Many-to-Many} sa User preko atributa user\_ id, \textit{One-to-Many} sa Subgenre preko genre\_ id i \textit{One-to-Many} sa Vinyl preko genre\_ id.
 				
+				%Genre
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{Genre}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}genre\_ id & LONG	&  Jedinstveni identifikator žanra  \\ \hline
+					name	 & STRING & Ime žanra  	\\ \hline 
+				\end{longtblr}
+				
+				\textbf{Subgenre}	Ovaj entitet sadrži sve važne informacije o podžanrovima. Sadrži atribute: subgenre\_ id, name i parent\_ genre\_ id. Ovaj entitet je u vezi \textit{Many-to-One} sa Genre preko atributa genre_id.
+				
+				%Subgenre
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{Genre}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}subgenre\_ id & LONG	&  Jedinstveni identifikator podžanra  \\ \hline
+					name	& STRING & Ime podžanra  	\\ \hline
+					\SetCell{LightBlue}parent\_ genre\_ id & LONG & Identifikator roditeljskog žanra \\ \hline
+					
+				\end{longtblr}
+				
+				\textbf{Vinyl}	Ovaj entitet sadrži sve važne informacije o vinilima. Sadrži atribute: vinyl\_ id, album\_ name, release\_ year, genre\_ id, subgenre\_ id, image, condition\_ evaluation, isRare, description, value\_ kn, RPM, diameter, capacity, reproduction\_ quality, nmb\_ of\_ audio\_ channels, time\_ of\_ reproduction. Ovaj entitet je u vezi \textit{One-to-Many} sa Ad preko atributa vinyl\_ id, \textit{Many-to-Many} sa User preko user\_ id, \textit{Many-to-One} sa User preko vinyl\_ id, \textit{Many-to-One} sa Genre preko genre\_ id i \textit{Many-to-One} sa Artist preko artist\_ id.
+				
+				%Vinyl
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{Vinyl}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}vinyl\_ id & LONG	&  Jedinstveni identifikator vinila  \\ \hline
+					album\_ name	& STRING & Ime albuma \\ \hline 
+					release\_ year & INT & Godina izdanja \\ \hline
+					\SetCell{LightBlue}genre\_ id & LONG & Jedinstveni identifikator žanra \\ \hline
+					subgenre\_ id & LONG & Jednistveni identifikator podžanra \\ \hline
+					image & BYTEA & Slika vinila \\ \hline
+					condition\_ evaluation & INT & Ocjena stanja vinila \\ \hline
+					isRare & BOOLEAN & Raritet vinila \\ \hline
+					description & STRING & Kratki opis vinila \\ \hline
+					value\_ kn & NUMERIC & Vrijednost vinila \\ \hline
+					RPM & STRING & Brzina okretaja u minuti \\ \hline
+					diameter & FLOAT & Promjer vinila \\ \hline
+					capacity & STRING & Kapacitet vinila \\ \hline
+					reproduction\_ quality & STRING & Kvaliteta reprodukcije vinila \\ \hline
+					nmb\_ of\_ audio\_ channels & INT & Broj audio kanala \\ \hline
+					time\_ of\_ reproduction & TIME & Vrijeme reprodukcije \\ \hline
+					
+				\end{longtblr}
+				
+				\textbf{Artist}	Ovaj entitet sadrži sve važne informacije o izvođaču. Sadrži atribute: artist\_ id i name. Ovaj entitet je u vezi \textit{Many-to-Many} sa User preko atributa user\_ id i \textit{One-to-Many} sa Vinyl preko artist\_ id.
+				
+				%Artist
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{Vinyl}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}artist\_ id & LONG	&  Jedinstveni identifikator izvođača  \\ \hline
+					name & STRING & Ime izvođača \\ \hline
+					
+				\end{longtblr}
+				
+				\textbf{Ad}	Ovaj entitet sadrži sve važne informacije o oglasu. Sadrži atribute: ad\_ id, vinyl\_ id, sale\_ ad\_ id, exchange\_ ad\_ id i isActive. Ovaj entitet je u vezi \textit{Many-to-One} sa User preko user\_ id, \textit{Many-to-One} sa Vinyl preko vinyl\_ id, \textit{One-to-One} sa SaleAd preko ad\_ id i \textit{One-to-One} sa ExchangeAd preko ad\_ id.
+				
+				%Ad
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{Ad}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}ad\_ id & LONG	&  Jedinstveni identifikator oglasa  \\ \hline
+					vinyl\_ id & STRING & Jedinstveni identifikator vinila \\ \hline
+					\SetCell{LightBlue}sale\_ ad\_ id & LONG & Jednistveni identifikator oglasa za prodaju \\ \hline
+					\SetCell{LightBlue}exchange\_ ad\_ id & LONG & Jedinstveni identifikator oglasa za razmjenu \\ \hline
+					isActive & BOOLEAN & Aktivnost oglasa \\ \hline
+					
+				\end{longtblr}
+				
+				\textbf{SaleAd}	Ovaj entitet sadrži sve važe informacije za oglas koji je označen za prodaju vinila. Sadrži atribute: ad\_ id i price. Ovaj entitet je u vezi \textit{One-to-One} sa Ad preko atributa ad\_ id.
+				
+				%SaleAd
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{SaleAd}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}ad\_ id & LONG	&  Jedinstveni identifikator oglasa  \\ \hline
+					price & NUMERIC & Cijena vinila u oglasu \\ \hline
+					
+				\end{longtblr}
+				
+				\textbf{ExchangeAd}	Ovaj entitet sadrži sve važe informacije za oglas koji je označen za razmjenu vinila. Sadrži atribute: ad\_ id, new\_ Owner\_ id i exchanged\_ vinyl\_ id. Ovaj entitet je u vezi \textit{One-to-One} sa Ad preko atributa ad\_ id.
+				
+				%ExchangeAd
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{ExchangeAd}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}ad\_ id & LONG	&  Jedinstveni identifikator oglasa  \\ \hline
+					new\_ Owner\_ id & LONG & Jedinstveni identifikator novog vlasnika \\ \hline
+					exchanged\_ vinyl\_ id & LONG & Jedinstveni identifikator razmjenjenog vinila \\ \hline
+					
+				\end{longtblr}
+				
+				\textbf{SaleAd}	Ovaj entitet sadrži sve važe informacije za događaj. Sadrži atribute: event\_ id, title, image, creation\_ date, description, social\_ network\_ link i location. Ovaj entitet nije u vezi niti sa jednim drugim entitetom.
+				
+				%Event
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} 
+					\hline \multicolumn{3}{|c|}{\textbf{Event}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}event\_ id & LONG	&  Jedinstveni identifikator događaja  \\ \hline
+					title & STRING & Naslov događaja \\ \hline
+					image & BYTEA & Slika događaja \\ \hline
+					creation\_ date & DATE & Datum događaja \\ \hline
+					description & STRING & Kratki opis događaja \\ \hline
+					social\_ network\_ link & STRING & Link na događaj \\ \hline
+					location & GEOGRAPHY & Lokacija događaja \\ \hline
+					
+				\end{longtblr}
 			
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+%				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/baza.jpg}
+					\centering
+					\caption{Dijagram baze podataka}
+					\label{fig:baza}
+				\end{figure}
+			
 			
 			\eject
 			
 			
 		\section{Dijagram razreda}
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+%			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+%			
+%			\textbf{\textit{dio 1. revizije}}\\
+%			
+%			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+
 			
 %			\textbf{\textit{dio 2. revizije}}\\			
 %			
