@@ -13,7 +13,7 @@ import {
   Stepper,
   Typography
 } from "@mui/material";
-import * as yup from 'yup'
+import * as yup from 'yup';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import {useHistory} from "react-router-dom";
