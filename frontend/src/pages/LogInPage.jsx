@@ -8,6 +8,7 @@ import Form from "../components/Form";
 import {useHistory} from "react-router-dom";
 
 function LogInPage() {
+    const api = process.env.REACT_APP_API_URL;
     const history = useHistory();
     const [errorMessage, setErrorMessage] = React.useState(false)
   const loginPageStyle = {
@@ -50,7 +51,7 @@ function LogInPage() {
               credentials: 'same-origin',
             body: JSON.stringify({ ...values }, null, 2),
           };
-          fetch("http://localhost:8080/users/login", requestOptions)
+          fetch(api+"/users/login", requestOptions)
             .then((response) => {
                 if(response.ok) {
                     console.log(response.json());

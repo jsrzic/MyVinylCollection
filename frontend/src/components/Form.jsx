@@ -14,7 +14,7 @@ function Form({ children, style, onSubmit }) {
   return <form style={{ ...formStyle, ...style }} onSubmit={onSubmit}>{children}</form>;
 }
 
-function FormRow({ name, type, required, label, value, onChange, error, helperText }) {
+function FormRow({ name, type, required, label, value, onChange, error, helperText, onClick }) {
   return (
     <TextField
       size="small"
@@ -28,6 +28,7 @@ function FormRow({ name, type, required, label, value, onChange, error, helperTe
       onChange={onChange}
       error={error}
       helperText={helperText}
+      onClick={onClick}
     />
   );
 }

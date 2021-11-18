@@ -53,7 +53,7 @@ function LandingPage() {
       <div style={homepageHeaderStyle}>
         <h1 style={titleStyle}>My Vinyl Collection</h1>
         <div style={{ display: "flex" }}>
-          <Button onClick={() => history.push("/login")} variant="contained">
+          <Button style={{marginRight: "0.3rem"}} onClick={() => history.push("/login")} variant="contained">
             Login
           </Button>
           <Button onClick={() => history.push("/signup")} variant="outlined">
