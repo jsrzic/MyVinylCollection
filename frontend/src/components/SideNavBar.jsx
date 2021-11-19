@@ -65,7 +65,7 @@ function SideNavBar() {
     background: color,
   };
   const tabsStyle = { width: "15rem" };
-  const bottomNavStyle = { width: "100%", position: "absolute", bottom: 0 };
+  const bottomNavStyle = { width: "100%", position: "absolute", bottom: 0, zoom: `${window.innerWidth/4}%`};
 
   const history = useHistory();
 
