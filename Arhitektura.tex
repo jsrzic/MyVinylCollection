@@ -24,11 +24,11 @@
 			\label{fig:arhitektura}
 		\end{figure}
 		
-		\textit{\underline{Web preglednik}} je aplikacija koja omogućuje korisniku pristup \textit{World Wide Web}-u. Kada korisnik zatraži web stranicu, preglednik dohvaća potreban sadržaj, web stranicu i potrebne multimedijske sadržaje, s web poslužitelja i prikazuje na korisnikovom uređaju. Web stranica je hipertekstualni dokument koji se prikazuje korisniku na ekranu. Web stranice se sastoje od jedne ili više tekstualnih datoteka pisanih u jezicima: \textit{HTML (HyperText Markup Lagnuage), CSS (Cascade Style Sheets) te JS (JavaScript)}, koje web preglednik prevodi i prikazuje ih korisniku koji putem web preglednika šalje zahtjev web poslužitelju.
+		\textit{\underline{Web preglednik}} je aplikacija koja omogućuje korisniku pristup \textit{World Wide Web}-u. Kada korisnik zatraži web stranicu, preglednik dohvaća potreban sadržaj, web stranicu i potrebne multimedijske sadržaje, s web poslužitelja i prikazuje na korisnikovom uređaju. Web stranica je hipertekstualni dokument koji se prikazuje korisniku na ekranu. Web stranice se sastoje od jedne ili više tekstualnih datoteka pisanih u jezicima: HTML \textit{(HyperText Markup Lagnuage)}, CSS \textit{(Cascade Style Sheets)} te JS \textit{(JavaScript)}, koje web preglednik prevodi i prikazuje ih korisniku koji putem web preglednika šalje zahtjev web poslužitelju.
 		
-		\textit{\underline{Web poslužitelj}} je računalni hardveri sofver koji služi za komunikaciju klijenta s aplikacijom. Poslužitelj prima zahtjeve preko \textit{HTPP (Hyper Text Transfer Protocol)} mrežnog protokola stvorenog za distirbuciju web sadržaja. Korisnik preko web preglednika pokreće komunikaciju postavljanjem željenih zahtjeva koristeći \textit{HTTP}, a web poslužitelj, ovisno o zahtjevu koji obrađuje, odgovara sadržajem tog resursa (HTML dokumentom) ili porukom o pogrešci.
+		\textit{\underline{Web poslužitelj}} je računalni hardveri sofver koji služi za komunikaciju klijenta s aplikacijom. Poslužitelj prima zahtjeve preko HTTP \textit{(Hyper Text Transfer Protocol)} mrežnog protokola stvorenog za distirbuciju web sadržaja. Korisnik preko web preglednika pokreće komunikaciju postavljanjem željenih zahtjeva koristeći HTTP, a web poslužitelj, ovisno o zahtjevu koji obrađuje, odgovara sadržajem tog resursa (HTML dokumentom) ili porukom o pogrešci.
 		
-		Programski jezici koji su korišteni za izradu projekta su PostgreSQL, za baze podataka, te JavaScript (Node.js za backend), te React (za frontend). Odabrano razvojno okruženje je IntelliJ. Arhitektura sustava temelji se na MVC (Model-View-Controller) obrascu koji funkcionira na načelu dizajna \textit{Separation of Concerns (SoC)}. SoC omogućava odvajanje programa u različite odjeljke tako da se svaki odjeljak bavi svojim dijelom, što olakšava izradu i daljnji razvoj aplikacije.
+		Programski jezici koji su korišteni za izradu projekta su  sustav PostgreSQL (za upravljanje relacijskom bazom podataka), programski jezik Java i razvojni okvir Spring Boot (backend) te programski jezik JavaScript i razvojni okvir React (frontend). Odabrano razvojno okruženje je IntelliJ te cloud platforma Heroku (za deploy aplikacije). Arhitektura sustava temelji se na MVC \textit{(Model-View-Controller)} obrascu koji funkcionira na načelu dizajna SoC \textit{(Separation of Concerns)}. SoC omogućava odvajanje programa u različite odjeljke tako da se svaki odjeljak bavi svojim dijelom, što olakšava izradu i daljnji razvoj aplikacije.
 		
 		MVC sastoji se od:
 		\begin{packed_item}
@@ -49,7 +49,7 @@
 %			
 %		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
 
-			Za potrebe sustava našeg projekta korištena je relacijska baza podataka. Osnovna građa baze je relacija, odnosno tablica koja je definirana imenom i skupom atributa. Glavni zadatak baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za obradu. Baza podataka ove aplikacije sastoji se od tablica:
+\quad Za potrebe sustava našeg projekta korištena je relacijska baza podataka. Osnovna građa baze je relacija, odnosno tablica koja je definirana imenom i skupom atributa. Glavni zadatak baze podataka je brza i jednostavna pohrana, izmjena i dohvat podataka za obradu. Baza podataka ove aplikacije sastoji se od tablica:
 			
 			\begin{packed_item}
 				\item User
@@ -68,7 +68,7 @@
 %
 %				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
 				
-				\textbf{User}	Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: user\_ id, name, surname, username, password, email, contact\_ email i location. Ovaj entitet je u vezi \textit{Many-to-Many} sa samim sobom preko atributa user\_ id korisnika, \textit{Many-to-Many} sa entitetom Genre preko genre\_ id, \textit{One-to-Many} sa entitetom Ad preko user\_ id, \textit{Many-to-Many} sa Vinyl preko user\_ id te \textit{One-to-Many} sa Vinyl preko vinyl\_ id i \textit{Many-to-Many} sa Artist preko user\_ id.
+\quad\textbf{User}\quad Ovaj entitet sadrži sve važne informacije o korisniku aplikacije. Sadrži atribute: user\_ id, name, surname, username, password, email, contact\_ email i location. Ovaj entitet je u vezi \textit{Many-to-Many} sa samim sobom preko atributa user\_ id korisnika, \textit{Many-to-Many} sa entitetom Genre preko genre\_ id, \textit{One-to-Many} sa entitetom Ad preko user\_ id, \textit{Many-to-Many} sa Vinyl preko user\_ id te \textit{One-to-Many} sa Vinyl preko vinyl\_ id i \textit{Many-to-Many} sa Artist preko user\_ id.
 				
 				%User 
 				\begin{longtblr}[
@@ -87,10 +87,10 @@
 					password & STRING & Lozinka \\ \hline
 					email & STRING & E-mail korisnika \\ \hline
 					contact\_ email & STRING & E-mail za stupanje u kontakt s korisnikom \\ \hline
-					location & GEOGRAPHY & Geografska lokacija uređaja \\ \hline
+					location & GEOGRAPHY & Geografska lokacija uređaja korisnika \\ \hline
 				\end{longtblr}
 				
-				\textbf{Genre}	Ovaj entitet sadrži sve važne informacije o žanrovima. Sadrži atribute: genre\_ id i name. Ovaj entitet je u vezi \textit{Many-to-Many} sa User preko atributa user\_ id, \textit{One-to-Many} sa Subgenre preko genre\_ id i \textit{One-to-Many} sa Vinyl preko genre\_ id.
+\textbf{Genre}\quad Ovaj entitet sadrži sve važne informacije o žanrovima. Sadrži atribute: genre\_ id i name. Ovaj entitet je u vezi \textit{Many-to-Many} sa User preko atributa user\_ id, \textit{One-to-Many} sa Subgenre preko genre\_ id i \textit{One-to-Many} sa Vinyl preko genre\_ id.
 				
 				%Genre
 				\begin{longtblr}[
@@ -106,7 +106,7 @@
 					name	 & STRING & Ime žanra  	\\ \hline 
 				\end{longtblr}
 				
-				\textbf{Subgenre}	Ovaj entitet sadrži sve važne informacije o podžanrovima. Sadrži atribute: subgenre\_ id, name i parent\_ genre\_ id. Ovaj entitet je u vezi \textit{Many-to-One} sa Genre preko atributa genre_id.
+\textbf{Subgenre}\quad	Ovaj entitet sadrži sve važne informacije o podžanrovima. Sadrži atribute: subgenre\_ id, name i parent\_ genre\_ id. Ovaj entitet je u vezi \textit{Many-to-One} sa Genre preko atributa genre\_ id.
 				
 				%Subgenre
 				\begin{longtblr}[
@@ -117,14 +117,14 @@
 						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} 
-					\hline \multicolumn{3}{|c|}{\textbf{Genre}}	 \\ \hline[3pt]
+					\hline \multicolumn{3}{|c|}{\textbf{Subgenre}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}subgenre\_ id & LONG	&  Jedinstveni identifikator podžanra  \\ \hline
 					name	& STRING & Ime podžanra  	\\ \hline
 					\SetCell{LightBlue}parent\_ genre\_ id & LONG & Identifikator roditeljskog žanra \\ \hline
 					
 				\end{longtblr}
 				
-				\textbf{Vinyl}	Ovaj entitet sadrži sve važne informacije o vinilima. Sadrži atribute: vinyl\_ id, album\_ name, release\_ year, genre\_ id, subgenre\_ id, image, condition\_ evaluation, isRare, description, value\_ kn, RPM, diameter, capacity, reproduction\_ quality, nmb\_ of\_ audio\_ channels, time\_ of\_ reproduction. Ovaj entitet je u vezi \textit{One-to-Many} sa Ad preko atributa vinyl\_ id, \textit{Many-to-Many} sa User preko user\_ id, \textit{Many-to-One} sa User preko vinyl\_ id, \textit{Many-to-One} sa Genre preko genre\_ id i \textit{Many-to-One} sa Artist preko artist\_ id.
+\textbf{Vinyl}\quad	Ovaj entitet sadrži sve važne informacije o vinilima. Sadrži atribute: vinyl\_ id, album\_ name, release\_ year, genre\_ id, subgenre\_ id, image, condition\_ evaluation, isRare, description, value\_ kn, RPM, diameter, capacity, reproduction\_ quality, nmb\_ of\_ audio\_ channels, time\_ of\_ reproduction. Ovaj entitet je u vezi \textit{One-to-Many} sa Ad preko atributa vinyl\_ id, \textit{Many-to-Many} sa User preko user\_ id, \textit{Many-to-One} sa User preko vinyl\_ id, \textit{Many-to-One} sa Genre preko parent\_ genre\_ id i \textit{Many-to-One} sa Artist preko artist\_ id.
 				
 				%Vinyl
 				\begin{longtblr}[
@@ -155,7 +155,7 @@
 					
 				\end{longtblr}
 				
-				\textbf{Artist}	Ovaj entitet sadrži sve važne informacije o izvođaču. Sadrži atribute: artist\_ id i name. Ovaj entitet je u vezi \textit{Many-to-Many} sa User preko atributa user\_ id i \textit{One-to-Many} sa Vinyl preko artist\_ id.
+\textbf{Artist}\quad	Ovaj entitet sadrži sve važne informacije o izvođaču. Sadrži atribute: artist\_ id i name. Ovaj entitet je u vezi \textit{Many-to-Many} sa User preko atributa user\_ id i \textit{One-to-Many} sa Vinyl preko artist\_ id.
 				
 				%Artist
 				\begin{longtblr}[
@@ -166,13 +166,13 @@
 						colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} 
-					\hline \multicolumn{3}{|c|}{\textbf{Vinyl}}	 \\ \hline[3pt]
+					\hline \multicolumn{3}{|c|}{\textbf{Artist}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}artist\_ id & LONG	&  Jedinstveni identifikator izvođača  \\ \hline
 					name & STRING & Ime izvođača \\ \hline
 					
 				\end{longtblr}
 				
-				\textbf{Ad}	Ovaj entitet sadrži sve važne informacije o oglasu. Sadrži atribute: ad\_ id, vinyl\_ id, sale\_ ad\_ id, exchange\_ ad\_ id i isActive. Ovaj entitet je u vezi \textit{Many-to-One} sa User preko user\_ id, \textit{Many-to-One} sa Vinyl preko vinyl\_ id, \textit{One-to-One} sa SaleAd preko ad\_ id i \textit{One-to-One} sa ExchangeAd preko ad\_ id.
+\textbf{Ad}\quad	Ovaj entitet sadrži sve važne informacije o oglasu. Sadrži atribute: ad\_ id, vinyl\_ id, sale\_ ad\_ id, exchange\_ ad\_ id i isActive. Ovaj entitet je u vezi \textit{Many-to-One} sa User preko user\_ id, \textit{Many-to-One} sa Vinyl preko vinyl\_ id, \textit{One-to-One} sa SaleAd preko ad\_ id i \textit{One-to-One} sa ExchangeAd preko ad\_ id.
 				
 				%Ad
 				\begin{longtblr}[
@@ -192,7 +192,7 @@
 					
 				\end{longtblr}
 				
-				\textbf{SaleAd}	Ovaj entitet sadrži sve važe informacije za oglas koji je označen za prodaju vinila. Sadrži atribute: ad\_ id i price. Ovaj entitet je u vezi \textit{One-to-One} sa Ad preko atributa ad\_ id.
+\textbf{SaleAd}\quad	Ovaj entitet sadrži sve važe informacije za oglas koji je označen za prodaju vinila. Sadrži atribute: ad\_ id i price. Ovaj entitet je u vezi \textit{One-to-One} sa Ad preko atributa ad\_ id.
 				
 				%SaleAd
 				\begin{longtblr}[
@@ -209,7 +209,7 @@
 					
 				\end{longtblr}
 				
-				\textbf{ExchangeAd}	Ovaj entitet sadrži sve važe informacije za oglas koji je označen za razmjenu vinila. Sadrži atribute: ad\_ id, new\_ Owner\_ id i exchanged\_ vinyl\_ id. Ovaj entitet je u vezi \textit{One-to-One} sa Ad preko atributa ad\_ id.
+\textbf{ExchangeAd}\quad	Ovaj entitet sadrži sve važe informacije za oglas koji je označen za razmjenu vinila. Sadrži atribute: ad\_ id, new\_ Owner\_ id i exchanged\_ vinyl\_ id. Ovaj entitet je u vezi \textit{One-to-One} sa Ad preko atributa ad\_ id.
 				
 				%ExchangeAd
 				\begin{longtblr}[
@@ -227,7 +227,7 @@
 					
 				\end{longtblr}
 				
-				\textbf{SaleAd}	Ovaj entitet sadrži sve važe informacije za događaj. Sadrži atribute: event\_ id, title, image, creation\_ date, description, social\_ network\_ link i location. Ovaj entitet nije u vezi niti sa jednim drugim entitetom.
+\textbf{Event}\quad	Ovaj entitet sadrži sve važe informacije za događaj. Sadrži atribute: event\_ id, title, image, creation\_ date, description, social\_ network\_ link i location. Ovaj entitet nije u vezi niti sa jednim drugim entitetom.
 				
 				%Event
 				\begin{longtblr}[
@@ -271,7 +271,25 @@
 %			
 %			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
 
-			
+\quad Slike \ref{fig:controller} i \ref{fig:model} prikazuju dijagrame razreda koji pripadaju \textit{backend} dijelu MVC arhitekture. Razredi prikazan na slici \ref{fig:controller} nasljeđuju Controller razred. Neki metode implementirane u tim razredima manipuliraju s DTO \textit{(Data transfer object)} koji su dohvaćeni pomoću metoda implementiranih u Model razredima. Metode implementirane u Controller razredima vraćaju JSON datoteke s HTML status kodom. Razredi su podijeljeni logički po pravu pristupa metodama određenih aktora.
+
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/CD_controller.png}
+					\centering
+					\caption{Dijagram razreda controller}
+					\label{fig:controller}
+				\end{figure}
+				
+			\eject
+				
+			Na slici \ref{fig:model} prikazan je dijagram razreda modela koji služi za preslikavanje baze podataka u aplikaciji. Implementirane metode direktno komuniciraju s bazom podataka te vraćaju tražene podatke. Razred User predstavlja prijavljenog korisnika aplikacije te ima sve navedene atribute koji prijvaljeni korisnik mora imati kako bi mogao komunicirati s bazom podataka. Razred Ad predstavlja oglase koje korisnik može objaviti a razred Vinyl predstavlja vinile koje korisnik posjeduje i vinil koji se nalazi u oglasu.
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/CD_model.png}
+					\centering
+					\caption{Dijagram razreda model}
+					\label{fig:model}
+				\end{figure}
 
 			
 %			\textbf{\textit{dio 2. revizije}}\\			
