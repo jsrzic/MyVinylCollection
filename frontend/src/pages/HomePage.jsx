@@ -6,21 +6,24 @@ import VinylCard from "../components/VinylCard";
 import { IsMobile } from "../util/utils";
 
 function HomePage() {
-  const scrollContainerStyle = IsMobile()
-    ? {
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr",
-      }
-    : {
-        display: "flex",
-        flexWrap: "wrap",
-        maxHeight: "90vh",
-        overflowY: "scroll",
-        justifyContent: "space-between",
-      };
+  const scrollContainerStyleDesktop = {
+      display: "flex",
+      flexWrap: "wrap",
+      maxHeight: "90vh",
+      overflowY: "scroll",
+      justifyContent: "space-between",
+  };
+
+  const scrollContainerStyleMobile = {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      width: "100%",
+      zoom: `${window.innerWidth/4}%`
+  }
+
   return (
     <Fade in>
-      <div style={scrollContainerStyle}>
+      <div style={IsMobile() ? scrollContainerStyleMobile : scrollContainerStyleDesktop}>
         {/*mock*/}
         <VinylCard name="Euforija" forSale />
         <VinylCard name="Bohemian Rhapsody" forSale />
