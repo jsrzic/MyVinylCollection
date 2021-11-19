@@ -26,10 +26,7 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public boolean checkUsernameUnique(RegisterUserDTO user) {
-        if (userRepo.countByUsername(user.getUsername()) == 0) {
-            return true;
-        }
-        return false;
+        return userRepo.countByUsername(user.getUsername()) == 0;
     }
 
     @Override
@@ -47,10 +44,7 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public boolean checkPassword(LoginUserDTO user) {
-        if(userRepo.findByUsername(user.getUsername()).getPassword().equals(user.getPassword())) {
-            return true;
-        }
-        return false;
+        return userRepo.findByUsername(user.getUsername()).getPassword().equals(user.getPassword());
     }
 
     @Override
