@@ -36,8 +36,8 @@ function LandingPage() {
 
   const imageStyle = {
     animation: "rotation 20s infinite linear",
-    position: "absolute",
-    bottom: "-55%",
+    position: "relative",
+    bottom: "-15%",
     pointerEvents: "none"
   };
 

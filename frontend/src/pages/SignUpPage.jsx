@@ -55,8 +55,9 @@ function SignUpPage() {
   };
 
   const imageStyle = {
-    position: "absolute",
-    bottom: "-20%",
+    position: "relative",
+    bottom: "4vh",
+    height: "110vh",
     animation: "floatUp 1s",
     zIndex: 0
   };
