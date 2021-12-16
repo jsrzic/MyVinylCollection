@@ -1,0 +1,16 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  id="4"  author="Marta">
+        <createTable  tableName="user_preferred_genre">
+            <column  name="user_id"  type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK-User-Genre"></constraints>
+            </column>
+            <column  name="genre_id"  type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK-User-Genre"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

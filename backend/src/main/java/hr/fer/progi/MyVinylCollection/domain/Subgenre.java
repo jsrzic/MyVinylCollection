@@ -2,7 +2,7 @@ package hr.fer.progi.MyVinylCollection.domain;
 
 import javax.persistence.*;
 
-@Entity(name="subgenres")
+@Entity(name="subgenre")
 public class Subgenre {
 
     @Id
