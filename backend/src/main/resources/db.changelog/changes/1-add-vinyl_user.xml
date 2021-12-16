@@ -23,8 +23,13 @@
             <column  name="email"  type="varchar(50)">
                 <constraints  nullable="false" unique="true"/>
             </column>
-            <column  name="contact_email"  type="varchar(50)"></column>
-            <column  name="is_active"  type="bool"></column>
+            <column name="contact_email" type="varchar(50)"/>
+            <column name="is_active" type="bool"/>
         </createTable>
+    </changeSet>
+    <changeSet  id="8"  author="Marta">
+        <addColumn tableName="vinyl_user">
+            <column name="location" type="varchar(50)"/>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

@@ -1,7 +1,6 @@
 package hr.fer.progi.MyVinylCollection.rest.user.dto;
 
 import hr.fer.progi.MyVinylCollection.domain.Genre;
-import hr.fer.progi.MyVinylCollection.domain.Location;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class UpdateUserDTO {
     private String password;
     private String email;
     private String contactEmail;
-    private Location location;
+    private String location;
     private List<Genre> preferredGenres;
 
     public String getContactEmail() {
@@ -24,11 +23,11 @@ public class UpdateUserDTO {
         this.contactEmail = contactEmail;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

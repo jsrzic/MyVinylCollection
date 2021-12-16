@@ -28,6 +28,8 @@ public class User {
     @Column(name="contact_email")
     private String contactEmail;
 
+    private String location;
+
     @Column(name="is_active")
     private boolean isActive;
 
@@ -45,6 +47,7 @@ public class User {
         this.password = user.getPassword();
         this.contactEmail = user.getEmail();
         this.isActive = true;
+        this.location = "";
         this.preferredGenres = userGenrePreference;
     }
 
@@ -104,19 +107,27 @@ public class User {
         this.contactEmail = contactEmail;
     }
 
-    public boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
     public List<Genre> getPreferredGenres() {
         return preferredGenres;
     }
 
     public void setPreferredGenres(List<Genre> preferredGenres) {
         this.preferredGenres = preferredGenres;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 }
