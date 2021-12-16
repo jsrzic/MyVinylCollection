@@ -1,4 +1,4 @@
-INSERT INTO genres (name) VALUES
+INSERT INTO genre (name) VALUES
 ('rock'),
 ('pop'),
 ('hip-hop'),

@@ -3,7 +3,7 @@ package hr.fer.progi.MyVinylCollection.domain;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name="genres")
+@Entity(name="genre")
 public class Genre {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

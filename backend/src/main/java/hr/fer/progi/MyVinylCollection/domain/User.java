@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Entity(name="users")
+@Entity(name="vinyl_user")
 public class User {
 
     @Id
@@ -36,10 +36,6 @@ public class User {
     @Column(name="is_active")
     private boolean isActive;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "location_id")
-    private Location location;
-
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
@@ -55,7 +51,6 @@ public class User {
         this.contactEmail = user.getEmail();
         this.isActive = true;
         this.preferredGenres = userGenrePreference;
-
     }
 
     public Long getId() {
@@ -118,16 +113,8 @@ public class User {
         return isActive;
     }
 
-    public void setIsActive(boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public List<Genre> getPreferredGenres() {
