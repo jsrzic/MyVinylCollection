@@ -4,10 +4,12 @@ import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.rest.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.RegisterUserDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public interface UserService {
 
     List<User> listAll();

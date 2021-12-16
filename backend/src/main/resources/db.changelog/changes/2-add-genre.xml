@@ -3,7 +3,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet  id="2"  author="Tea">
+    <changeSet  id="6"  author="Marta">
         <createTable  tableName="genre">
             <column  name="id"  type="int8">
                 <constraints  primaryKey="true"  nullable="false"/>
@@ -12,5 +12,9 @@
                 <constraints  nullable="false"/>
             </column>
         </createTable>
+        <addAutoIncrement incrementBy="1" tableName="genre" columnName="id" columnDataType="int8" />
+    </changeSet>
+    <changeSet id="7" author="Marta">
+        <sqlFile path="db.changelog/changes/data.sql" />
     </changeSet>
 </databaseChangeLog>
