@@ -1,4 +1,4 @@
-package hr.fer.progi.MyVinylCollection.rest;
+package hr.fer.progi.MyVinylCollection.rest.user.dto;
 public class LoginUserDTO {
 
     private String username;

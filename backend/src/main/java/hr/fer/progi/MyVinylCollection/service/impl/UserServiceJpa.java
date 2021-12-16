@@ -3,21 +3,25 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
-import hr.fer.progi.MyVinylCollection.rest.LoginUserDTO;
-import hr.fer.progi.MyVinylCollection.rest.RegisterUserDTO;
+import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceJpa implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private MapStructMapper mapstructMapper;
 
     @Override
     public List<User> listAll() {
@@ -64,5 +68,28 @@ public class UserServiceJpa implements UserService {
         if(userRepo.updateUserStatus(userId, status).getIsActive() == status)
                 return true;
         return false;
+    }
+
+    @Override
+    public UpdateUserDTO getUserInfo(String username) {
+        User user = userRepo.findByUsername(username);
+        if(user == null) {
+            throw new RequestDeniedException("No user with username:" + username);
+        } else {
+            return mapstructMapper.userToUpdateUserDTO(user);
+        }
+    }
+
+    @Override
+    public boolean updateUserInfo(UpdateUserDTO updatedUser) {
+        User user = userRepo.findByUsername(updatedUser.getUsername());
+        mapstructMapper.updateUserDTOToUser(updatedUser, user);
+        if(user == null) {
+            throw new RequestDeniedException("No user with username:" + updatedUser.getUsername());
+        } else {
+            userRepo.save(user);
+            return true;
+        }
+
     }
 }

@@ -1,7 +1,11 @@
-package hr.fer.progi.MyVinylCollection.rest;
+package hr.fer.progi.MyVinylCollection.rest.user;
 
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 import hr.fer.progi.MyVinylCollection.service.GenreService;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
@@ -12,14 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -89,4 +86,28 @@ public class UserController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @GetMapping("/info/{username}")
+    public UpdateUserDTO getUserInfo(@PathVariable("username") String username){
+        try{
+            return userService.getUserInfo(username);
+        }catch(RequestDeniedException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+    }
+
+    @PutMapping("/info/{username}")
+    public ResponseEntity<Object> updateUserInfo(@PathVariable("username") String username, @RequestBody UpdateUserDTO updatedUser) {
+        try {
+            if (userService.updateUserInfo(updatedUser)) {
+                return new ResponseEntity<Object>(username, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Object>(username, HttpStatus.EXPECTATION_FAILED);
+            }
+        } catch (RequestDeniedException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
 }

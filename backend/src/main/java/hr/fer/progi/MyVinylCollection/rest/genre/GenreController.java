@@ -1,4 +1,4 @@
-package hr.fer.progi.MyVinylCollection.rest;
+package hr.fer.progi.MyVinylCollection.rest.genre;
 
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;

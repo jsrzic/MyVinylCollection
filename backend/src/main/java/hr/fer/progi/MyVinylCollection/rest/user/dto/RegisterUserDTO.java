@@ -1,4 +1,4 @@
-package hr.fer.progi.MyVinylCollection.rest;
+package hr.fer.progi.MyVinylCollection.rest.user.dto;
 
 import java.util.List;
 import java.util.Set;

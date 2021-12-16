@@ -1,15 +1,10 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
-import hr.fer.progi.MyVinylCollection.rest.RegisterUserDTO;
-import org.springframework.util.Assert;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity(name="users")
 public class User {

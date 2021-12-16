@@ -2,11 +2,11 @@ package hr.fer.progi.MyVinylCollection.service;
 
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
-import hr.fer.progi.MyVinylCollection.rest.LoginUserDTO;
-import hr.fer.progi.MyVinylCollection.rest.RegisterUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -17,5 +17,7 @@ public interface UserService {
     boolean checkPassword(LoginUserDTO user);
     String getUserContactEmail(Long userId);
     boolean updateUserStatus(Long userId, boolean status);
+    UpdateUserDTO getUserInfo(String username);
+    boolean updateUserInfo(UpdateUserDTO updatedUser);
 
 }
