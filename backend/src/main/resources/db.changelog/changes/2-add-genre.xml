@@ -15,6 +15,6 @@
         <addAutoIncrement incrementBy="1" tableName="genre" columnName="id" columnDataType="int8" />
     </changeSet>
     <changeSet id="7" author="Marta">
-        <sqlFile path="db.changelog/changes/data.sql" />
+        <sqlFile path="db.changelog/changes/genre-data.sql" />
     </changeSet>
 </databaseChangeLog>
