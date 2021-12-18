@@ -14,6 +14,10 @@ public class Vinyl {
     @GeneratedValue
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     private String album;
 
     private int releaseYear;

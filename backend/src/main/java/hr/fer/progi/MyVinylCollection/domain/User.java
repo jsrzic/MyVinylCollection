@@ -36,6 +36,9 @@ public class User {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
+    @OneToOne(mappedBy = "user")
+    private Vinyl vinyl;
+
     public User() {
     }
 

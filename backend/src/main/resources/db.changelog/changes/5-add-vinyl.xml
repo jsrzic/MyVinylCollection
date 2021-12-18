@@ -4,9 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
-    <changeSet  id="9"  author="Marta">
+    <changeSet  id="10"  author="Marta">
         <createTable  tableName="vinyl">
-            <column  name="user_id"  type="int8">
+            <column  name="id"  type="int8">
                 <constraints  primaryKey="true"  nullable="false"/>
             </column>
             <column  name="album"  type="varchar(50)">
@@ -17,6 +17,9 @@
             </column>
             <column  name="name"  type="varchar(50)">
                 <constraints  nullable="false"/>
+            </column>
+            <column  name="user_id"  type="int8">
+                <constraints  validateForeignKey="true"  nullable="false"/>
             </column>
             <column  name="genre_id"  type="int8">
                 <constraints  validateForeignKey="true"  nullable="false"/>
