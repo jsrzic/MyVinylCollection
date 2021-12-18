@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet  id="9"  author="Marta">
+        <createTable  tableName="vinyl">
+            <column  name="user_id"  type="int8">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="album"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="release_year"  type="integer">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="name"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="genre_id"  type="int8">
+                <constraints  validateForeignKey="true"  nullable="false"/>
+            </column>
+            <column  name="subgenre_id"  type="int8">
+                <constraints  validateForeignKey="true"/>
+            </column>
+            <column  name="vinyl_image"  type="bytea">
+            <constraints  nullable="false"/>
+            </column>
+            <column  name="condition_evaluation"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="is_rare"  type="boolean">
+            </column>
+            <column  name="description"  type="varchar(250)">
+            </column>
+            <column  name="price_hrk"  type="double">
+            </column>
+            <column  name="rpm"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="capacity"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="reproduction_quality"  type="varchar(50)">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="nmb_of_audio_channels"  type="int">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="time_of_reproduction"  type="time">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
