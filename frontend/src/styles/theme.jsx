@@ -71,39 +71,39 @@ export const themeForms = createTheme({
       styleOverrides: {
         root: {
           color: "#e25c3b",
-        }
-      }
+        },
+      },
     },
     MuiStepper: {
       styleOverrides: {
         root: {
           width: "50%",
-          margin: "auto"
-        }
-      }
+          margin: "auto",
+        },
+      },
     },
     MuiFormHelperText: {
       styleOverrides: {
         root: {
           marginTop: 0,
           height: 0,
-        }
-      }
+        },
+      },
     },
     MuiFilledInput: {
       styleOverrides: {
         input: {
-          color: "black"
-        }
-      }
+          color: "black",
+        },
+      },
     },
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          color: "black"
-        }
-      }
-    }
+          color: "black",
+        },
+      },
+    },
   },
 });
 
@@ -113,7 +113,7 @@ export const themeLanding = createTheme({
       main: "rgb(0,0,0)",
     },
     secondary: {
-      main: "rgb(255, 255, 255)"
-    }
-  }
+      main: "rgb(255, 255, 255)",
+    },
+  },
 });

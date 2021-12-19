@@ -52,20 +52,30 @@ function SideNavBar() {
     display: "flex",
     justifyContent: "start",
     margin: "0.5rem",
-    borderRadius: "0.5rem",
+    marginRight: "0",
+    borderTopLeftRadius: "0.5rem",
+    borderBottomLeftRadius: "0.5rem",
   };
   const activeTabStyle = {
     display: "flex",
     justifyContent: "start",
     margin: "0.5rem",
+    marginRight: "0",
     fontWeight: "750",
-    borderRadius: "0.5rem",
+    borderTopLeftRadius: "0.5rem",
+    borderBottomLeftRadius: "0.5rem",
     fontSize: "17px",
     animation: "grow 0.15s",
     background: color,
   };
   const tabsStyle = { width: "15rem" };
-  const bottomNavStyle = { width: "100%", position: "absolute", bottom: 0, zoom: `${window.innerWidth/4}%`};
+  const bottomNavStyle = {
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+    zoom: `${window.innerWidth / 4}%`,
+    zIndex: 2,
+  };
 
   const history = useHistory();
 
@@ -82,17 +92,25 @@ function SideNavBar() {
         position: "relative",
       }}
     >
-      <Tabs orientation="vertical" style={tabsStyle}>
+      <Tabs
+        orientation="vertical"
+        style={tabsStyle}
+        value={
+          [...tabToPath.values()].indexOf(url) === -1
+            ? false
+            : [...tabToPath.values()].indexOf(url)
+        }
+      >
         <UserTab />
         <Divider />
         {tabs.map((tab, index) => (
           <Tab
             label={<p>{tabs[index]}</p>}
+            value={index}
             style={isActive(tabToPath.get(tab)) ? activeTabStyle : tabStyle}
             onClick={() => {
               setActive(tabToPath.get(tabs[index]));
               history.push(`/dashboard/${tabToPath.get(tabs[index])}`);
-              console.log(active);
             }}
             icon={tabsIcons[index]}
             iconPosition="start"
