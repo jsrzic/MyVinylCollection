@@ -70,9 +70,6 @@ export function getRandomColor() {
   const shade = shades[shadeIndex];
   const colorIndex = Math.round(Math.random() * (colors.length - 1));
   const color = colors[colorIndex];
-  console.log(
-    color[shade] + " INDEX: [" + colorIndex + "][" + shadeIndex + "]"
-  );
   return color[shade];
 }
 

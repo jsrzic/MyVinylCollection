@@ -4,10 +4,10 @@ import { Paper } from "@mui/material";
 
 import TopNavBar from "../components/TopNavBar";
 import SideNavBar from "../components/SideNavBar";
-import { IsMobile } from "../util/utils";
 
 const subScreenStyle = {
   display: "flex",
+  flexGrow: 1,
   marginTop: "4rem",
   height: "100%",
 };
@@ -26,7 +26,6 @@ function DashboardWrap({ children }) {
       style={{
         height: "100vh",
         overflow: "hidden",
-        position: "fixed"
       }}
     >
       <TopNavBar />

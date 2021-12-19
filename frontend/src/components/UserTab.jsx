@@ -14,11 +14,12 @@ const userContainerStyle = {
   alignItems: "center",
   cursor: "pointer",
 };
-const avatarStyle = { height: 56, width: 56 };
+const avatarStyle = { height: 56, width: 56, fontSize: 25 };
 const usernameStyle = { fontSize: "1.2rem", marginLeft: "1rem" };
 
 function UserTab() {
   const history = useHistory();
+  const username = localStorage.getItem("username");
 
   return (
     <div
@@ -26,9 +27,11 @@ function UserTab() {
       onClick={() => history.push("/dashboard/profile")}
     >
       <Avatar alt="user" sx={avatarStyle}>
-        U
+        {username.substring(0,1).toUpperCase()}
       </Avatar>
-      <h4 style={usernameStyle}>username</h4>
+      <h4 style={usernameStyle}>
+        {username}
+      </h4>
     </div>
   );
 }

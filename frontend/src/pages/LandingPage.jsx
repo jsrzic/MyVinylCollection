@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { Button } from "@mui/material";
-import ExploreIcon from '@mui/icons-material/Explore';
+import ExploreIcon from "@mui/icons-material/Explore";
 
 import "../index.css";
 import vinyl from "../assets/vinyl.png";
@@ -39,7 +39,7 @@ function LandingPage() {
     animation: "rotation 20s infinite linear",
     position: "relative",
     bottom: "-15%",
-    pointerEvents: "none"
+    pointerEvents: "none",
   };
 
   const titleStyle = {
@@ -53,9 +53,19 @@ function LandingPage() {
     <div style={{ ...pageStyle, ...homepageStyle }}>
       <div style={homepageHeaderStyle}>
         <h1 style={titleStyle}>My Vinyl Collection</h1>
-        <div style={IsMobile() ? {display: "flex", flexDirection: "column"} : {display: "flex"}}>
+        <div
+          style={
+            IsMobile()
+              ? { display: "flex", flexDirection: "column" }
+              : { display: "flex" }
+          }
+        >
           <div style={{ display: "flex", marginBottom: "0.5rem" }}>
-            <Button style={{marginRight: "0.3rem"}} onClick={() => history.push("/login")} variant="contained">
+            <Button
+              style={{ marginRight: "0.3rem" }}
+              onClick={() => history.push("/login")}
+              variant="contained"
+            >
               Login
             </Button>
             <Button onClick={() => history.push("/signup")} variant="outlined">
@@ -67,7 +77,11 @@ function LandingPage() {
             endIcon={<ExploreIcon />}
             variant="contained"
             color="secondary"
-            style={IsMobile() ? {marginBottom: "0.5rem"} : {marginBottom: "0.5rem", marginLeft: "0.3rem"}}
+            style={
+              IsMobile()
+                ? { marginBottom: "0.5rem" }
+                : { marginBottom: "0.5rem", marginLeft: "0.3rem" }
+            }
           >
             Explore
           </Button>

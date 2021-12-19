@@ -7,23 +7,27 @@ import { IsMobile } from "../util/utils";
 
 function HomePage() {
   const scrollContainerStyleDesktop = {
-      display: "flex",
-      flexWrap: "wrap",
-      maxHeight: "90vh",
-      overflowY: "scroll",
-      justifyContent: "space-between",
+    display: "flex",
+    flexWrap: "wrap",
+    maxHeight: "90vh",
+    overflowY: "scroll",
+    justifyContent: "space-between",
   };
 
   const scrollContainerStyleMobile = {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr 1fr",
-      width: "100%",
-      zoom: `${window.innerWidth/4}%`
-  }
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    width: "100%",
+    zoom: `${window.innerWidth / 4}%`,
+  };
 
   return (
     <Fade in>
-      <div style={IsMobile() ? scrollContainerStyleMobile : scrollContainerStyleDesktop}>
+      <div
+        style={
+          IsMobile() ? scrollContainerStyleMobile : scrollContainerStyleDesktop
+        }
+      >
         {/*mock*/}
         <VinylCard name="Euforija" forSale />
         <VinylCard name="Bohemian Rhapsody" forSale />

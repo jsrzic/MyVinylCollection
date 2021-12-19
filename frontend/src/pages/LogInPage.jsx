@@ -5,12 +5,12 @@ import { Formik } from "formik";
 import Button from "@mui/material/Button";
 
 import Form from "../components/Form";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function LogInPage() {
-    const api = process.env.REACT_APP_API_URL;
-    const history = useHistory();
-    const [errorMessage, setErrorMessage] = React.useState(false)
+  const api = process.env.REACT_APP_API_URL;
+  const history = useHistory();
+  const [errorMessage, setErrorMessage] = React.useState(false);
   const loginPageStyle = {
     display: "flex",
     justifyContent: "center",
@@ -20,8 +20,7 @@ function LogInPage() {
 
   const imageStyle = {
     position: "absolute",
-    bottom: "-4vh",
-    height: "110vh",
+    bottom: "-20%",
     animation: "floatUp 1s",
     zIndex: 0,
   };
@@ -36,8 +35,8 @@ function LogInPage() {
   const btnStyle = {
     width: "50%",
     margin: "auto",
-      marginTop: "1rem",
-      marginBottom: "1rem"
+    marginTop: "1rem",
+    marginBottom: "1rem",
   };
 
   return (
@@ -49,30 +48,35 @@ function LogInPage() {
           const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-              credentials: 'same-origin',
+            credentials: "same-origin",
+            withCredentials: true,
             body: JSON.stringify({ ...values }, null, 2),
           };
-          fetch(api+"/users/login", requestOptions)
+          fetch(api + "/users/login", requestOptions)
             .then((response) => {
-                if(response.ok) {
-                    console.log(response.json());
-                    history.push("/dashboard/homepage")
-                }else {
+              if (response.ok) {
+                localStorage.setItem("username", "");
+                response
+                  .json()
+                  .then((r) => localStorage.setItem("username", r.username));
+                history.push("/dashboard/homepage");
+              } else {
                 setErrorMessage(true);
-                }
+              }
             })
             .catch((err) => {
-                console.log(err);
+              console.log(err);
             });
-
         }}
       >
         {(formik) => {
           return (
             <Form style={formStyle}>
-                {errorMessage && (
-                    <p style={{color: "red", fontSize: "13.5px", margin:"auto"}}>Invalid username/password. Try again</p>
-                )}
+              {errorMessage && (
+                <p style={{ color: "red", fontSize: "13.5px", margin: "auto" }}>
+                  Invalid username/password. Try again
+                </p>
+              )}
               <Form.Row
                 label="Username"
                 type="text"
@@ -92,11 +96,16 @@ function LogInPage() {
               <Button onClick={formik.handleSubmit} style={btnStyle}>
                 Log in
               </Button>
-                <p style={{color: "white", margin: "auto"}}>Don't have an account?
-                    <span onClick={() => history.push("/signup")}
-                          style={{color: "rgb(226,92,59)", cursor: "pointer"}}> Create one now.
-                    </span>
-                </p>
+              <p style={{ color: "white", margin: "auto" }}>
+                Don't have an account?
+                <span
+                  onClick={() => history.push("/signup")}
+                  style={{ color: "rgb(226,92,59)", cursor: "pointer" }}
+                >
+                  {" "}
+                  Create one now.
+                </span>
+              </p>
             </Form>
           );
         }}
