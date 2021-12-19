@@ -29,6 +29,11 @@ public class UserServiceJpa implements UserService {
     }
 
     @Override
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username);
+    }
+
+    @Override
     public boolean checkUsernameUnique(RegisterUserDTO user) {
         return userRepo.countByUsername(user.getUsername()) == 0;
     }
