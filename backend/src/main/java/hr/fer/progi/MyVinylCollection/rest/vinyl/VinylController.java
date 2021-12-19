@@ -12,4 +12,6 @@ public class VinylController {
 
     @Autowired
     private VinylService vinylService;
+
+    
 }

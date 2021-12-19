@@ -32,4 +32,7 @@
             <column name="location" type="varchar(50)"/>
         </addColumn>
     </changeSet>
+    <changeSet id="13" author="Marta">
+        <modifyDataType tableName="vinyl_user" columnName="password" newDataType="varchar(250)"/>
+    </changeSet>
 </databaseChangeLog>

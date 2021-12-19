@@ -10,6 +10,7 @@ import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class UserServiceJpa implements UserService {
 
     @Autowired
     private MapStructMapper mapstructMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> listAll() {
@@ -40,6 +44,7 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public User registerUser(RegisterUserDTO user, List<Genre> userGenrePreference) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(new User(user, userGenrePreference));
     }
 
@@ -53,7 +58,7 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public boolean checkPassword(LoginUserDTO user) {
-        return userRepo.findByUsername(user.getUsername()).getPassword().equals(user.getPassword());
+        return passwordEncoder.matches(user.getPassword(), userRepo.findByUsername(user.getUsername()).getPassword());
     }
 
     @Override

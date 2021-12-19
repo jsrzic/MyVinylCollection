@@ -39,6 +39,8 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Vinyl> vinyls;
 
+    public User() {}
+
     public User(RegisterUserDTO user, List<Genre> userGenrePreference) {
         this.name = user.getName();
         this.surname = user.getSurname();
