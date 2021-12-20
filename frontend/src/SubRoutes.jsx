@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import DashboardWrap from "./pages/DashboardWrap";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
+import CollectionPage from "./pages/CollectionPage";
 
 function SubRoutes() {
   return (
@@ -19,7 +20,7 @@ function SubRoutes() {
       </Route>
       <Route path="/dashboard/collection">
         <DashboardWrap>
-          <h1>collection</h1>
+          <CollectionPage />
         </DashboardWrap>
       </Route>
       <Route path="/dashboard/ads">

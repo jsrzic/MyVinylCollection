@@ -8,7 +8,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import VinylComponent from "./VinylComponent";
 import { getRandomColor, IsMobile } from "../util/utils";
 
-function VinylCard({ name, ad, forSale }) {
+function VinylCard({ vinylData }) {
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
 
@@ -35,7 +35,7 @@ function VinylCard({ name, ad, forSale }) {
 
   return (
     <Card style={cardStyle}>
-      {forSale && (
+      {vinylData.forSale && (
         <div style={saleHeaderStyle}>
           <IconButton size="small" disabled style={{ background: "green" }}>
             <AttachMoneyIcon />
@@ -43,8 +43,8 @@ function VinylCard({ name, ad, forSale }) {
           <FavoriteBorderIcon />
         </div>
       )}
-      <VinylComponent size={vinylDimension} name={name} />
-      {ad && (
+      <VinylComponent size={vinylDimension} name={vinylData.name} />
+      {vinylData.ad && (
         <Chip variant="filled" label="kupljen" style={{ marginTop: "1rem" }} />
       )}
     </Card>

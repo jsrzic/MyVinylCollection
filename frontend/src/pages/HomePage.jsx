@@ -1,51 +1,27 @@
 import React from "react";
 
-import { Fade } from "@mui/material";
-
-import VinylCard from "../components/VinylCard";
-import { IsMobile } from "../util/utils";
+import VinylCollection from "../components/VinylCollection";
 
 function HomePage() {
-  const scrollContainerStyleDesktop = {
-    display: "flex",
-    flexWrap: "wrap",
-    maxHeight: "90vh",
-    overflowY: "scroll",
-    justifyContent: "space-between",
-  };
 
-  const scrollContainerStyleMobile = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
-    width: "100%",
-    zoom: `${window.innerWidth / 4}%`,
-  };
-
+  const mockData = [
+    {name: "Bohemian Rhapsody", forSale: true, ad: true},
+    {name: "Tražena si roba u gradu", forSale: true, ad: false},
+    {name: "Mesečar", forSale: false, ad: true},
+    {name: "Vraćam se majci u Bosnu", forSale: false, ad: false},
+    {name: "Instant crush", forSale: false, ad: false},
+    {name: "Don't cry", forSale: false, ad: false},
+    {name: "Three little birds", forSale: true, ad: false},
+    {name: "Without me", forSale: false, ad: true},
+    {name: "Đuskanje ne pomaže", forSale: false, ad: false},
+    {name: "Highlife", forSale: true, ad: true},
+    {name: "Namazan U Kocki", forSale: false, ad: false},
+    {name: "Lemonade", forSale: true, ad: false},
+    {name: "Džin i limunada", forSale: false, ad: true},
+    {name: "Run to the hills", forSale: false, ad: true},
+  ]
   return (
-    <Fade in>
-      <div
-        style={
-          IsMobile() ? scrollContainerStyleMobile : scrollContainerStyleDesktop
-        }
-      >
-        {/*mock*/}
-        <VinylCard name="Euforija" forSale />
-        <VinylCard name="Bohemian Rhapsody" forSale />
-        <VinylCard name="Dugo neko ime" ad />
-        <VinylCard name="Ime" forSale />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime ime" ad />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-        <VinylCard name="Ime" />
-      </div>
-    </Fade>
+    <VinylCollection data={mockData}/>
   );
 }
 
