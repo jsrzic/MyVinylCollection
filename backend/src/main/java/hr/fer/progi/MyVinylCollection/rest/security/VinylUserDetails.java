@@ -1,4 +1,4 @@
-package hr.fer.progi.MyVinylCollection.rest;
+package hr.fer.progi.MyVinylCollection.rest.security;
 
 import hr.fer.progi.MyVinylCollection.domain.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,11 +9,11 @@ import java.util.Collection;
 import static org.springframework.security.core.authority.AuthorityUtils.NO_AUTHORITIES;
 import static org.springframework.security.core.authority.AuthorityUtils.commaSeparatedStringToAuthorityList;
 
-public class VinylUserPrincipal implements UserDetails {
+public class VinylUserDetails implements UserDetails {
 
     private final User user;
 
-    public VinylUserPrincipal(User user) {
+    public VinylUserDetails(User user) {
         this.user = user;
     }
 
@@ -57,6 +57,6 @@ public class VinylUserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getIsActive();
+        return user.isActive();
     }
 }

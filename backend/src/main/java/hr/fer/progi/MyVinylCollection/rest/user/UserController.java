@@ -3,6 +3,8 @@ package hr.fer.progi.MyVinylCollection.rest.user;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
+import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
+import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetailsService;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
@@ -27,6 +29,9 @@ public class UserController {
 
     @Autowired
     private GenreService genreService;
+
+    @Autowired
+    private VinylUserDetailsService userDetailsService;
 
     @GetMapping("")
     public List<User> listUsers() {
@@ -58,6 +63,7 @@ public class UserController {
     public ResponseEntity<Object> loginUser(@RequestBody LoginUserDTO user, HttpServletResponse response) {
         response.addCookie(createCookie(user.getUsername()));
         if (userService.checkUsernameExists(user) && userService.checkPassword(user)) {
+            userDetailsService.loadUserByUsername(user.getUsername());
             return new ResponseEntity<Object>(user, HttpStatus.OK);
         } else {
             throw new IllegalArgumentException("Invalid username/password.");

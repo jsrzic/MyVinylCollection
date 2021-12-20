@@ -125,11 +125,19 @@ public class User {
         this.location = location;
     }
 
-    public boolean getIsActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<Vinyl> getVinyls() {
+        return vinyls;
+    }
+
+    public void setVinyls(List<Vinyl> vinyls) {
+        this.vinyls = vinyls;
     }
 }

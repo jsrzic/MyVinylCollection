@@ -1,4 +1,4 @@
-package hr.fer.progi.MyVinylCollection.rest;
+package hr.fer.progi.MyVinylCollection.rest.security;
 
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.service.UserService;
@@ -21,7 +21,7 @@ public class VinylUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
-        return new VinylUserPrincipal(user);
+        return new VinylUserDetails(user);
     }
 
 

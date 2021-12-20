@@ -75,7 +75,7 @@ public class UserServiceJpa implements UserService {
         if(userRepo.findById(userId).isEmpty())
             throw new RequestDeniedException("No user with id:" + userId);
 
-        if(userRepo.updateUserStatus(userId, status).getIsActive() == status)
+        if(userRepo.updateUserStatus(userId, status).isActive() == status)
                 return true;
         return false;
     }

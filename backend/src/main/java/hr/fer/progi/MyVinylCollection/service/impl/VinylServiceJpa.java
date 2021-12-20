@@ -1,6 +1,7 @@
 package hr.fer.progi.MyVinylCollection.service.impl;
 
 import hr.fer.progi.MyVinylCollection.dao.VinylRepository;
+import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,9 @@ public class VinylServiceJpa implements VinylService {
 
 
     @Override
-    public Vinyl createVinyl(Vinyl vinyl) {
-        return null;
+    public Vinyl addVinyl(Vinyl vinyl, User user) {
+        user.getVinyls().add(vinyl);
+        return vinylRepo.save(vinyl);
     }
 
     @Override
