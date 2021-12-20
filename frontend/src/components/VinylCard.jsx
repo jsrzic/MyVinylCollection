@@ -16,7 +16,7 @@ function VinylCard({ vinylData }) {
     background: getRandomColor(),
     width: cardDimension,
     minHeight: cardDimension,
-    height: "fit-content",
+    height: "12rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -24,13 +24,17 @@ function VinylCard({ vinylData }) {
     flexDirection: "column",
     paddingTop: "1rem",
     paddingBottom: "1rem",
+    position: "relative",
+    justifySelf: "center"
   };
   const saleHeaderStyle = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     width: "90%",
-    marginTop: "-1.5rem",
+    marginTop: "-1rem",
+    position:"absolute",
+    top: "1.3rem"
   };
 
   return (

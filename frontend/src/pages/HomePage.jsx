@@ -1,6 +1,7 @@
 import React from "react";
 
 import VinylCollection from "../components/VinylCollection";
+import {getRandomColor, IsMobile} from "../util/utils";
 
 function HomePage() {
 
@@ -20,6 +21,8 @@ function HomePage() {
     {name: "Džin i limunada", forSale: false, ad: true},
     {name: "Run to the hills", forSale: false, ad: true},
   ]
+
+
   return (
     <VinylCollection data={mockData}/>
   );

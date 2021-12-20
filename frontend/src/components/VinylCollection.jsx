@@ -5,11 +5,12 @@ import {Fade} from "@mui/material";
 
 function VinylCollection({data, initialCard}) {
   const scrollContainerStyleDesktop = {
-    display: "flex",
-    flexWrap: "wrap",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+    justifyContent: "space-between",
     maxHeight: "90vh",
     overflowY: "scroll",
-    justifyContent: "space-between",
+    width: "100%",
   };
 
   const scrollContainerStyleMobile = {
@@ -25,6 +26,7 @@ function VinylCollection({data, initialCard}) {
         IsMobile() ? scrollContainerStyleMobile : scrollContainerStyleDesktop
       }
     >
+      {initialCard}
       {data.map((v) => (
         <VinylCard vinylData={v} />
       ))}
