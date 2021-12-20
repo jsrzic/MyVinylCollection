@@ -53,4 +53,5 @@
             </column>
         </createTable>
     </changeSet>
+
 </databaseChangeLog>

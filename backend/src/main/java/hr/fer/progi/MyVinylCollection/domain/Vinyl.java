@@ -16,6 +16,10 @@ public class Vinyl {
 
     private String album;
 
+    @ManyToOne
+    @JoinColumn(name="artist_id", nullable=false)
+    private Artist artist;
+
     private int releaseYear;
 
     @ManyToOne
@@ -62,13 +66,20 @@ public class Vinyl {
         this.id = id;
     }
 
-
     public String getAlbum() {
         return album;
     }
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 
     public int getReleaseYear() {
