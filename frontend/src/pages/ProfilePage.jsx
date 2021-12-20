@@ -25,6 +25,7 @@ const containerStyle = {
 
 function ProfilePage() {
   const api = process.env.REACT_APP_API_URL;
+  const origin = process.env.REACT_APP_URL;
   const mobile = IsMobile();
   const [username, setUsername] = React.useState(
     localStorage.getItem("username")
@@ -44,7 +45,7 @@ function ProfilePage() {
     fetch(api + `/users/info/${username}`, {
       method: "GET",
       headers: {
-        Origin: "http://localhost:3000",
+        Origin: origin,
       },
     }).then((response) => {
       response.json().then((result) => setData(result));
