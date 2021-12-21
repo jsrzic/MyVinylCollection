@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2ace089e-6712-444f-92bf-1c6deabcf31f" name="Changes" comment="fix responsiveness when zooming in or out">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/UserTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserTab.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/ProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ProfilePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopNavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNavBar.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +45,11 @@
       <envs />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
