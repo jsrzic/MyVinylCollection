@@ -14,7 +14,7 @@
         </createTable>
         <addAutoIncrement incrementBy="1" tableName="genre" columnName="id" columnDataType="int8" />
     </changeSet>
-    <changeSet id="7" author="Marta">
+    <changeSet id="18" author="Marta">
         <sqlFile path="db.changelog/changes/genre-data.sql" />
     </changeSet>
 </databaseChangeLog>

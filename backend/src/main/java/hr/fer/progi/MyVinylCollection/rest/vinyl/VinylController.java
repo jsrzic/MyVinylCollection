@@ -1,19 +1,17 @@
 package hr.fer.progi.MyVinylCollection.rest.vinyl;
 
 
-import hr.fer.progi.MyVinylCollection.domain.Genre;
-import hr.fer.progi.MyVinylCollection.domain.User;
-import hr.fer.progi.MyVinylCollection.domain.Vinyl;
+import hr.fer.progi.MyVinylCollection.domain.*;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
+import hr.fer.progi.MyVinylCollection.service.ArtistService;
+import hr.fer.progi.MyVinylCollection.service.GenreService;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -28,11 +26,19 @@ public class VinylController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("")
-    public Vinyl addVinyl(@RequestBody Vinyl vinyl,
-                             @AuthenticationPrincipal VinylUserDetails userDetails) {
-        System.out.println(userDetails.getUsername());
-        User user = userService.findByUsername(userDetails.getUsername());
+    @Autowired
+    private ArtistService artistService;
+
+    @Autowired
+    private GenreService genreService;
+
+    @PostMapping("/{username}")
+    public Vinyl addVinyl(@PathVariable("username") String username, @RequestBody AddVinylDTO vinylDto) {
+        User user = userService.findByUsername(username);
+        Artist artist = artistService.getArtistById(vinylDto.getArtistId());
+        Genre genre = genreService.getGenreById(vinylDto.getGenreId());
+        Subgenre subgenre = genreService.getSubgenreByName(vinylDto.getSubgenreName());
+        Vinyl vinyl = new Vinyl(vinylDto,artist, genre, subgenre);
         return vinylService.addVinyl(vinyl, user);
     }
 }

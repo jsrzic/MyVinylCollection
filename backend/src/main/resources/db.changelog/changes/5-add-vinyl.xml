@@ -53,5 +53,7 @@
             </column>
         </createTable>
     </changeSet>
-
+    <changeSet id="15"  author="Marta">
+        <dropColumn tableName="vinyl" columnName="vinyl_image"/>
+    </changeSet>
 </databaseChangeLog>

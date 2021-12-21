@@ -11,9 +11,6 @@ public class Genre {
 
     private String name;
 
-    @OneToMany(mappedBy="genre", cascade=CascadeType.ALL)
-    private Set<Subgenre> subgenres;
-
     public Long getId() {
         return id;
     }
@@ -30,11 +27,4 @@ public class Genre {
         this.name = name;
     }
 
-    public Set<Subgenre> getSubgenres() {
-        return subgenres;
-    }
-
-    public void setSubgenres(Set<Subgenre> subgenres) {
-        this.subgenres = subgenres;
-    }
 }

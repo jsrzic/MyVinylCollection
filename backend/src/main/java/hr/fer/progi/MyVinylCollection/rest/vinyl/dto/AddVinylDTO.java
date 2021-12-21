@@ -1,37 +1,18 @@
-package hr.fer.progi.MyVinylCollection.domain;
+package hr.fer.progi.MyVinylCollection.rest.vinyl.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
-
-import javax.persistence.*;;
 import java.time.LocalTime;
-import java.util.Optional;
 
-
-import static hr.fer.progi.MyVinylCollection.util.CurrencyUtil.convertToEuro;
-
-@Entity(name="vinyl")
-public class Vinyl {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class AddVinylDTO {
 
     private String album;
 
-    @ManyToOne
-    @JoinColumn(name="artist_id", nullable=false)
-    private Artist artist;
+    private Long artistId;
 
     private int releaseYear;
 
-    @ManyToOne
-    @JoinColumn(name="genre_id", nullable=false)
-    private Genre genre;
+    private Long genreId;
 
-    @ManyToOne
-    @JoinColumn(name="subgenre_id")
-    private Subgenre subgenre;
+    private String subgenreName;
 
     private int conditionEvaluation;
 
@@ -51,43 +32,7 @@ public class Vinyl {
 
     private int nmbOfAudioChannels;
 
-    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime timeOfReproduction;
-
-    public Vinyl() {
-
-    }
-
-    public Vinyl(AddVinylDTO dto, Artist artist, Genre genre, Subgenre subgenre) {
-        this.album = dto.getAlbum();
-        this.artist = artist;
-        this.releaseYear = dto.getReleaseYear();
-        this.genre = genre;
-        this.subgenre = subgenre;
-        this.priceKn = dto.getPriceKn();
-        this.capacity = dto.getCapacity();
-        this.conditionEvaluation = dto.getConditionEvaluation();
-        this.description = dto.getDescription();
-        this.diameter = dto.getDiameter();
-        this.isRare = dto.isRare();
-        this.nmbOfAudioChannels = dto.getNmbOfAudioChannels();
-        this.reproductionQuality = dto.getReproductionQuality();
-        this.RPM = dto.getRPM();
-        this.timeOfReproduction = dto.getTimeOfReproduction();
-    }
-
-
-    private String getPrice() {
-        return new StringBuilder().append(priceKn).append(" HRK").append("(").append(convertToEuro(priceKn)).append(" EUR").append(")").toString();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getAlbum() {
         return album;
@@ -97,12 +42,12 @@ public class Vinyl {
         this.album = album;
     }
 
-    public Artist getArtist() {
-        return artist;
+    public Long getArtistId() {
+        return artistId;
     }
 
-    public void setArtist(Artist artist) {
-        this.artist = artist;
+    public void setArtistId(Long artistId) {
+        this.artistId = artistId;
     }
 
     public int getReleaseYear() {
@@ -113,20 +58,12 @@ public class Vinyl {
         this.releaseYear = releaseYear;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public Long getGenreId() {
+        return genreId;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-
-    public Subgenre getSubgenre() {
-        return subgenre;
-    }
-
-    public void setSubgenre(Subgenre subgenre) {
-        this.subgenre = subgenre;
+    public void setGenreId(Long genreId) {
+        this.genreId = genreId;
     }
 
     public int getConditionEvaluation() {
@@ -208,4 +145,13 @@ public class Vinyl {
     public void setTimeOfReproduction(LocalTime timeOfReproduction) {
         this.timeOfReproduction = timeOfReproduction;
     }
+
+    public String getSubgenreName() {
+        return subgenreName;
+    }
+
+    public void setSubgenreName(String subgenreName) {
+        this.subgenreName = subgenreName;
+    }
+
 }
