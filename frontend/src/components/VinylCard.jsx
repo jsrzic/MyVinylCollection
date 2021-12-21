@@ -39,18 +39,10 @@ function VinylCard({ vinylData }) {
 
   return (
     <Card style={cardStyle}>
-      {vinylData.forSale && (
-        <div style={saleHeaderStyle}>
-          <IconButton size="small" disabled style={{ background: "green" }}>
-            <AttachMoneyIcon />
-          </IconButton>
-          <FavoriteBorderIcon />
-        </div>
-      )}
+      <div style={saleHeaderStyle}>
+        <FavoriteBorderIcon />
+      </div>
       <VinylComponent size={vinylDimension} name={vinylData.name} />
-      {vinylData.ad && (
-        <Chip variant="filled" label="kupljen" style={{ marginTop: "1rem" }} />
-      )}
     </Card>
   );
 }
