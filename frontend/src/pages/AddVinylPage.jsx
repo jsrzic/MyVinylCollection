@@ -13,7 +13,7 @@ function AddVinylPage() {
   const history = useHistory();
   const [errorMessage, setErrorMessage] = React.useState(false);
   const [artists, setArtists] = React.useState();
-  const [genres, setGenres] = React.useState([]);
+  const [genre, setGenre] = React.useState("");
 
   const formStyle = {
     margin: "auto",
@@ -47,7 +47,7 @@ function AddVinylPage() {
       .then((response) => response.json())
       .then((data) => {
         data = data.map((g) => g["name"]);
-        setGenres(data);
+        setGenre(data);
       });
   }, []);
 
@@ -60,10 +60,12 @@ function AddVinylPage() {
       }
     >
       <Formik
-        initialValues={{album: "", artist: "", releaseYear: "", genre: [], subgenre: "", conditionEvaluation: "",
+        initialValues={{album: "", artistId: "", releaseYear: "", genre: "", subgenre: "", conditionEvaluation: "",
         isRare: "No", description: "", priceKn: "", RPM: "", diameter: "", capacity: "", reproductionQuality: "",
         nmbOfAudioChannels: "", timeOfReproduction: ""}}
-        onSubmit={(values) => console.log(JSON.stringify(values))}>
+        onSubmit={(values) => {
+          values.artistId = artists.indexOf(values.artistId);
+        }}>
 
         {
           (formik) => {
@@ -90,8 +92,8 @@ function AddVinylPage() {
                 <Form.Row
                   label="Artist"
                   type="text"
-                  value={formik.values.artist}
-                  name="artist"
+                  value={formik.values.artistId}
+                  name="artistId"
                   onChange={formik.handleChange}
                   required
                 />
@@ -105,28 +107,12 @@ function AddVinylPage() {
                 />
 
                 <Autocomplete
-                  sx={{marginTop: "1rem", marginBottom: "1rem", marginLeft: "0.5rem"}}
-                  multiple
-                  id="checkboxes-tags-demo"
-                  options={genres}
+                  disablePortal
+                  id="combo-box-demo"
+                  options={genre}
                   onChange={(e, value) => formik.setFieldValue("genre", value)}
-                  disableCloseOnSelect
-                  getOptionLabel={((option) => option)}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option}
-                    </li>
-                  )}
-                  style={{ width: 500 }}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Genres" placeholder="" />
-                  )}
+                  sx={{marginTop: "1rem", marginBottom: "1rem", marginLeft: "0.5rem"}}
+                  renderInput={(params) => <TextField {...params} label="Genre" />}
                 />
 
                 <Form.Row
