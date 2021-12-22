@@ -56,4 +56,7 @@
     <changeSet id="15"  author="Marta">
         <dropColumn tableName="vinyl" columnName="vinyl_image"/>
     </changeSet>
+    <changeSet id="20"  author="Marta">
+        <dropColumn tableName="vinyl" columnName="name"/>
+    </changeSet>
 </databaseChangeLog>
