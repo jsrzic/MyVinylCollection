@@ -8,4 +8,6 @@
     <include file="changes/2-add-genre.xml" relativeToChangelogFile="true"/>
     <include file="changes/3-add-subgenre.xml" relativeToChangelogFile="true"/>
     <include file="changes/4-add-user_preferred_genre.xml" relativeToChangelogFile="true"/>
+    <include file="changes/5-add-vinyl.xml" relativeToChangelogFile="true"/>
+    <include file="changes/6-add-artist.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

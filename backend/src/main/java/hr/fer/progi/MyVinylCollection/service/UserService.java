@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface UserService {
 
     List<User> listAll();
+    User findByUsername(String username);
     boolean checkUsernameUnique(RegisterUserDTO user);
     User registerUser(RegisterUserDTO user, List<Genre> userGenrePreference);
     boolean checkUsernameExists(LoginUserDTO user);

@@ -1,12 +1,14 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Entity(name="genre")
-public class Genre {
+@Entity(name="artist")
+public class Artist {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String name;
@@ -26,5 +28,8 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
+
+
+
 
 }

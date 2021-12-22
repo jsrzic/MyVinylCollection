@@ -36,8 +36,10 @@ public class User {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
-    public User() {
-    }
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Vinyl> vinyls;
+
+    public User() {}
 
     public User(RegisterUserDTO user, List<Genre> userGenrePreference) {
         this.name = user.getName();
@@ -123,11 +125,19 @@ public class User {
         this.location = location;
     }
 
-    public boolean getIsActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<Vinyl> getVinyls() {
+        return vinyls;
+    }
+
+    public void setVinyls(List<Vinyl> vinyls) {
+        this.vinyls = vinyls;
     }
 }
