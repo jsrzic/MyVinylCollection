@@ -35,6 +35,12 @@ public class VinylController {
     @Autowired
     private GenreService genreService;
 
+    @GetMapping("/{username}")
+    public List<Vinyl> getVinylCollection(@PathVariable("username") String username) {
+        User user = userService.findByUsername(username);
+        return user.getVinyls();
+    }
+
     @PostMapping("/{username}")
     public Vinyl addVinyl(@PathVariable("username") String username, @RequestBody AddVinylDTO vinylDto) {
         User user = userService.findByUsername(username);
