@@ -20,7 +20,7 @@ const usernameStyle = { fontSize: "1.2rem", marginLeft: "1rem" };
 function UserTab() {
   const history = useHistory();
   const username = localStorage.getItem("username");
-
+if(username!=null) {
   return (
     <div
       style={userContainerStyle}
@@ -34,6 +34,21 @@ function UserTab() {
       </h4>
     </div>
   );
+  } else {
+  return(
+  <div
+        style={userContainerStyle}
+      >
+        <Avatar alt="user" sx={avatarStyle}>
+          G
+        </Avatar>
+        <h4 style={usernameStyle}>
+          Guest
+        </h4>
+      </div>
+  )
+
+  }
 }
 
 export default UserTab;
