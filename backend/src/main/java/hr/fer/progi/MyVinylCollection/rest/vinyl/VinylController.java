@@ -7,9 +7,12 @@ import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
 import hr.fer.progi.MyVinylCollection.service.ArtistService;
 import hr.fer.progi.MyVinylCollection.service.GenreService;
+import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +43,24 @@ public class VinylController {
         Subgenre subgenre = genreService.getSubgenreByName(vinylDto.getSubgenreName());
         Vinyl vinyl = new Vinyl(vinylDto,artist, genre, subgenre);
         return vinylService.addVinyl(vinyl, user);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> deleteVinyl(@PathVariable Long id){
+        if(vinylService.deleteVinyl(id)){
+            return new ResponseEntity<Object>(id, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateVinylInfo(@PathVariable Long id,
+                                              @RequestBody UpdateVinylDTO updatedVinyl){
+        if(vinylService.updateVinylInfo(id, updatedVinyl)){
+            return new ResponseEntity<Object>(id, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
+        }
     }
 }
