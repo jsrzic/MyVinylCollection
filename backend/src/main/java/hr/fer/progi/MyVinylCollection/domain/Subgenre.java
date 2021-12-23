@@ -1,5 +1,7 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity(name="subgenre")
@@ -13,6 +15,7 @@ public class Subgenre {
 
     @ManyToOne
     @JoinColumn(name="parent_genre_id", nullable=false)
+    @JsonBackReference
     private Genre genre;
 
     public String getName() {

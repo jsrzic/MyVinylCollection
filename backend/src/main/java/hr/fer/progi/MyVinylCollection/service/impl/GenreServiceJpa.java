@@ -9,7 +9,6 @@ import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -40,13 +39,9 @@ public class GenreServiceJpa implements GenreService {
     }
 
     @Override
-    public List<Subgenre> listSubgenres(Long genreId) {
-        return subgenreRepo.findByGenre(getGenresById(Collections.singletonList(genreId)).get(0));
-    }
-
-    @Override
-    public Subgenre getSubgenreByName(String name) {
-        return subgenreRepo.findByName(name);
+    public Subgenre getSubgenreById(Long id) {
+        return subgenreRepo.findById(id).orElseThrow(
+                () -> new RequestDeniedException("No subgenre with id " + id));
     }
 
 }

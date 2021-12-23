@@ -33,6 +33,9 @@ public class Vinyl {
     @JoinColumn(name="subgenre_id")
     private Subgenre subgenre;
 
+    @ManyToOne
+    private User owner;
+
     private int conditionEvaluation;
 
     private boolean isRare;
@@ -208,4 +211,5 @@ public class Vinyl {
     public void setTimeOfReproduction(LocalTime timeOfReproduction) {
         this.timeOfReproduction = timeOfReproduction;
     }
+
 }

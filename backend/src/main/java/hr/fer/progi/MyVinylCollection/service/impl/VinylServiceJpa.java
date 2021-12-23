@@ -40,6 +40,8 @@ public class VinylServiceJpa implements VinylService {
 
     @Override
     public boolean deleteVinyl(long vinylId) {
+        Vinyl vinyl = vinylRepo.getById(vinylId);
+        vinyl.getOwner().getVinyls().remove(vinyl);
         vinylRepo.deleteById(vinylId);
         if(!vinylRepo.findById(vinylId).isPresent())
             return true;

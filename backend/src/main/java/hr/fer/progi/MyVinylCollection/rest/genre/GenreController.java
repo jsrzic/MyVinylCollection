@@ -24,8 +24,5 @@ public class GenreController {
         return genreService.getGenresById(genreIds);
     }
 
-    @GetMapping("/{id}/subgenres")
-    public List<Subgenre> listSubgenres(@PathVariable("id") Long genreId) { return genreService.listSubgenres(genreId);}
-
 
 }

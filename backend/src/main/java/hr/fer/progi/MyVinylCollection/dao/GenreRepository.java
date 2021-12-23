@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface GenreRepository extends JpaRepository<Genre, Long> {
 
     List<Genre> findByIdIn(List<Long> id);
-    Optional<Genre> findById(Long id);
 }

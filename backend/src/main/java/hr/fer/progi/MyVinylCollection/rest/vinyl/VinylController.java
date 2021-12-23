@@ -46,8 +46,8 @@ public class VinylController {
         User user = userService.findByUsername(username);
         Artist artist = artistService.getArtistById(vinylDto.getArtistId());
         Genre genre = genreService.getGenreById(vinylDto.getGenreId());
-        Subgenre subgenre = genreService.getSubgenreByName(vinylDto.getSubgenreName());
-        Vinyl vinyl = new Vinyl(vinylDto,artist, genre, subgenre);
+        Subgenre subgenre = genreService.getSubgenreById(vinylDto.getSubgenreId());
+        Vinyl vinyl = new Vinyl(vinylDto, artist, genre, subgenre);
         return vinylService.addVinyl(vinyl, user);
     }
 

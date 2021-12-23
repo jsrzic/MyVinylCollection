@@ -12,7 +12,7 @@ public class AddVinylDTO {
 
     private Long genreId;
 
-    private String subgenreName;
+    private Long subgenreId;
 
     private int conditionEvaluation;
 
@@ -146,12 +146,11 @@ public class AddVinylDTO {
         this.timeOfReproduction = timeOfReproduction;
     }
 
-    public String getSubgenreName() {
-        return subgenreName;
+    public Long getSubgenreId() {
+        return subgenreId;
     }
 
-    public void setSubgenreName(String subgenreName) {
-        this.subgenreName = subgenreName;
+    public void setSubgenreId(Long subgenreId) {
+        this.subgenreId = subgenreId;
     }
-
 }
