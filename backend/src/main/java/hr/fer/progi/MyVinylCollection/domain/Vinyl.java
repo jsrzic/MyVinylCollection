@@ -35,7 +35,6 @@ public class Vinyl {
     private Subgenre subgenre;
 
     @ManyToOne
-    @JoinColumn(name="owner_id")
     @JsonBackReference
     private User owner;
 

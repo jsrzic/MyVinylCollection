@@ -37,7 +37,7 @@ public class User {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Vinyl> vinyls;
 

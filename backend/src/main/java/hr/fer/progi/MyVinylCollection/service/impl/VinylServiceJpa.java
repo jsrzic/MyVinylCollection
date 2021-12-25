@@ -41,6 +41,10 @@ public class VinylServiceJpa implements VinylService {
 
     @Override
     public boolean deleteVinyl(long vinylId) {
+        User owner = vinylRepo.findById(vinylId).orElseThrow(
+                () -> new RequestDeniedException("No vinyl with id " + vinylId)
+        ).getOwner();
+        owner.getVinyls().remove(vinylRepo.getById(vinylId));
         vinylRepo.deleteById(vinylId);
         if(!vinylRepo.findById(vinylId).isPresent())
             return true;
