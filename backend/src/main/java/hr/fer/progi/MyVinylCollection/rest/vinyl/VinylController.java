@@ -14,7 +14,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/vinyls")
@@ -32,7 +34,7 @@ public class VinylController {
     @Autowired
     private GenreService genreService;
 
-    @GetMapping("/collection/{username}")
+    @GetMapping("/{username}/collection")
     public List<Vinyl> getVinylCollection(@PathVariable("username") String username) {
         User user = userService.findByUsername(username);
         return user.getVinyls();
@@ -41,7 +43,7 @@ public class VinylController {
     @PostMapping("/{username}")
     public Vinyl addVinyl(@PathVariable("username") String username, @RequestBody AddVinylDTO vinylDto) {
         User user = userService.findByUsername(username);
-        Artist artist = artistService.getArtistById(vinylDto.getArtistId());
+        Artist artist = artistService.findById(vinylDto.getArtistId());
         Genre genre = genreService.getGenreById(vinylDto.getGenreId());
         Subgenre subgenre = genreService.getSubgenreById(vinylDto.getSubgenreId());
         Vinyl vinyl = new Vinyl(vinylDto, artist, genre, subgenre);
@@ -49,30 +51,55 @@ public class VinylController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteVinyl(@PathVariable Long id){
-        if(vinylService.deleteVinyl(id)){
-            return new ResponseEntity<Object>(id, HttpStatus.OK);
+    public ResponseEntity<Object> deleteVinyl(@PathVariable Long vinylId){
+        if(vinylService.deleteVinyl(vinylId)){
+            return new ResponseEntity<Object>(vinylId, HttpStatus.OK);
         }else{
-            return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<Object>(vinylId, HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @GetMapping("/{id}")
-    public UpdateVinylDTO getVinylInfo(@PathVariable Long id){
+    public UpdateVinylDTO getVinylInfo(@PathVariable Long vinylId){
         try{
-            return vinylService.getVinylInfo(id);
+            return vinylService.getVinylInfo(vinylId);
         }catch(RequestDeniedException e){
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateVinylInfo(@PathVariable Long id,
+    public ResponseEntity<Object> updateVinylInfo(@PathVariable Long vinylId,
                                               @RequestBody UpdateVinylDTO updatedVinyl){
-        if(vinylService.updateVinylInfo(id, updatedVinyl)){
-            return new ResponseEntity<Object>(id, HttpStatus.OK);
+        if(vinylService.updateVinylInfo(vinylId, updatedVinyl)){
+            return new ResponseEntity<Object>(vinylId, HttpStatus.OK);
         }else{
-            return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<Object>(vinylId, HttpStatus.EXPECTATION_FAILED);
         }
     }
+
+    @PutMapping("/{username}/subcollection/{id}")
+    public ResponseEntity<Object> createSubcollection(@PathVariable("id") Long artistId,
+                                                     @PathVariable("username") String username) {
+        User user = userService.findByUsername(username);
+        Artist artist = artistService.findById(artistId);
+        vinylService.createCollection(artist, user);
+        return new ResponseEntity<Object>(user, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{username}/subcollection")
+    public List<Subcollection> getUserSubcollections(@PathVariable("username") String username) {
+        User user = userService.findByUsername(username);
+        List<Vinyl> collection = user.getVinyls();
+        List<Subcollection> subcollections = new ArrayList<Subcollection>();
+        user.getSubcollections().forEach( s -> {
+            List<Vinyl> subcollectionItems =  collection.stream().filter(v -> v.getArtist().getName()
+                    .equals(s.getName())).collect(Collectors.toList());
+            subcollections.add(new Subcollection(s.getName(), subcollectionItems));
+        });
+        return subcollections;
+    }
+
+
 }

@@ -41,6 +41,12 @@ public class User {
     @JsonManagedReference
     private List<Vinyl> vinyls;
 
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Artist> subcollections;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Vinyl> favourites;
+
     public User() {}
 
     public User(RegisterUserDTO user, List<Genre> userGenrePreference) {
@@ -141,5 +147,21 @@ public class User {
 
     public void setVinyls(List<Vinyl> vinyls) {
         this.vinyls = vinyls;
+    }
+
+    public List<Artist> getSubcollections() {
+        return subcollections;
+    }
+
+    public void setSubcollections(List<Artist> subcollections) {
+        this.subcollections = subcollections;
+    }
+
+    public List<Vinyl> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(List<Vinyl> favourites) {
+        this.favourites = favourites;
     }
 }

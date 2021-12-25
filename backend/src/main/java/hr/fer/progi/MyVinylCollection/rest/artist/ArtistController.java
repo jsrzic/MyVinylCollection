@@ -19,7 +19,7 @@ public class ArtistController {
 
     @GetMapping("/getById")
     public Artist getArtistsById(@RequestBody Long artistId) {
-        return artistService.getArtistById(artistId);
+        return artistService.findById(artistId);
     }
 
 

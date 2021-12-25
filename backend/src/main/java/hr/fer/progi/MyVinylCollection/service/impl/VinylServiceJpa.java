@@ -1,6 +1,8 @@
 package hr.fer.progi.MyVinylCollection.service.impl;
 
+import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.dao.VinylRepository;
+import hr.fer.progi.MyVinylCollection.domain.Artist;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
@@ -15,6 +17,9 @@ public class VinylServiceJpa implements VinylService {
 
     @Autowired
     private VinylRepository vinylRepo;
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Autowired
     private MapStructMapper mapstructMapper;
@@ -56,4 +61,11 @@ public class VinylServiceJpa implements VinylService {
             return true;
         return false;
     }
+
+    @Override
+    public void createCollection(Artist artist, User user) {
+        user.getSubcollections().add(artist);
+        userRepo.save(user);
+    }
+
 }
