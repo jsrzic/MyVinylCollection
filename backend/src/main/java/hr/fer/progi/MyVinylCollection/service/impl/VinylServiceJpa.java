@@ -28,15 +28,21 @@ public class VinylServiceJpa implements VinylService {
     }
 
     @Override
+    public UpdateVinylDTO getVinylInfo(long vinylId) {
+        Vinyl vinyl = vinylRepo.findById(vinylId).orElseThrow(
+                () -> new RequestDeniedException("No vinyl with id " + vinylId)
+        );
+        return mapstructMapper.vinylToUpdateVinylDTO(vinyl);
+    }
+
+    @Override
     public boolean updateVinylInfo(long vinylId, UpdateVinylDTO updatedVinyl) {
-        Vinyl vinyl = vinylRepo.getById(vinylId);
+        Vinyl vinyl = vinylRepo.findById(vinylId).orElseThrow(
+                () -> new RequestDeniedException("No vinyl with id " + vinylId)
+        );
         mapstructMapper.updateVinylDTOToVinyl(updatedVinyl, vinyl);
-        if(vinyl == null) {
-            throw new RequestDeniedException("No vinyl with id: " + vinylId);
-        } else {
-            vinylRepo.save(vinyl);
-            return true;
-        }
+        vinylRepo.save(vinyl);
+        return true;
     }
 
     @Override

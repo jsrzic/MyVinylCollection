@@ -5,11 +5,8 @@ import hr.fer.progi.MyVinylCollection.domain.*;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
-import hr.fer.progi.MyVinylCollection.service.ArtistService;
-import hr.fer.progi.MyVinylCollection.service.GenreService;
+import hr.fer.progi.MyVinylCollection.service.*;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
-import hr.fer.progi.MyVinylCollection.service.UserService;
-import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +32,7 @@ public class VinylController {
     @Autowired
     private GenreService genreService;
 
-    @GetMapping("/{username}")
+    @GetMapping("/collection/{username}")
     public List<Vinyl> getVinylCollection(@PathVariable("username") String username) {
         User user = userService.findByUsername(username);
         return user.getVinyls();
@@ -57,6 +54,15 @@ public class VinylController {
             return new ResponseEntity<Object>(id, HttpStatus.OK);
         }else{
             return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public UpdateVinylDTO getVinylInfo(@PathVariable Long id){
+        try{
+            return vinylService.getVinylInfo(id);
+        }catch(RequestDeniedException e){
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
