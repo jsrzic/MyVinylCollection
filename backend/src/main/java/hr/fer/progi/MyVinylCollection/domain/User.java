@@ -1,5 +1,6 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 
 import javax.persistence.*;
@@ -36,7 +37,8 @@ public class User {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
+    @JsonManagedReference
     private List<Vinyl> vinyls;
 
     public User() {}

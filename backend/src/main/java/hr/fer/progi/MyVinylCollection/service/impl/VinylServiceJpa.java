@@ -22,6 +22,7 @@ public class VinylServiceJpa implements VinylService {
 
     @Override
     public Vinyl addVinyl(Vinyl vinyl, User user) {
+        vinyl.setOwner(user);
         user.getVinyls().add(vinyl);
         return vinylRepo.save(vinyl);
     }
@@ -40,8 +41,6 @@ public class VinylServiceJpa implements VinylService {
 
     @Override
     public boolean deleteVinyl(long vinylId) {
-        Vinyl vinyl = vinylRepo.getById(vinylId);
-        vinyl.getOwner().getVinyls().remove(vinyl);
         vinylRepo.deleteById(vinylId);
         if(!vinylRepo.findById(vinylId).isPresent())
             return true;
