@@ -2,6 +2,7 @@ package hr.fer.progi.MyVinylCollection.service;
 
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
@@ -21,5 +22,7 @@ public interface UserService {
     boolean updateUserStatus(Long userId, boolean status);
     UpdateUserDTO getUserInfo(String username);
     boolean updateUserInfo(UpdateUserDTO updatedUser);
+    void addFavourite(User user, Vinyl vinyl);
+    void removeFavourite(User user, Vinyl vinyl);
 
 }

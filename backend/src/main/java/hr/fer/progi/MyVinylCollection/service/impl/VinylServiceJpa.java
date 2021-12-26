@@ -26,6 +26,13 @@ public class VinylServiceJpa implements VinylService {
 
 
     @Override
+    public Vinyl findById(Long id) {
+        return vinylRepo.findById(id).orElseThrow(
+                () -> new RequestDeniedException("No vinyl with id " + id)
+        );
+    }
+
+    @Override
     public Vinyl addVinyl(Vinyl vinyl, User user) {
         vinyl.setOwner(user);
         user.getVinyls().add(vinyl);
@@ -34,17 +41,13 @@ public class VinylServiceJpa implements VinylService {
 
     @Override
     public UpdateVinylDTO getVinylInfo(long vinylId) {
-        Vinyl vinyl = vinylRepo.findById(vinylId).orElseThrow(
-                () -> new RequestDeniedException("No vinyl with id " + vinylId)
-        );
+        Vinyl vinyl = findById(vinylId);
         return mapstructMapper.vinylToUpdateVinylDTO(vinyl);
     }
 
     @Override
     public boolean updateVinylInfo(long vinylId, UpdateVinylDTO updatedVinyl) {
-        Vinyl vinyl = vinylRepo.findById(vinylId).orElseThrow(
-                () -> new RequestDeniedException("No vinyl with id " + vinylId)
-        );
+        Vinyl vinyl = findById(vinylId);
         mapstructMapper.updateVinylDTOToVinyl(updatedVinyl, vinyl);
         vinylRepo.save(vinyl);
         return true;
@@ -52,14 +55,11 @@ public class VinylServiceJpa implements VinylService {
 
     @Override
     public boolean deleteVinyl(long vinylId) {
-        User owner = vinylRepo.findById(vinylId).orElseThrow(
-                () -> new RequestDeniedException("No vinyl with id " + vinylId)
-        ).getOwner();
-        owner.getVinyls().remove(vinylRepo.getById(vinylId));
+        User owner = findById(vinylId).getOwner();
+        owner.getVinyls().remove(findById(vinylId));
         vinylRepo.deleteById(vinylId);
-        if(!vinylRepo.findById(vinylId).isPresent())
-            return true;
-        return false;
+        return true;
+
     }
 
     @Override

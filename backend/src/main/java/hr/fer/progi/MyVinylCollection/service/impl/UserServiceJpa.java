@@ -3,6 +3,7 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
@@ -111,4 +112,17 @@ public class UserServiceJpa implements UserService {
         }
 
     }
+
+    @Override
+    public void addFavourite(User user, Vinyl vinyl) {
+        user.getFavourites().add(vinyl);
+        userRepo.save(user);
+    }
+
+    @Override
+    public void removeFavourite(User user, Vinyl vinyl) {
+        user.getFavourites().remove(vinyl);
+        userRepo.save(user);
+    }
+
 }
