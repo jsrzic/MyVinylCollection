@@ -11,5 +11,6 @@ public interface VinylService {
     UpdateVinylDTO getVinylInfo(long vinylId);
     boolean updateVinylInfo(long vinylId, UpdateVinylDTO updatedVinyl);
     boolean deleteVinyl(long vinylId);
-    void createCollection(Artist artist, User user);
+    void createSubcollection(Artist artist, User user);
+    void deleteSubcollection(Artist artist, User user);
 }

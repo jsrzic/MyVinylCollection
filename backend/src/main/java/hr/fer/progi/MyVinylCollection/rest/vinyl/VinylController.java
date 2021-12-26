@@ -83,7 +83,7 @@ public class VinylController {
                                                      @PathVariable("username") String username) {
         User user = userService.findByUsername(username);
         Artist artist = artistService.findById(artistId);
-        vinylService.createCollection(artist, user);
+        vinylService.createSubcollection(artist, user);
         return new ResponseEntity<Object>(user, HttpStatus.OK);
 
     }
@@ -100,6 +100,17 @@ public class VinylController {
         });
         return subcollections;
     }
+
+    @DeleteMapping("/{username}/subcollection/{id}")
+    public ResponseEntity<Object> deleteSubcollection(@PathVariable("id") Long artistId,
+                                                      @PathVariable("username") String username) {
+        User user = userService.findByUsername(username);
+        Artist artist = artistService.findById(artistId);
+        vinylService.deleteSubcollection(artist, user);
+        return new ResponseEntity<Object>(user, HttpStatus.OK);
+    }
+
+
 
 
 }

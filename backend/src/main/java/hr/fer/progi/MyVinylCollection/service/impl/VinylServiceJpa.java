@@ -63,9 +63,25 @@ public class VinylServiceJpa implements VinylService {
     }
 
     @Override
-    public void createCollection(Artist artist, User user) {
-        user.getSubcollections().add(artist);
-        userRepo.save(user);
+    public void createSubcollection(Artist artist, User user) {
+        if(user.getSubcollections().contains(artist)) {
+            throw new RequestDeniedException(String.format("Subcollection %s already exists!", artist.getName()));
+        } else {
+            user.getSubcollections().add(artist);
+            userRepo.save(user);
+        }
+
+    }
+
+    @Override
+    public void deleteSubcollection(Artist artist, User user) {
+        if(user.getSubcollections().contains(artist)) {
+            user.getSubcollections().remove(artist);
+            userRepo.save(user);
+        } else {
+            throw new RequestDeniedException(String.format("Subcollection %s doesnt exist!", artist.getName()));
+        }
+
     }
 
 }
