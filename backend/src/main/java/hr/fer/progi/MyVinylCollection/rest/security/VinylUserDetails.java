@@ -25,7 +25,7 @@ public class VinylUserDetails implements UserDetails {
             if(isEnabled()) {
                 return commaSeparatedStringToAuthorityList("ROLE_USER");
             } else {
-                return NO_AUTHORITIES;
+                return commaSeparatedStringToAuthorityList("ROLE_BLOCKED_USER");
             }
         }
     }
