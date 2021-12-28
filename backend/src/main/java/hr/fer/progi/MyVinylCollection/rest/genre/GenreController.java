@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/genres")
 public class GenreController {
 
@@ -20,10 +19,4 @@ public class GenreController {
 
     @GetMapping("")
     public List<Genre> listGenres() { return genreService.listAll(); }
-
-    @GetMapping("/getById")
-    public List<Genre> getGenresById(@RequestBody List<Long> genreIds) {
-        return genreService.getGenresById(genreIds);
-    }
-
 }

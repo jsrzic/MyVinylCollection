@@ -10,6 +10,7 @@ import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@Secured({"ROLE_ADMIN", "ROLE_USER"})
 @RequestMapping("/vinyls")
 public class VinylController {
 
