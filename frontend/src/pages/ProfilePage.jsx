@@ -4,7 +4,8 @@ import ProfileHeader from "../components/ProfileHeader";
 
 import { Button, LinearProgress, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { IsMobile } from "../util/utils";
+import {getCurrentUser, IsMobile} from "../util/utils";
+import authHeader from "../auth-header";
 
 const infoContainerStyle = {
   display: "flex",
@@ -28,7 +29,7 @@ function ProfilePage() {
   const origin = process.env.REACT_APP_URL;
   const mobile = IsMobile();
   const [username, setUsername] = React.useState(
-    localStorage.getItem("username")
+      getCurrentUser()
   );
   const [data, setData] = React.useState({});
   const [editingMode, setEditingMode] = React.useState(false);
@@ -46,6 +47,7 @@ function ProfilePage() {
       method: "GET",
       headers: {
         Origin: origin,
+        Authorization: authHeader(),
       },
     }).then((response) => {
       response.json().then((result) => setData(result));
@@ -69,6 +71,7 @@ function ProfilePage() {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          Authorization: authHeader(),
         },
         body: JSON.stringify(data),
       }).then((r) => r.json());

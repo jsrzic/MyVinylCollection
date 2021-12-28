@@ -68,7 +68,7 @@ function TopNavBar() {
                   disableElevation
                   startIcon={<LogoutIcon />}
                   onClick={() => {
-                    localStorage.removeItem("username")
+                    localStorage.removeItem("user")
                     history.push("/")
                   }}
                 >

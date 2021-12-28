@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2ace089e-6712-444f-92bf-1c6deabcf31f" name="Changes" comment="fix responsiveness when zooming in or out">
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/auth-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth-header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProfileHeader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProfileHeader.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TopNavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNavBar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserTab.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserTab.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LogInPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LogInPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ProfilePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SignUpPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SignUpPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/utils.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/utils.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +43,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Korisnik\IdeaProjects\MyVinylCollection\frontend\src" />
+      <recent name="C:\Users\Korisnik\IdeaProjects\MyVinylCollection\frontend\src\services" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -66,6 +86,8 @@
       <workItem from="1637162744856" duration="945000" />
       <workItem from="1637274807652" duration="730000" />
       <workItem from="1637317191648" duration="2258000" />
+      <workItem from="1640632766811" duration="39000" />
+      <workItem from="1640717841574" duration="7372000" />
     </task>
     <task id="LOCAL-00001" summary="fix preferredGenres typo and now sends ids instead of genre names">
       <created>1637073404068</created>
