@@ -16,6 +16,11 @@ import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -144,6 +149,17 @@ public class UserController {
         }
     }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @GetMapping("/current")
+    public Object getCurrentUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getPrincipal();
+    }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @GetMapping("/current_username")
+    public String getCurrentUsername(@CurrentSecurityContext(expression="authentication?.name") String username) {
+        return username;
+    }
 
 }
