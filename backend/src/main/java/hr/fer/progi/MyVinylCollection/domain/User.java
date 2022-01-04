@@ -55,7 +55,7 @@ public class User {
     @JsonManagedReference
     private List<ExchangeAd> exchangeAds;
 
-    @OneToOne(mappedBy = "vinyl_user")
+    @OneToOne(mappedBy = "newOwner")
     private ExchangeAd exchangedAd;
 
     public User() {}

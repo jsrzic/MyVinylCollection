@@ -69,7 +69,7 @@ public class Vinyl {
     @JsonManagedReference
     private List<ExchangeAd> exchangeAds;
 
-    @OneToOne(mappedBy = "vinyl")
+    @OneToOne(mappedBy = "exchangedVinyl")
     private ExchangeAd exchangedAd;
 
     public Vinyl() {
