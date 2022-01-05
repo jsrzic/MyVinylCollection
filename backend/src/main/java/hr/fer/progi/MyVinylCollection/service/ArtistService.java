@@ -9,5 +9,7 @@ import java.util.List;
 public interface ArtistService {
 
     List<Artist> listAll();
-    Artist getArtistById(Long artistId);
+    Artist findById(Long artistId);
+
 }
+

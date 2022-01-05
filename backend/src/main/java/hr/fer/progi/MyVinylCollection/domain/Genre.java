@@ -1,6 +1,9 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name="genre")
@@ -10,6 +13,18 @@ public class Genre {
     private Long id;
 
     private String name;
+
+    @OneToMany(mappedBy = "genre", cascade=CascadeType.ALL)
+    @JsonManagedReference
+    private List<Subgenre> subgenres;
+
+    public List<Subgenre> getSubgenres() {
+        return subgenres;
+    }
+
+    public void setSubgenres(List<Subgenre> subgenres) {
+        this.subgenres = subgenres;
+    }
 
     public Long getId() {
         return id;

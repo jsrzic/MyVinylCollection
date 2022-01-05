@@ -1,5 +1,6 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
 
@@ -32,6 +33,10 @@ public class Vinyl {
     @ManyToOne
     @JoinColumn(name="subgenre_id")
     private Subgenre subgenre;
+
+    @ManyToOne
+    @JsonBackReference
+    private User owner;
 
     private int conditionEvaluation;
 
@@ -207,5 +212,13 @@ public class Vinyl {
 
     public void setTimeOfReproduction(LocalTime timeOfReproduction) {
         this.timeOfReproduction = timeOfReproduction;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

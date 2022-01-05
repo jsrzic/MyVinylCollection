@@ -224,7 +224,7 @@ function SignUpPage() {
                     2
                   ),
                 };
-                fetch(api + "/users/register", requestOptions)
+                fetch(api + "/users/auth/register", requestOptions)
                   .then((response) => {
                     if (response.ok) {
                       history.push("/login");

@@ -2,6 +2,7 @@ import React from "react";
 
 import { Avatar } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import {getCurrentUser} from "../util/utils";
 
 const userContainerStyle = {
   display: "flex",
@@ -19,7 +20,8 @@ const usernameStyle = { fontSize: "1.2rem", marginLeft: "1rem" };
 
 function UserTab() {
   const history = useHistory();
-  const username = localStorage.getItem("username");
+  const username = getCurrentUser();
+
 if(username!=null) {
   return (
     <div

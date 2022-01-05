@@ -74,3 +74,10 @@ export function getRandomColor() {
 }
 
 export const ThemeContext = React.createContext();
+
+export function getCurrentUser() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    return (user!=null) ? user.username : user;
+  }
+
+

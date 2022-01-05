@@ -3,6 +3,7 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
@@ -10,6 +11,7 @@ import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,9 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepo.findByUsername(username);
+        return userRepo.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("No user with username: "+username)
+        );
     }
 
     @Override
@@ -58,7 +62,9 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public boolean checkPassword(LoginUserDTO user) {
-        return passwordEncoder.matches(user.getPassword(), userRepo.findByUsername(user.getUsername()).getPassword());
+        return passwordEncoder.matches(user.getPassword(),
+                userRepo.findByUsername(user.getUsername()).orElseThrow(
+                        () -> new UsernameNotFoundException("No user with username: "+user.getUsername())).getPassword());
     }
 
     @Override
@@ -82,7 +88,9 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public UpdateUserDTO getUserInfo(String username) {
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException("No user with username: "+username)
+        );
         if(user == null) {
             throw new RequestDeniedException("No user with username:" + username);
         } else {
@@ -92,7 +100,9 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public boolean updateUserInfo(UpdateUserDTO updatedUser) {
-        User user = userRepo.findByUsername(updatedUser.getUsername());
+        User user = userRepo.findByUsername(updatedUser.getUsername()).orElseThrow(
+                () -> new UsernameNotFoundException("No user with username: "+ updatedUser.getUsername())
+        );
         mapstructMapper.updateUserDTOToUser(updatedUser, user);
         if(user == null) {
             throw new RequestDeniedException("No user with username:" + updatedUser.getUsername());
@@ -102,4 +112,17 @@ public class UserServiceJpa implements UserService {
         }
 
     }
+
+    @Override
+    public void addFavourite(User user, Vinyl vinyl) {
+        user.getFavourites().add(vinyl);
+        userRepo.save(user);
+    }
+
+    @Override
+    public void removeFavourite(User user, Vinyl vinyl) {
+        user.getFavourites().remove(vinyl);
+        userRepo.save(user);
+    }
+
 }

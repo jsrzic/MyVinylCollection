@@ -22,7 +22,7 @@ public class ArtistServiceJpa implements ArtistService {
     }
 
     @Override
-    public Artist getArtistById(Long artistId) {
+    public Artist findById(Long artistId) {
         return artistRepo.findById(artistId).orElseThrow(
                 () -> new RequestDeniedException("No artist with id " + artistId)
         );

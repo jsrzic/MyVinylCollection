@@ -2,23 +2,38 @@ package hr.fer.progi.MyVinylCollection.rest.user;
 
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetailsService;
+import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtResponse;
+import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtUtils;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 import hr.fer.progi.MyVinylCollection.service.GenreService;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
+import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -28,29 +43,27 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private VinylService vinylService;
+
+    @Autowired
     private GenreService genreService;
 
     @Autowired
-    private VinylUserDetailsService userDetailsService;
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    PasswordEncoder encoder;
+
+    @Autowired
+    JwtUtils jwtUtils;
 
     @GetMapping("")
     public List<User> listUsers() {
         return userService.listAll();
     }
 
-    private Cookie createCookie(String username) {
-        Cookie cookie = new Cookie("username",username);
-
-        cookie.setMaxAge(7 * 24 * 60 * 60);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-
-       return cookie;
-    }
-
-    @PostMapping("/register")
-    public User registerUser(@RequestBody RegisterUserDTO user, HttpServletResponse response) {
+    @PostMapping("/auth/register")
+    public User registerUser(@RequestBody RegisterUserDTO user) {
         if (userService.checkUsernameUnique(user)) {
             List<Genre> userGenrePreference = genreService.getGenresById(user.getPreferredGenres());
             return userService.registerUser(user, userGenrePreference);
@@ -59,12 +72,29 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Object> loginUser(@RequestBody LoginUserDTO user, HttpServletResponse response) {
-        response.addCookie(createCookie(user.getUsername()));
+    private ResponseEntity<Object> authenticateUser(LoginUserDTO user) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        VinylUserDetails userDetails = (VinylUserDetails) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.user.getId(),
+                userDetails.getUsername(),
+                userDetails.user.getEmail(),
+                roles));
+    }
+
+    @PostMapping("/auth/login")
+    public ResponseEntity<Object> loginUser(@RequestBody LoginUserDTO user) {
         if (userService.checkUsernameExists(user) && userService.checkPassword(user)) {
-            userDetailsService.loadUserByUsername(user.getUsername());
-            return new ResponseEntity<Object>(user, HttpStatus.OK);
+            return authenticateUser(user);
         } else {
             throw new IllegalArgumentException("Invalid username/password.");
         }
@@ -73,13 +103,13 @@ public class UserController {
     @GetMapping("/contact_email/{id}")
     public String getUserContactEmail(@PathVariable("id") Long userId){
         try{
-            String contactEmail = userService.getUserContactEmail(userId);
-            return contactEmail;
+            return userService.getUserContactEmail(userId);
         }catch(RequestDeniedException e){
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/status/{id}")
     public ResponseEntity<Object> updateUserStatus(@PathVariable("id") Long userId, @RequestParam boolean status){
         try{
@@ -93,6 +123,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/info/{username}")
     public UpdateUserDTO getUserInfo(@PathVariable("username") String username){
         try{
@@ -103,6 +134,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/info/{username}")
     public ResponseEntity<Object> updateUserInfo(@PathVariable("username") String username, @RequestBody UpdateUserDTO updatedUser) {
         try {
@@ -114,6 +146,43 @@ public class UserController {
         } catch (RequestDeniedException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("{username}/favourites")
+    public List<Vinyl> getFavourites(@PathVariable("username") String username) {
+        User user = userService.findByUsername(username);
+        return user.getFavourites();
+    }
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PutMapping("{username}/favourites/{id}")
+    public ResponseEntity<Object> manageFavourites(@PathVariable("username") String username, @PathVariable("id") Long vinylId) {
+        try {
+            User user = userService.findByUsername(username);
+            Vinyl vinyl = vinylService.findById(vinylId);
+            if(user.getFavourites().contains(vinyl)) {
+                userService.removeFavourite(user, vinyl);
+                return new ResponseEntity<Object>("Vinyl removed from favourites!", HttpStatus.OK);
+            } else {
+                userService.addFavourite(user, vinyl);
+                return new ResponseEntity<Object>("Vinyl added to favourites!", HttpStatus.OK);
+            }
+        } catch (RequestDeniedException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @GetMapping("/current")
+    public Object getCurrentUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getPrincipal();
+    }
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @GetMapping("/current_username")
+    public String getCurrentUsername(@CurrentSecurityContext(expression="authentication?.name") String username) {
+        return username;
     }
 
 }

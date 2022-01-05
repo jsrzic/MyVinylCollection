@@ -11,7 +11,7 @@ import static org.springframework.security.core.authority.AuthorityUtils.commaSe
 
 public class VinylUserDetails implements UserDetails {
 
-    private final User user;
+    public final User user;
 
     public VinylUserDetails(User user) {
         this.user = user;
@@ -25,7 +25,7 @@ public class VinylUserDetails implements UserDetails {
             if(isEnabled()) {
                 return commaSeparatedStringToAuthorityList("ROLE_USER");
             } else {
-                return NO_AUTHORITIES;
+                return commaSeparatedStringToAuthorityList("ROLE_BLOCKED_USER");
             }
         }
     }

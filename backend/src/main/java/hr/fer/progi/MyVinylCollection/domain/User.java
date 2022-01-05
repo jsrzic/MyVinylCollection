@@ -1,5 +1,6 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 
 import javax.persistence.*;
@@ -36,8 +37,15 @@ public class User {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Vinyl> vinyls;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Artist> subcollections;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Vinyl> favourites;
 
     public User() {}
 
@@ -139,5 +147,21 @@ public class User {
 
     public void setVinyls(List<Vinyl> vinyls) {
         this.vinyls = vinyls;
+    }
+
+    public List<Artist> getSubcollections() {
+        return subcollections;
+    }
+
+    public void setSubcollections(List<Artist> subcollections) {
+        this.subcollections = subcollections;
+    }
+
+    public List<Vinyl> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(List<Vinyl> favourites) {
+        this.favourites = favourites;
     }
 }

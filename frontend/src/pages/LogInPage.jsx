@@ -42,7 +42,7 @@ function LogInPage() {
   return (
     <div style={{ ...pageStyle, ...loginPageStyle }}>
       <img src={logoImg} style={imageStyle} alt="login_image" />
-      <Formik
+R      <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={(values) => {
           const requestOptions = {
@@ -52,13 +52,13 @@ function LogInPage() {
             withCredentials: true,
             body: JSON.stringify({ ...values }, null, 2),
           };
-          fetch(api + "/users/login", requestOptions)
+          fetch(api + "/users/auth/login", requestOptions)
             .then((response) => {
               if (response.ok) {
-                localStorage.setItem("username", "");
+                localStorage.setItem("user", "");
                 response
                   .json()
-                  .then((r) => localStorage.setItem("username", r.username));
+                  .then((r) => localStorage.setItem("user", JSON.stringify(r)));
                 history.push("/dashboard/homepage");
               } else {
                 setErrorMessage(true);
