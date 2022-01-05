@@ -49,6 +49,13 @@ function AddVinylPage() {
         data = data.map((g) => g["name"]);
         setGenre(data);
       });
+
+    fetch(api + "/artists")
+      .then((response) => response.json())
+      .then((data) => {
+        data = data.map((a) => a["name"]);
+        setArtists(data);
+      });
   }, []);
 
 
@@ -60,11 +67,28 @@ function AddVinylPage() {
       }
     >
       <Formik
-        initialValues={{album: "", artistId: "", releaseYear: "", genre: "", subgenre: "", conditionEvaluation: "",
-        isRare: "No", description: "", priceKn: "", RPM: "", diameter: "", capacity: "", reproductionQuality: "",
+        initialValues={{album: "", artistId: "", releaseYear: "", genreId: "", subgenreId: "", conditionEvaluation: "",
+        isRare: "No", description: "", priceKn: "", rpm: "", diameter: "", capacity: "", reproductionQuality: "",
         nmbOfAudioChannels: "", timeOfReproduction: ""}}
         onSubmit={(values) => {
-          values.artistId = artists.indexOf(values.artistId);
+          values.artistId = 2;
+          values.releaseYear = parseInt(values.releaseYear);
+          values.genreId = 3;
+          values.subgenreId = parseInt(values.subgenreId);
+          values.conditionEvaluation = parseInt(values.conditionEvaluation);
+          values.isRare = "Yes" ? true : false;
+          values.priceKn = parseInt(values.priceKn);
+          values.diameter = parseInt(values.diameter);
+          values.nmbOfAudioChannels = parseInt(values.nmbOfAudioChannels);
+
+          fetch(api + `/vinyls/${username}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(values)
+          }).then(response => console.log(response));
         }}>
 
         {
@@ -89,13 +113,13 @@ function AddVinylPage() {
                   required
                 />
 
-                <Form.Row
-                  label="Artist"
-                  type="text"
-                  value={formik.values.artistId}
-                  name="artistId"
-                  onChange={formik.handleChange}
-                  required
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={artists}
+                  onChange={(e, value) => formik.setFieldValue("artistId", value)}
+                  sx={{marginTop: "1rem", marginBottom: "1rem", marginLeft: "0.5rem"}}
+                  renderInput={(params) => <TextField {...params} label="Artist" />}
                 />
 
                 <Form.Row
@@ -110,7 +134,7 @@ function AddVinylPage() {
                   disablePortal
                   id="combo-box-demo"
                   options={genre}
-                  onChange={(e, value) => formik.setFieldValue("genre", value)}
+                  onChange={(e, value) => formik.setFieldValue("genreId", value)}
                   sx={{marginTop: "1rem", marginBottom: "1rem", marginLeft: "0.5rem"}}
                   renderInput={(params) => <TextField {...params} label="Genre" />}
                 />
@@ -118,8 +142,8 @@ function AddVinylPage() {
                 <Form.Row
                   label="Subgenre"
                   type="text"
-                  value={formik.values.subgenre}
-                  name="subgenre"
+                  value={formik.values.subgenreId}
+                  name="subgenreId"
                   onChange={formik.handleChange}
                 />
 
@@ -150,8 +174,8 @@ function AddVinylPage() {
                 <Form.Row
                   label="RPM"
                   type="text"
-                  value={formik.values.RPM}
-                  name="RPM"
+                  value={formik.values.rpm}
+                  name="rpm"
                   onChange={formik.handleChange}
                 />
 
