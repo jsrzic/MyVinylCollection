@@ -54,15 +54,15 @@ R      <Formik
           };
           fetch(api + "/users/auth/login", requestOptions)
             .then((response) => {
-              if (response.ok) {
-                localStorage.setItem("user", "");
-                response
-                  .json()
-                  .then((r) => localStorage.setItem("user", JSON.stringify(r)));
-                history.push("/dashboard/homepage");
-              } else {
+              if (!response.ok) {
                 setErrorMessage(true);
+              } else {
+                return response.json();
               }
+              })
+            .then(data => {
+              localStorage.setItem("user", JSON.stringify(data));
+              history.push("/dashboard/homepage");
             })
             .catch((err) => {
               console.log(err);
