@@ -2,6 +2,7 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
+import hr.fer.progi.MyVinylCollection.domain.Location;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
@@ -47,9 +48,9 @@ public class UserServiceJpa implements UserService {
     }
 
     @Override
-    public User registerUser(RegisterUserDTO user, List<Genre> userGenrePreference) {
+    public User registerUser(RegisterUserDTO user, List<Genre> userGenrePreference, Location location) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(new User(user, userGenrePreference));
+        return userRepo.save(new User(user, userGenrePreference, location));
     }
 
     @Override

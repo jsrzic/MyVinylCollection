@@ -1,11 +1,11 @@
 package hr.fer.progi.MyVinylCollection.rest.user;
 
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
+import hr.fer.progi.MyVinylCollection.domain.Location;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
-import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
-import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetailsService;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtResponse;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtUtils;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
@@ -15,6 +15,7 @@ import hr.fer.progi.MyVinylCollection.service.GenreService;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import hr.fer.progi.MyVinylCollection.service.VinylService;
+import hr.fer.progi.MyVinylCollection.service.impl.LocationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +49,10 @@ public class UserController {
     private GenreService genreService;
 
     @Autowired
+    private LocationServiceImpl locationService;
+
+
+    @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
@@ -63,13 +67,19 @@ public class UserController {
     }
 
     @PostMapping("/auth/register")
-    public User registerUser(@RequestBody RegisterUserDTO user) {
+    public User registerUser(@RequestBody RegisterUserDTO user) throws IOException, GeoIp2Exception {
         if (userService.checkUsernameUnique(user)) {
             List<Genre> userGenrePreference = genreService.getGenresById(user.getPreferredGenres());
-            return userService.registerUser(user, userGenrePreference);
+            return userService.registerUser(user, userGenrePreference, getLocationFromIp(user.getIp()));
         } else {
             throw new IllegalArgumentException("Username already exists.");
         }
+    }
+
+    private Location getLocationFromIp(String ip) throws IOException, GeoIp2Exception {
+        Location location = locationService.getLocation(ip);
+        locationService.saveLocation(location);
+        return location;
     }
 
     private ResponseEntity<Object> authenticateUser(LoginUserDTO user) {
