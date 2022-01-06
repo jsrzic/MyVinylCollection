@@ -103,6 +103,9 @@ public class UserServiceJpa implements UserService {
         User user = userRepo.findByUsername(updatedUser.getUsername()).orElseThrow(
                 () -> new UsernameNotFoundException("No user with username: "+ updatedUser.getUsername())
         );
+        if(updatedUser.getPassword() != null) {
+            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
         mapstructMapper.updateUserDTOToUser(updatedUser, user);
         if(user == null) {
             throw new RequestDeniedException("No user with username:" + updatedUser.getUsername());
