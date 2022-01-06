@@ -29,7 +29,9 @@ public class User {
     @Column(name="contact_email")
     private String contactEmail;
 
-    private String location;
+    @OneToOne
+    @JoinColumn(name="location_id", nullable=false)
+    private Location location;
 
     @Column(name="is_active")
     private boolean isActive;
@@ -47,9 +49,20 @@ public class User {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Vinyl> favourites;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<SaleAd> saleAds;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ExchangeAd> exchangeAds;
+
+    @OneToOne(mappedBy = "newOwner")
+    private ExchangeAd exchangedAd;
+
     public User() {}
 
-    public User(RegisterUserDTO user, List<Genre> userGenrePreference) {
+    public User(RegisterUserDTO user, List<Genre> userGenrePreference, Location location) {
         this.name = user.getName();
         this.surname = user.getSurname();
         this.username = user.getUsername();
@@ -57,7 +70,7 @@ public class User {
         this.password = user.getPassword();
         this.contactEmail = user.getEmail();
         this.isActive = true;
-        this.location = "";
+        this.location = location;
         this.preferredGenres = userGenrePreference;
     }
 
@@ -125,14 +138,6 @@ public class User {
         this.preferredGenres = preferredGenres;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public boolean isActive() {
         return isActive;
     }
@@ -163,5 +168,29 @@ public class User {
 
     public void setFavourites(List<Vinyl> favourites) {
         this.favourites = favourites;
+    }
+
+    public List<SaleAd> getSaleAds() {
+        return saleAds;
+    }
+
+    public void setSaleAds(List<SaleAd> saleAds) {
+        this.saleAds = saleAds;
+    }
+
+    public List<ExchangeAd> getExchangeAds() {
+        return exchangeAds;
+    }
+
+    public void setExchangeAds(List<ExchangeAd> exchangeAds) {
+        this.exchangeAds = exchangeAds;
+    }
+
+    public ExchangeAd getExchangedAd() {
+        return exchangedAd;
+    }
+
+    public void setExchangedAd(ExchangeAd exchangedAd) {
+        this.exchangedAd = exchangedAd;
     }
 }

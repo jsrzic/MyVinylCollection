@@ -7,9 +7,11 @@ import { IsMobile } from "../util/utils";
 import {Autocomplete, TextField, Checkbox} from "@mui/material";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import authHeader from "../auth-header";
 
 function AddVinylPage() {
   const api = process.env.REACT_APP_API_URL;
+  const origin = process.env.REACT_APP_URL;
   const history = useHistory();
   const [errorMessage, setErrorMessage] = React.useState(false);
   const [artists, setArtists] = React.useState();
@@ -43,14 +45,26 @@ function AddVinylPage() {
   const username = localStorage.getItem("username");
 
   React.useEffect(() => {
-    fetch(api + "/genres")
+    fetch(api + "/genres", {
+      method: "GET",
+      headers: {
+        Origin: origin,
+        Authorization: authHeader(),
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         data = data.map((g) => g["name"]);
         setGenre(data);
       });
 
-    fetch(api + "/artists")
+    fetch(api + "/artists", {
+      method: "GET",
+          headers: {
+            Origin: origin,
+            Authorization: authHeader(),
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         data = data.map((a) => a["name"]);

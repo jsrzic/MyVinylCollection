@@ -2,10 +2,12 @@ package hr.fer.progi.MyVinylCollection.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
 
 import javax.persistence.*;;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -59,6 +61,17 @@ public class Vinyl {
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime timeOfReproduction;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<SaleAd> saleAds;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ExchangeAd> exchangeAds;
+
+    @OneToOne(mappedBy = "exchangedVinyl")
+    private ExchangeAd exchangedAd;
+
     public Vinyl() {
 
     }
@@ -80,7 +93,6 @@ public class Vinyl {
         this.RPM = dto.getRPM();
         this.timeOfReproduction = dto.getTimeOfReproduction();
     }
-
 
     private String getPrice() {
         return new StringBuilder().append(priceKn).append(" HRK").append("(").append(convertToEuro(priceKn)).append(" EUR").append(")").toString();
@@ -220,5 +232,29 @@ public class Vinyl {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public List<SaleAd> getSaleAds() {
+        return saleAds;
+    }
+
+    public void setSaleAds(List<SaleAd> saleAds) {
+        this.saleAds = saleAds;
+    }
+
+    public List<ExchangeAd> getExchangeAds() {
+        return exchangeAds;
+    }
+
+    public void setExchangeAds(List<ExchangeAd> exchangeAds) {
+        this.exchangeAds = exchangeAds;
+    }
+
+    public ExchangeAd getExchangedAd() {
+        return exchangedAd;
+    }
+
+    public void setExchangedAd(ExchangeAd exchangedAd) {
+        this.exchangedAd = exchangedAd;
     }
 }

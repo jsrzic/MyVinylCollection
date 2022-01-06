@@ -2,6 +2,7 @@ import React from "react";
 import { pageStyle } from "../styles/globalStyles";
 import signupImg from "../assets/signup.png";
 import Form from "../components/Form";
+import publicIP from 'react-native-public-ip';
 import {
   Box,
   Button,
@@ -47,7 +48,19 @@ function SignUpPage() {
       });
   }, []);
 
+  let ipAddress = "";
+  React.useEffect(() => {
+    publicIP()
+        .then(ip => {
+          ipAddress = ip;
+        })
+        .catch(error => {
+          console.log(error);
+        })
+  }, []);
+
   let genresData = [];
+
 
   const history = useHistory();
 
@@ -219,7 +232,7 @@ function SignUpPage() {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify(
-                    { ...values, preferredGenres: genresData },
+                    { ...values, preferredGenres: genresData, ip: ipAddress},
                     null,
                     2
                   ),

@@ -35,4 +35,12 @@
     <changeSet id="13" author="Marta">
         <modifyDataType tableName="vinyl_user" columnName="password" newDataType="varchar(250)"/>
     </changeSet>
+    <changeSet id="26" author="Marta">
+        <dropColumn tableName="vinyl_user" columnName="location"/>
+        <addColumn tableName="vinyl_user">
+            <column  name="location_id"  type="int8">
+                <constraints  validateForeignKey="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
