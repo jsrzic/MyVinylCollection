@@ -193,4 +193,12 @@ public class User {
     public void setExchangedAd(ExchangeAd exchangedAd) {
         this.exchangedAd = exchangedAd;
     }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }
