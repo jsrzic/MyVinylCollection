@@ -47,6 +47,17 @@ public class User {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Vinyl> favourites;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<SaleAd> saleAds;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ExchangeAd> exchangeAds;
+
+    @OneToOne(mappedBy = "newOwner")
+    private ExchangeAd exchangedAd;
+
     public User() {}
 
     public User(RegisterUserDTO user, List<Genre> userGenrePreference) {
@@ -163,5 +174,29 @@ public class User {
 
     public void setFavourites(List<Vinyl> favourites) {
         this.favourites = favourites;
+    }
+
+    public List<SaleAd> getSaleAds() {
+        return saleAds;
+    }
+
+    public void setSaleAds(List<SaleAd> saleAds) {
+        this.saleAds = saleAds;
+    }
+
+    public List<ExchangeAd> getExchangeAds() {
+        return exchangeAds;
+    }
+
+    public void setExchangeAds(List<ExchangeAd> exchangeAds) {
+        this.exchangeAds = exchangeAds;
+    }
+
+    public ExchangeAd getExchangedAd() {
+        return exchangedAd;
+    }
+
+    public void setExchangedAd(ExchangeAd exchangedAd) {
+        this.exchangedAd = exchangedAd;
     }
 }
