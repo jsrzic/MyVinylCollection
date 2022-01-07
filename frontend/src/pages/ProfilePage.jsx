@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import {getCurrentUser, IsMobile} from "../util/utils";
 import authHeader from "../auth-header";
+import LocationMap from "../components/LocationMap";
 
 const infoContainerStyle = {
   display: "flex",
@@ -38,9 +39,9 @@ function ProfilePage() {
 
   const [name, setName] = React.useState();
   const [surname, setSurname] = React.useState();
-  const [location, setLocation] = React.useState();
-  const [country, setCountry] = React.useState();
-  const [city, setCity] = React.useState();
+  const [location, setLocation] = React.useState({});
+  const [latitude, setLatitude] = React.useState();
+  const [longitude, setLongitude] = React.useState();
   const [email, setEmail] = React.useState();
   const [contactEmail, setContactEmail] = React.useState();
   const [password, setPassword] = React.useState();
@@ -53,7 +54,13 @@ function ProfilePage() {
         Authorization: authHeader(),
       },
     }).then((response) => {
-      response.json().then((result) => setData(result));
+      response.json().then((result) => {
+        setData(result)
+        console.log(result)
+        setLatitude(result.location.latitude)
+        setLongitude(result.location.longitude)
+        console.log(result.location.latitude + "  " + result.location.longitude)
+      });
     });
   }, [api, username]);
 
@@ -65,8 +72,11 @@ function ProfilePage() {
       setEmail(data.email);
       setContactEmail(data.contactEmail);
       setPassword(data.password);
-      setTimeout(() => setLoading(false), 500);
+      setTimeout(() => {
+        setLoading(false)
+      }, 500);
     } else {
+      console.log(data)
       localStorage.setItem("username", username);
       fetch(api + `/users/info/${username}`, {
         method: "PUT",
@@ -80,41 +90,6 @@ function ProfilePage() {
     }
   }, [data]);
 
-  React.useEffect(() => {
-    if (data.location !== undefined) {
-      setCountry(data.location.substr(0, data.location.indexOf(",")));
-      setCity(
-        data.location.substr(
-          data.location.indexOf(",") + 2,
-          data.location.length
-        )
-      );
-    }
-  }, [data.location]);
-
-  const [countryData, setCountryData] = React.useState({});
-  let c = [];
-  const [countries, setCountries] = React.useState([]);
-  const [cities, setCities] = React.useState([]);
-
-  React.useEffect(() => {
-    fetch("https://countriesnow.space/api/v0.1/countries", {
-      method: "GET",
-    })
-      .then(async (response) => {
-        setCountryData(await response.json());
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
-  React.useEffect(() => {
-    if (countryData.data !== undefined)
-      countryData.data.forEach((d) => c.push(d.country));
-    setCountries(c);
-  }, [countryData]);
-
   function saveChanges() {
     setEditingMode(false);
     localStorage.setItem("username", username);
@@ -122,7 +97,10 @@ function ProfilePage() {
       name: name,
       surname: surname,
       username: username,
-      location: `${country}, ${city}`,
+      location: {
+        latitude: latitude,
+        longitude: longitude
+      },
       email: email,
       password: password,
     });
@@ -136,17 +114,6 @@ function ProfilePage() {
     setEmail(data.email);
     setPassword(data.password);
     setEditingMode(false);
-  }
-
-  function handleCountryChange(value) {
-    setCities([]);
-    setCountry(value);
-    setCity("");
-    setCities(
-      countryData.data.filter((data) => {
-        return data.country === value;
-      })[0].cities
-    );
   }
 
   return (
@@ -216,26 +183,11 @@ function ProfilePage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Autocomplete
-            style={{ marginTop: "2rem" }}
-            value={country}
-            disabled={!editingMode}
-            renderInput={(params) => (
-              <TextField {...params} autoComplete="off" label="Country" />
-            )}
-            options={countries}
-            onChange={(event, value) => handleCountryChange(value)}
-          />
 
-          <Autocomplete
-            style={{ marginTop: "2rem" }}
-            value={city}
-            disabled={!editingMode}
-            renderInput={(params) => (
-              <TextField {...params} autoComplete="off" label="City" />
-            )}
-            options={cities}
-            onChange={(event, value) => setCity(value)}
+          <LocationMap
+              lat={data.location.latitude} lng={data.location.longitude}
+              setLat={setLatitude} setLng={setLongitude}
+              editing={editingMode}
           />
 
           <div style={{ marginTop: "1rem" }}>
