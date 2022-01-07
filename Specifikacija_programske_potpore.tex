@@ -114,42 +114,35 @@
 						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
 						\item  \textbf{Cilj:} Pregledati tuđe vinile
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Web aplikacija je otvorena
+						\item  \textbf{Preduvjet:} Korisnik se nalazi na početnoj stranici
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Na početnoj stranici automatski su prikazani oglasi, za neregistrirane korisnike, iz Zagreba
-							\item Korisnik u tražilici pretražuje kolekcije
-							\item Korisnik pregledava pretražene kolekcije
+							\item Na početnoj stranici prikazani su oglasi koji su u blizini korisnika
+							\item Korisnik odabire tražilicu
+							\item Korisnik upisuje ime kolekcije u tražilicu
+							\item Aplikacija izbaci rezultat pretrage
+							\item Korisnik pregledava prikazane kolekcije
 
-						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[1.a] Korisnik je registriran
-								\begin{packed_item}
-									\item Sustav prikazuje oglase ovisno o njegovoj lokaciji
-								\end{packed_item}
-							
-						\end{packed_item}						
+						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC2 - Pretraži korisnika}}
+				\noindent \underbar{\textbf{UC2 - Pregledaj korisnika}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
-						\item  \textbf{Cilj:} Pregledati tuđe vinile
+						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik, administrator
+						\item  \textbf{Cilj:} Pregledati ostale korisnike
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Web aplikacija je otvorena
+						\item  \textbf{Preduvjet:} Korisnik se nalazi na početnoj stranici
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
-	
+							
+							\item Korisnik odabire tražilicu
 							\item Korisnik upisuje korisničko ime u tražilicu
 							\item Aplikacija izbaci rezultat pretrage
+							\item Korisnik pregledava prikazanog korisnika
 
 						\end{packed_enum}
 						
@@ -157,7 +150,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Korisničko ime je krivo napisano ili ne postoji
+							\item[3.a] Korisničko ime je krivo napisano ili ne postoji
 								\begin{packed_item}
 									\item Sustav obavještava korisnika o neuspjeloj pretrazi
 								\end{packed_item}
@@ -171,13 +164,15 @@
 						\item \textbf{Glavni sudionik: }Neregistrirani korisnik
 						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Web aplikacija je otvorena
+						\item  \textbf{Preduvjet:} Korisnik se nalazi na počtenoj stranici
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik odabire opciju za registraciju
+							\item Korisnik odabire gumb za registraciju
+							\item Aplikacija otvori stranicu za registraciju
 							\item Korisnik unosi potrebne korisničke podatke
+							\item Aplikacija verificira korisničke podatke
 							\item Korisnik prima obavijest o uspješnoj registraciji
 
 						\end{packed_enum}
@@ -186,7 +181,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkih podataka u nedozvoljenom formatu ili pružanje neispravnih podataka
+							\item[4.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkih podataka u nedozvoljenom formatu ili pružanje neispravnih podataka
 							
 								\begin{packed_item}
 								
@@ -204,12 +199,15 @@
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item  \textbf{Cilj:} Dobiti pristup korinsičkom sučelju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je odabrao opciju prijave
+						\item  \textbf{Preduvjet:} Korisnik je registriran i nalazi se na početnoj stranici
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
+							\item Korisnik odabire gumb za prijavu
+							\item Aplikacija otvara stranicu za prijavu
 							\item Korisnik unosi korisničko ime i lozinku
+							\item Aplikacija verificira korisničko ime i lozinku
 							\item Nakon uspješne prijave aplikacija dovodi korisnika na početnu stranicu
 							
 						\end{packed_enum}
@@ -218,7 +216,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[1.a] Neispravno korisničko ime/lozinka
+							\item[4.a] Neispravno korisničko ime/lozinka
 							
 								\begin{packed_item}
 								
@@ -229,137 +227,7 @@
 						\end{packed_item}				
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC5 - Verificiraj lozinku}}
-					\begin{packed_item}
-	
-						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
-						\item  \textbf{Cilj:} Verificirati lozinku tijekom prijave ili registracije
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je upisao ostale potrebne podatke za prijavu ili registraciju
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-	
-							\item Korisnik unosi lozinku za prijavu
-							\item Nakon uspješne prijave aplikacija dovodi korisnika na početnu stranicu
-							
-						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[1.a] Neispravna lozinka	
-								\begin{packed_item}
-									\item Sustav obavještava korisnika da je unio krivu lozinku
-								\end{packed_item}
-								
-							\item[1.b] Neispravna lozinka tijekom registracije
-								\begin{packed_item}
-									\item Sustav obavještava korisnika da je unio krivu lozinku u polju ponovnog upisa lozinke
-								\end{packed_item}
-								
-							\item[2.a] Nakon uspješne registracije
-								\begin{packed_item}
-									\item Sustav vodi korisnika na stranicu prijave
-								\end{packed_item}
-							
-						\end{packed_item}				
-					\end{packed_item}
-					
-				\noindent \underbar{\textbf{UC6 - Verificiraj korisničko ime}}
-					\begin{packed_item}
-	
-						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
-						\item  \textbf{Cilj:} Verificirati korisničko ime tijekom prijave ili registracije
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je upisao ostale potrebne podatke za prijavu ili registraciju
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-	
-							\item Korisnik unosi korisničko za prijavu
-							\item Nakon uspješne prijave aplikacija dovodi korisnika na početnu stranicu
-							
-						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[1.a] Neispravno korisničko ime	
-								\begin{packed_item}
-									\item Sustav obavještava korisnika da je unio pogrešno korisničko ime
-								\end{packed_item}
-								
-							\item[1.b] Neispravno korisničko ime tijekom registracije
-								\begin{packed_item}
-									\item Sustav obavještava korisnika da je unio već postojeće korisničko ime
-								\end{packed_item}
-								
-							\item[2.a] Nakon uspješne registracije
-								\begin{packed_item}
-									\item Sustav vodi korisnika na stranicu prijave
-								\end{packed_item}
-							
-						\end{packed_item}				
-					\end{packed_item}
-					
-				\noindent \underbar{\textbf{UC7 - Prikaži pogrešku tijekom prijave/registracije}}
-					\begin{packed_item}
-	
-						\item \textbf{Glavni sudionik: }Neregistrirani, registrirani korisnik
-						\item  \textbf{Cilj:} Prikazati koja se pogreška desila prilikom prijave/registracije
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je upisao sve potrebne podatke za prijavu/registraciju
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-	
-							\item Korisnik unosi podatke potrebne za prijavu/registraciju
-							\item Nakon uspješne prijave aplikacija dovodi korisnika na početnu stranicu
-							
-						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] Nakon neuspješne prijave
-								\begin{packed_item}
-									\item Sustav javlja grešku
-								\end{packed_item}
-								
-							\item[2.b] Nakon uspješne registracije
-								\begin{packed_item}
-									\item Sustav vodi korisnika na stranicu prijave
-									\item[2.b.1] Nakon neuspješne registracije
-										\begin{packed_item}
-											\item Sustav javlja greršku
-										\end{packed_item}
-								\end{packed_item}
-							
-						\end{packed_item}				
-					\end{packed_item}
-					
-				\noindent \underbar{\textbf{UC8 - Pregledaj osobne podatake}}
-					\begin{packed_item}
-	
-						\item \textbf{Glavni sudionik: }Registrirani korisnik
-						\item  \textbf{Cilj:} Promjeniti osobne podatke
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je prijavljen u aplikaciji
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-	
-							\item Korsnik odabire opciju za pregled profila
-							\item Otvara se stranica s osobnim podacima korisnika
-
-						\end{packed_enum}						
-					\end{packed_item}
-					
-				\noindent \underbar{\textbf{UC9 - Promjeni osobne podatake}}
+				\noindent \underbar{\textbf{UC5 - Promjeni osobne podatake}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -372,7 +240,8 @@
 	
 							\item Korisnik odabire opciju za pregled profila
 							\item Otvara se stranica s osobnim podacima korisnika
-							\item Korisnik mijenja i sprema podatke
+							\item Korisnik mijenja podatke
+							\item Korisnik sprema promijene
 							\item Baza podataka se ažurira
 
 						\end{packed_enum}
@@ -381,12 +250,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[3.a] Korisnik nije spremio izmjene
-								\begin{packed_item}
-									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
-								\end{packed_item}
-								
-							\item[3.b] Korisnik nije spremio izmjene
+							\item[4.a] Korisnik nije spremio izmjene
 								\begin{packed_item}
 									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -394,7 +258,7 @@
 						\end{packed_item}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC10 - Obriši korisnički račun}}
+				\noindent \underbar{\textbf{UC6 - Obriši korisnički račun}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -407,7 +271,8 @@
 	
 							\item Korisnik odabire opciju za pregled profila
 							\item Otvara se stranica s osobnim podacima korisnika
-							\item Korisnik bira opciju brisanja profila i sprema promjene
+							\item Korisnik bira opciju brisanja profila
+							\item Korisnik sprema promijene
 							\item Baza podataka se ažurira
 
 						\end{packed_enum}
@@ -416,7 +281,7 @@
 						
 						\item[] \begin{packed_item}
 								
-							\item[3.a] Korisnik nije spremio podatke
+							\item[4.a] Korisnik nije spremio podatke
 								\begin{packed_item}
 									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -425,11 +290,11 @@
 						\end{packed_item}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC11 - Pregledaj aktivne/neaktivne oglase}}
+				\noindent \underbar{\textbf{UC7 - Pregledaj sve oglase}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
-						\item  \textbf{Cilj:} Pogledati trenutno aktivne/neaktivne oglase
+						\item  \textbf{Cilj:} Pogledati sve oglase
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
@@ -447,32 +312,45 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] Korisnik nema aktivnih/neaktivih oglasa
+							\item[2.a] Korisnik nema objavljenih oglasa
 							
 						\end{packed_item}					
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC12 - Dodaj oglas}}
+				\noindent \underbar{\textbf{UC8 - Dodaj oglas}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
 						\item  \textbf{Cilj:} Dodati novi oglas
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je prijavljen i posjeduje vinil
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik odabire opciju za pregled oglasa
+							\item Korisnik odabire gumb za pregled oglasa
 							\item Otvara se stranica sa svim oglasima
-							\item Korisnik odabire opciju za dodavanje oglasa
-							\item Korisnik odabire je li vinil u oglasu za prodaju ili zamjenu
+							\item Korisnik odabire gumb za dodavanje oglasa
+							\item Korisnik unosi osnovne podatke vinila
+							\item Korisnik sprema promijene
 							\item Promjene se upisuju u bazu podataka
 
-						\end{packed_enum}						
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+								
+							\item[5.a] Korisnik nije spremio podatke
+								\begin{packed_item}
+									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
+								\end{packed_item}
+								
+								
+						\end{packed_item}					
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC13 - Uredi oglas}}
+				\noindent \underbar{\textbf{UC9 - Uredi oglas}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -486,7 +364,8 @@
 							\item Korisnik odabire opciju za pregled oglasa
 							\item Otvara se stranica sa svim oglasima
 							\item Korisnik odabire opciju uređivanja nad određenim oglasom
-							\item Korisnik dodaje/izmjenjuje i sprema informacije u oglasu
+							\item Korisnik dodaje/izmjenjuje informacije u oglasu
+							\item Korisnik sprema promijene
 							\item Promjene se upisuju u bazu podataka
 
 						\end{packed_enum}		
@@ -495,7 +374,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[4.a] Korisnik nije spremio promjene
+							\item[5.a] Korisnik nije spremio promjene
 								\begin{packed_item}
 									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -503,7 +382,7 @@
 						\end{packed_item}				
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC14 - Ukloni oglas}}
+				\noindent \underbar{\textbf{UC10 - Ukloni oglas}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik, administrator
@@ -516,7 +395,8 @@
 	
 							\item Korisnik odabire opciju za pregled oglasa
 							\item Otvara se stranica sa svim oglasima
-							\item Korisnik odabire opciju uklanjanja nad određenim oglasom i sprema promjene
+							\item Korisnik odabire opciju uklanjanja nad određenim oglasom					
+							\item Korisnik sprema promijene
 							\item Promjene se upisuju u bazu podataka
 
 						\end{packed_enum}		
@@ -525,7 +405,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[4.a] Korisnik nije spremio promjene
+							\item[5.a] Korisnik nije spremio promjene
 								\begin{packed_item}
 									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -533,7 +413,7 @@
 						\end{packed_item}				
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC15 - Označi oglas sa "Sviđa mi se"}}
+					\noindent \underbar{\textbf{UC11 - Označi oglas sa "Sviđa mi se"}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -563,7 +443,7 @@
 						\end{packed_item}				
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC16 - Stvori kolekciju/podkolekciju}}
+				\noindent \underbar{\textbf{UC12 - Stvori kolekciju/podkolekciju}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -576,7 +456,9 @@
 	
 							\item Korisnik odabire opciju za pregled oglasa
 							\item Otvara se stranica sa svim oglasima
-							\item Korisnik odabire opciju stvaranja kolekcije/podkolekcije i dodaje vinile te sprema promjene
+							\item Korisnik odabire opciju stvaranja kolekcije/podkolekcije
+							\item Korisnik dodaje vinile u kolekciju/podkolekciju
+							\item Korisnik sprema promijene
 							\item Promjene se upisuju u bazu podataka
 
 						\end{packed_enum}
@@ -585,7 +467,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[3.a] Korisnik nije spremio promjene
+							\item[5.a] Korisnik nije spremio promjene
 								\begin{packed_item}
 									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -593,7 +475,7 @@
 						\end{packed_item}							
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC17 - Uredi kolekciju/podkolekciju}}
+				\noindent \underbar{\textbf{UC13 - Uredi kolekciju/podkolekciju}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -606,8 +488,9 @@
 	
 							\item Korisnik odabire opciju za pregled oglasa
 							\item Otvara se stranica sa svim oglasima i kolekcijama/podkolekcijama
-							\item Korisnik odabire opciju uređivanja kolekcije/podkolekcije
-							\item Korisnik dodaje/uklanja vinile u/iz kolekciju/podkolekciju te sprema promjene
+							\item Korisnik odabire opciju uređivanja određene kolekcije/podkolekcije
+							\item Korisnik dodaje/uklanja vinile u/iz kolekciju/podkolekciju
+							\item Korisnik sprema promijene
 							\item Promjene se upisuju u bazu podataka
 
 						\end{packed_enum}		
@@ -616,7 +499,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[4.a] Korisnik nije spremio promjene
+							\item[5.a] Korisnik nije spremio promjene
 								\begin{packed_item}
 									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -624,7 +507,7 @@
 						\end{packed_item}				
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC18 - Ukloni kolekciju/podkolekciju}}
+				\noindent \underbar{\textbf{UC14 - Ukloni kolekciju/podkolekciju}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -637,7 +520,8 @@
 	
 							\item Korisnik odabire opciju za pregled oglasa
 							\item Otvara se stranica sa svim oglasima i kolekcijama/podkolekcijama
-							\item Korisnik odabire opciju brisanja kolekcije/podkolekcije te sprema promjene
+							\item Korisnik odabire opciju brisanja kolekcije/podkolekcije
+							\item Korisnik sprema promijene
 							\item Promjene se upisuju u bazu podataka
 
 						\end{packed_enum}	
@@ -646,7 +530,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[3.a] Korisnik nije spremio promjene
+							\item[4.a] Korisnik nije spremio promjene
 								\begin{packed_item}
 									\item Sustav obavještava korisnika da nije spremio podatke te nudi korisniku dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -654,7 +538,7 @@
 						\end{packed_item}					
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC19 - Javi se na oglas}}
+				\noindent \underbar{\textbf{UC15 - Javi se na oglas}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -665,14 +549,16 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik odabire korisnički profil iz oglasa
-							\item Otvara se stranica odabranog korisnika
-							\item Korisnik šalje poruku na e-mail koji piše na profilu oglašivača
+							\item Korisnik odabire željeni oglas
+							\item Korisnik odabire korisnički profil iz željenog oglasa
+							\item Aplikacija prikazuje stranicu odabranog korisnika
+							\item Korisnik čita e-mail adresu korisnika
+							\item Korisnik šalje e-mail željenom korisniku preko druge aplikacije za slanje e-mail poruka
 
 						\end{packed_enum}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC20 - Zaprati korisnika}}
+				\noindent \underbar{\textbf{UC16 - Zaprati korisnika}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Registrirani korisnik
@@ -693,45 +579,29 @@
 	
 							\item[2.a] Korisnik već prati odabranog korisnika
 								\begin{packed_item}
-									\item Sustav miče stanje praćenja i korisnik više ne prati odabranog korisnika
+									\item Sustav uklanja stanje praćenja i korisnik više ne prati odabranog korisnika
 								\end{packed_item}
 						\end{packed_item} 
 
 						\end{packed_enum}						
 					\end{packed_item}
-		
-				\noindent \underbar{\textbf{UC21 - Pregledaj korisnika}}
-					\begin{packed_item}
-	
-						\item \textbf{Glavni sudionik: }Administrator
-						\item  \textbf{Cilj:} Pregledati registriranog korisnika
-						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
-						\item  \textbf{Opis osnovnog tijeka:}
-						
-						\item[] \begin{packed_enum}
-	
-							\item Administrator odabire opciju pregledavanja korisnika
-							\item Prikaže se lista svih ispravno registriranih korisnika s osobnim podacima
-							\item Administrator odabire korisnika iz liste kojeg želi pregledati
-
-						\end{packed_enum}						
-					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC22 - Blokiraj korisnika}}
+				\noindent \underbar{\textbf{UC17 - Blokiraj korisnika}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Administrator
 						\item  \textbf{Cilj:} Blokirati korisnika koji je prekršio bilo koja pravila
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator odabire opciju pregledavanja korisnika
-							\item Administrator pronalazi željenog korisnika
-							\item Administrator blokira željenog korisnika i sprema promjene
+							\item Administrator uočava prekršaj pravila 
+							\item Administrator odabire gumb za pregledavanje svih korisnika
+							\item Administrator odabire željenog korisnika
+							\item Administrator blokira željenog korisnika
+							\item Administrator sprema promjene
 							\item Promjene se spremaju u bazu podataka
 
 						\end{packed_enum}
@@ -740,11 +610,7 @@
 						
 						\item[] \begin{packed_item}
 	
-							\item[3.a] Korisnik nije već blokiran
-								\begin{packed_item}
-									\item Sustav javlja administratoru da je korisnik već blokiran
-								\end{packed_item} 
-							\item[3.b] Administrator nije spremio promjene
+							\item[5.a] Administrator nije spremio promjene
 								\begin{packed_item}
 									\item Sustav obavještava administratora da nije spremio podatke te nudi administratoru dvije opcije: "Odustani" i "Vrati se i spremi"
 								\end{packed_item}
@@ -752,50 +618,43 @@
 						\end{packed_item}						
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC23 - Aktiviraj korisnika}}
+				\noindent \underbar{\textbf{UC18 - Aktiviraj korisnika}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Administrator
 						\item  \textbf{Cilj:} Aktivirati blokirane korisnike
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Preduvjet:} Administrator je prijvaljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Administrator odabire opciju pregledavanja korisnika
+							\item Administrator odabire opciju pregledavanja svih korisnika
+							\item Administrator filtrira sve korisnike samo na blokirane
 							\item Administrator pronalazi željenog blokiranog korisnika
 							\item Administrator aktivira željenog korisnika
+							\item Administrator sprema promjene
 							\item Promjene se spremaju u bazu podataka
 
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[3.a] Korisnik je aktivan
-								\begin{packed_item}
-									\item Sustav javlja administratoru da je korisnik već aktiviran
-								\end{packed_item}
-							
-						\end{packed_item}
+					
 					\end{packed_item}
 					
-				\noindent \underbar{\textbf{UC24 - Kreiraj događaj}}
+				\noindent \underbar{\textbf{UC19 - Kreiraj događaj}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }Administrator
 						\item  \textbf{Cilj:} Kreirati događaj
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je prijavljen i dodijeljena su mu prava administratora
+						\item  \textbf{Preduvjet:} Administrator je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
 							\item Administrator odabire opciju stvaranja događaja
-							\item Administrator upisuje datum i naziv događaja te stavlja neke slike, kratki opis i link na događaj
-							\item Administrator objavljuje događaj na početnu stranicu
+							\item Administrator upisuje datum, naziv događaja, stavlja slike, kratki opis i link na događaj
+							\item Administrator kreira događaj
+							\item Aplikacija stavlja događaj na početnu stranicu
 							\item Promjene se upisuju u bazu podataka
 
 						\end{packed_enum}	
@@ -837,55 +696,55 @@
 %				
 %				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
 
-			\textbf{Obrazac uporabe UC9 - Promjena osobnih podataka}
+			\textbf{Obrazac uporabe UC5 - Promjena osobnih podataka}
 				
 				\text Korisnik šalje zahtjev za odabir svojeg profila. Poslužitelj dohvaća podatke iz baze podataka i prikazuje ih korisniku. Korisnik odabire polje i šalje zahtjev za promjenu osobnih podataka. Poslužitelj mu daje pristup i korisnik unosi nove osobne podatke. Kad korisnik završi sa izmjenom podataka i spremi promjenu, poslužitelj izmjeni podatke u bazi podataka i vraća potvrdu. Ukoliko korisnik nije spremio promjenu ispisuje se poruka prilikom koje može nastaviti dalje i ne spremiti promjene ili vratiti se nazad i spremiti promjene.
 				
 				\begin{figure}[H]
-					\includegraphics[width=\textwidth]{slike/SD_UC9.png}
+					\includegraphics[width=\textwidth]{slike/SD_UC5.png}
 					\centering
-					\caption{Sekvencijski dijagram za UC9}
-					\label{fig:UC9}
+					\caption{Sekvencijski dijagram za UC5}
+					\label{fig:UC5}
 				\end{figure}
 				
 				
 				\eject
 				
-			\textbf{Obrazac uporabe UC11 - Pregled aktivnih/neaktivnih oglasa}
+			\textbf{Obrazac uporabe UC11 - Pregledaj sve oglase}
 				
-				\text Korisnik šalje zahtjev za prikaz stranice sa svim oglasima. Poslužitelj dohvaća stranicu i prikazuje sve rezultate. Odabirom na određeni oglas, poslužitelj dohvaća osnovne podatke iz baze podataka o oglasu i prikazuje ih klijentu. Ukoliko korisnik ne želi vidjeti neaktivne oglase, šalje zahtjev prikaz aktivnih oglasa. Poslužitelj dohvaća listu aktivnih oglasa iz baze podataka i ukoliko postoji barem jedan aktivni oglas vraća je korisniku.
+				\text Korisnik šalje zahtjev za prikaz stranice sa svim oglasima. Poslužitelj dohvaća stranicu i prikazuje sve rezultate. Odabirom na određeni oglas, poslužitelj dohvaća osnovne podatke iz baze podataka o oglasu i prikazuje ih klijentu.
 				
 				\begin{figure}[H]
-					\includegraphics[width=\textwidth]{slike/SD_UC11.png}
+					\includegraphics[width=\textwidth]{slike/SD_UC7.png}
 					\centering
-					\caption{Sekvencijski dijagram za UC11}
-					\label{fig:UC11}
+					\caption{Sekvencijski dijagram za UC7}
+					\label{fig:UC7}
 				\end{figure}
 				
 				\eject
 				
-			\textbf{Obrazac uporabe UC17 - Uređivanje kolekcije/podkolekcije}
+			\textbf{Obrazac uporabe UC13 - Uredi kolekciju/podkolekciju}
 				
 				\text Korisnik šalje zahtjev za odabir određene kolekcije/podkolekcije. Poslužitelj dohvaća podatke iz baze podataka te prikazuje ih korisniku. Korisnik šalje zahtjev za promjenu proizvoda. Poslužitelj mu daje pristup i korisnik dodaje/izbacuje vinile iz kolekcije/podkolekcije te sprema promjenu. Poslužitelj izmjeni proizvod u bazi podataka koja vraća potvrdu.  Ukoliko korisnik nije spremio promjenu ispisuje se poruka prilikom koje može nastaviti dalje i ne spremiti promjene ili vratiti se nazad i spremiti promjene.
 				
 				\begin{figure}[H]
-					\includegraphics[width=\textwidth]{slike/SD_UC17.png}
+					\includegraphics[width=\textwidth]{slike/SD_UC13.png}
 					\centering
-					\caption{Sekvencijski dijagram za UC17}
-					\label{fig:UC17}
+					\caption{Sekvencijski dijagram za UC13}
+					\label{fig:UC13}
 				\end{figure}
 				
 				\eject
 				
-			\textbf{Obrazac uporabe UC21 - Blokiranje korisnika}
+			\textbf{Obrazac uporabe UC17 - Blokiraj korisnika}
 				
 				\text 	Administrator šalje zahtjev za listu korisnika. Polužitelj dohvaća popis iz baze podataka te ih prikazuje administratoru. Administrator odabire željenog korisnika. Polužitelj dohvaća podatke korisnika iz baze podataka i prikazuje ih administratoru. Administrator šalje zahtjev za blokiranje korisnika. Poslužitelj mu daje pristup i administrator blokira korisnika te sprema promjene. Poslužitelj izmjeni podatke korisnika u bazi podataka i vraća potvrdu. Ukoliko administrator nije spremio promjenu ispisuje se poruka prilikom koje može nastaviti dalje i ne spremiti promjene ili vratiti se nazad i spremiti promjene.
 				
 				\begin{figure}[H]
-					\includegraphics[scale=1.2]{slike/SD_UC21.png}
+					\includegraphics[scale=1.2]{slike/SD_UC17.png}
 					\centering
-					\caption{Sekvencijski dijagram za UC21}
-					\label{fig:UC21}
+					\caption{Sekvencijski dijagram za UC17}
+					\label{fig:UC17}
 				\end{figure}
 				
 				\eject
