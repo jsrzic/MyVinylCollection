@@ -1,5 +1,6 @@
 package hr.fer.progi.MyVinylCollection.service.impl;
 
+import hr.fer.progi.MyVinylCollection.dao.LocationRepository;
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.Location;
@@ -23,6 +24,9 @@ public class UserServiceJpa implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private LocationRepository locationRepo;
 
     @Autowired
     private MapStructMapper mapstructMapper;
@@ -104,6 +108,9 @@ public class UserServiceJpa implements UserService {
         User user = userRepo.findByUsername(updatedUser.getUsername()).orElseThrow(
                 () -> new UsernameNotFoundException("No user with username: "+ updatedUser.getUsername())
         );
+        if(updatedUser.getLocation() != null) {
+            locationRepo.save(updatedUser.getLocation());
+        }
         if(updatedUser.getPassword() != null) {
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }

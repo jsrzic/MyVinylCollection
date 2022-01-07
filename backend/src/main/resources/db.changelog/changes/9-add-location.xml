@@ -21,4 +21,8 @@
         </createTable>
         <addAutoIncrement incrementBy="1" tableName="location" columnName="id" columnDataType="int8" />
     </changeSet>
+    <changeSet id="28" author="Marta">
+        <dropNotNullConstraint tableName="location" columnName="city"/>
+    </changeSet>
+
 </databaseChangeLog>
