@@ -1,0 +1,74 @@
+\chapter{Implementacija i korisničko sučelje}
+		
+		
+		\section{Korištene tehnologije i alati}
+		
+%			\textbf{\textit{dio 2. revizije}}
+%			
+%			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
+			
+			Tehnologije koje se bile korištene u svrhu komunikacije tima su bile WhatsApp i Discord. Za izradu obrazaca uporabe i UML dijagrama korišten je alat Astah UML, a kao sustav za upravljanje kodom projekta Git. Kompletni kod i dokumentacija projekta dostupna je na udaljenom repozitoriju platforme Gitlab.
+			
+			Kao razvojno okruženje korišteno je IntelliJ IDEA, integrirano razvojno okruženje razvijeno od tvrtke JetBrains. Napisano je u Javi u svrhu razvoja računalnog softvera. IDE pruža integraciju s alatima za izradu/pakiranje kao što su bower, gradle, i sl. Podržava sustave kao Git i SVN te baze podataka tipa Microsoft SQL Server, Oracle, PostrgeSQL, i sl.
+			
+			\textit{Frontend} dio web aplikacije napisan je korištenjem Javascript biblioteke React i programskog jezika JavaScript, dok je \textit{backend} dio napisan je korištenjem radnog okvira Spring Boot i programskog jezika Java. React (također poznat kao React.js ili ReactJS) open-source biblioteka za izgradnju korisničkih sučelja temeljenih na UI komponentama. React se bavi samo upravljanjem stanjem i prikazivanjem tog stanja DOM-u, s obzirom na to stvaranje aplikacija obično zahtijeva korištenje dodatnih biblioteka za interakciju s API-jem. Radni okvir Spring Boot olakšava stvaranje samostalnih aplikacija koje se temelje na Springu koje se mogu samo "pokrenuti".
+			
+			Za upravljanje relacijskom bazom podataka korišten je sustav PostgreSQL, a za pokretanje i rad aplikacije korištena je platforma Heroku.
+			
+			\eject 
+		
+	
+		\section{Ispitivanje programskog rješenja}
+			
+%			\textbf{\textit{dio 2. revizije}}\\
+%			
+%			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
+	
+			
+			\subsection{Ispitivanje komponenti}
+%			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+			
+			
+			
+			\subsection{Ispitivanje sustava}
+			
+%			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
+%			 
+%			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
+%			 \begin{itemize}
+%			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
+%			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
+%			 \end{itemize}
+%		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+%			
+			\eject 
+		
+		
+		\section{Dijagram razmještaja}
+			
+%			\textbf{\textit{dio 2. revizije}}
+%			
+%			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+
+		Dijagram razmještaja je strukturni dijagram koji opisuje topologiju sustava i usredotočen je na odnos sklopovskih i programskih dijelova. Sustav je baziran na trorazinskoj arhitekturi pri kojoj klijent - poslužitelj i poslužitelj - baza podataka komuniciraju preko HTTP veze. Klijenti upotrebljavaju web preglednik kako bi pristupili web aplikaciji, dok web aplikacija pristupa bazi podataka kako bi pristupala podacima u svrhu provjere ili prikaza korisniku.
+
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/DD_web_aplikacija.png}
+					\centering
+					\caption{Dijagram razmještaja}
+					\label{fig:dig_razmjestaja}
+				\end{figure}
+			
+			\eject 
+		
+		\section{Upute za puštanje u pogon}
+		
+%			\textbf{\textit{dio 2. revizije}}\\
+%		
+%			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+%			
+%			
+%			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			
+			
+			\eject 
