@@ -44,7 +44,11 @@ function ProfilePage() {
   const [longitude, setLongitude] = React.useState();
   const [email, setEmail] = React.useState();
   const [contactEmail, setContactEmail] = React.useState();
+
   const [password, setPassword] = React.useState();
+  const [newPassword, setNewPassword] = React.useState();
+  const [confirmPassword, setConfirmPassword] = React.useState();
+  const [errorMessage, setErrorMessage] = React.useState()
 
   React.useEffect(() => {
     fetch(api + `/users/info/${username}`, {
@@ -72,6 +76,7 @@ function ProfilePage() {
       setEmail(data.email);
       setContactEmail(data.contactEmail);
       setPassword(data.password);
+      console.log(data.password)
       setTimeout(() => {
         setLoading(false)
       }, 500);
@@ -91,19 +96,27 @@ function ProfilePage() {
   }, [data]);
 
   function saveChanges() {
-    setEditingMode(false);
-    localStorage.setItem("username", username);
-    setData({
-      name: name,
-      surname: surname,
-      username: username,
-      location: {
-        latitude: latitude,
-        longitude: longitude
-      },
-      email: email,
-      password: password,
-    });
+    if (confirmPassword === newPassword) {
+      setEditingMode(false);
+      localStorage.setItem("username", username);
+      setErrorMessage("")
+      setConfirmPassword("")
+      setData({
+        name: name,
+        surname: surname,
+        username: username,
+        location: {
+          latitude: latitude,
+          longitude: longitude
+        },
+        email: email,
+        password: newPassword,
+      });
+    } else {
+      setErrorMessage("Passwords must match");
+      setConfirmPassword("")
+      setPassword("")
+    }
   }
 
   function cancelChanges() {
@@ -117,10 +130,11 @@ function ProfilePage() {
   }
 
   return (
-    <div
+    <form
       style={
         mobile ? { ...containerStyle, marginBottom: "4rem" } : containerStyle
       }
+      autocomplete="off"
     >
       <ProfileHeader />
       {loading ? (
@@ -175,19 +189,31 @@ function ProfilePage() {
             value={contactEmail}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <TextField
-            style={{ marginTop: "2rem" }}
-            label="Password"
-            type="password"
-            disabled={!editingMode}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
 
           <LocationMap
               lat={data.location.latitude} lng={data.location.longitude}
               setLat={setLatitude} setLng={setLongitude}
               editing={editingMode}
+          />
+
+          <p style={{color: "red", fontSize: "12px", marginTop: "1rem"}}>{errorMessage}</p>
+
+          <TextField
+              label="New Password"
+              type="password"
+              disabled={!editingMode}
+              autoComplete={false}
+              value=""
+              onChange={(e) => setNewPassword(e.target.value)}
+          />
+
+          <TextField
+              style={{ marginTop: "2rem" }}
+              label="Confirm Password"
+              type="password"
+              disabled={!editingMode}
+              autoComplete={false}
+              onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
           <div style={{ marginTop: "1rem" }}>
@@ -212,7 +238,7 @@ function ProfilePage() {
           </div>
         </div>
       )}
-    </div>
+    </form>
   );
 }
 
