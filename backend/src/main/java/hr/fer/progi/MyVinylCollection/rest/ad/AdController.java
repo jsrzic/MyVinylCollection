@@ -3,10 +3,11 @@ package hr.fer.progi.MyVinylCollection.rest.ad;
 import hr.fer.progi.MyVinylCollection.domain.ExchangeAd;
 import hr.fer.progi.MyVinylCollection.domain.SaleAd;
 import hr.fer.progi.MyVinylCollection.domain.User;
-import hr.fer.progi.MyVinylCollection.rest.ad.dto.NewSaleAdDTO;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.SaleAdDTO;
+import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
 import hr.fer.progi.MyVinylCollection.service.ExchangeAdService;
 import hr.fer.progi.MyVinylCollection.service.SaleAdService;
+import hr.fer.progi.MyVinylCollection.service.UserService;
 import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -21,6 +22,12 @@ import java.util.List;
 public class AdController {
 
     @Autowired
+    UserSession userSession;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
     private SaleAdService saleAdService;
 
     @Autowired
@@ -31,21 +38,18 @@ public class AdController {
 
     @GetMapping("/sale_ads")
     public List<SaleAd> getSaleAds(){
-        return (List<SaleAd>) saleAdService.getActiveAds();
+        return saleAdService.getActiveAds();
     }
 
     @GetMapping("/exchange_ads")
     public List<ExchangeAd> getExchangeAds(){
-        return (List<ExchangeAd>) exchangeAdService.getActiveAds();
+        return exchangeAdService.getActiveAds();
     }
 
     @PostMapping("/sale_ads")
-    public SaleAd addSaleAd(@AuthenticationPrincipal User u, @RequestBody SaleAdDTO adDTO){
-        NewSaleAdDTO saleAdDTO = new NewSaleAdDTO();
-        saleAdDTO.setOwner(u);
-        saleAdDTO.setPrice(adDTO.getPrice());
-        saleAdDTO.setVinyl(vinylService.findById(adDTO.getVinylId()));
-        return (SaleAd) saleAdService.newAd(new SaleAd(saleAdDTO));
+    public SaleAd createNewSaleAd(@RequestBody SaleAdDTO adDTO){
+        User user = userService.findByUsername(userSession.getUsername());
+        return saleAdService.newAd(new SaleAd(adDTO, user));
     }
 
 

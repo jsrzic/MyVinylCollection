@@ -6,7 +6,7 @@ public class SaleAdDTO {
 
     private double price;
 
-    private Long vinylId;
+    private Vinyl vinyl;
 
     public double getPrice() {
         return price;
@@ -16,11 +16,11 @@ public class SaleAdDTO {
         this.price = price;
     }
 
-    public Long getVinylId() {
-        return vinylId;
+    public Vinyl getVinyl() {
+        return vinyl;
     }
 
-    public void setVinylId(Long vinylId) {
-        this.vinylId = vinylId;
+    public void setVinyl(Vinyl vinyl) {
+        this.vinyl = vinyl;
     }
 }

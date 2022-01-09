@@ -1,6 +1,7 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
-import hr.fer.progi.MyVinylCollection.rest.ad.dto.NewSaleAdDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import hr.fer.progi.MyVinylCollection.rest.ad.dto.SaleAdDTO;
 
 import javax.persistence.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 public class SaleAd {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name="is_active")
@@ -21,17 +22,18 @@ public class SaleAd {
     private Vinyl vinyl;
 
     @ManyToOne
-    @JoinColumn(name="owner_id", nullable=false)
+    @JoinColumn(name="creator_id", nullable=false)
+    @JsonBackReference
     private User creator;
 
 
     public SaleAd() {
     }
 
-    public SaleAd(NewSaleAdDTO adDTO) {
+    public SaleAd(SaleAdDTO adDTO, User creator) {
         this.isActive = true;
         this.price = adDTO.getPrice();
-        this.creator = adDTO.getOwner();
+        this.creator = creator;
         this.vinyl = adDTO.getVinyl();
     }
 

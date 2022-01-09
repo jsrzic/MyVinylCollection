@@ -69,21 +69,21 @@ public class VinylController {
     }
 
     @GetMapping("/{id}")
-    public UpdateVinylDTO getVinylInfo(@PathVariable Long vinylId){
+    public UpdateVinylDTO getVinylInfo(@PathVariable Long id){
         try{
-            return vinylService.getVinylInfo(vinylId);
+            return vinylService.getVinylInfo(id);
         }catch(RequestDeniedException e){
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateVinylInfo(@PathVariable Long vinylId,
+    public ResponseEntity<Object> updateVinylInfo(@PathVariable Long id,
                                               @RequestBody UpdateVinylDTO updatedVinyl){
-        if(vinylService.updateVinylInfo(vinylId, updatedVinyl)){
-            return new ResponseEntity<Object>(vinylId, HttpStatus.OK);
+        if(vinylService.updateVinylInfo(id, updatedVinyl)){
+            return new ResponseEntity<Object>(id, HttpStatus.OK);
         }else{
-            return new ResponseEntity<Object>(vinylId, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
         }
     }
 

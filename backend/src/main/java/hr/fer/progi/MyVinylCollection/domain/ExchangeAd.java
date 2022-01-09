@@ -1,6 +1,7 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
-import hr.fer.progi.MyVinylCollection.rest.ad.dto.NewExchangeAdDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import hr.fer.progi.MyVinylCollection.rest.ad.dto.ExchangeAdDTO;
 
 import javax.persistence.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 public class ExchangeAd {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name="is_active")
@@ -19,7 +20,8 @@ public class ExchangeAd {
     private Vinyl vinyl;
 
     @ManyToOne
-    @JoinColumn(name="owner_id", nullable=false)
+    @JoinColumn(name="creator_id", nullable=false)
+    @JsonBackReference
     private User creator;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -33,9 +35,9 @@ public class ExchangeAd {
     public ExchangeAd() {
     }
 
-    public ExchangeAd(NewExchangeAdDTO adDTO){
+    public ExchangeAd(ExchangeAdDTO adDTO, User creator){
         this.isActive = true;
-        this.creator = adDTO.getOwner();
+        this.creator = creator;
         this.vinyl = adDTO.getVinyl();
     }
 

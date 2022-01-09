@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SaleAdRepository extends JpaRepository<SaleAd, Long> {
 
-    @Query("SELECT s FROM sale_ad s WHERE s.isActive =: true")
+    @Query("SELECT s FROM sale_ad s WHERE s.isActive = true")
     List<SaleAd> getActiveAds();
 
 }
