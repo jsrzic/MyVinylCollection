@@ -36,18 +36,21 @@ public class User {
     @Column(name="is_active")
     private boolean isActive;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Genre> preferredGenres;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Vinyl> vinyls;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Artist> subcollections;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Vinyl> favourites;
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<User> friends;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
@@ -57,7 +60,7 @@ public class User {
     @JsonManagedReference
     private List<ExchangeAd> exchangeAds;
 
-    @OneToOne(mappedBy = "newOwner")
+    @OneToOne(mappedBy = "newOwner", fetch = FetchType.LAZY)
     private ExchangeAd exchangedAd;
 
     public User() {}
@@ -200,5 +203,13 @@ public class User {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
     }
 }

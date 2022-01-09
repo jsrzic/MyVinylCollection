@@ -184,15 +184,15 @@ public class UserController {
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/current")
-    public Object getCurrentUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
+    public VinylUserDetails getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth.getPrincipal();
+        return (VinylUserDetails) auth.getPrincipal();
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    @GetMapping("/current_username")
-    public String getCurrentUsername(@CurrentSecurityContext(expression="authentication?.name") String username) {
-        return username;
+    @GetMapping("/friends")
+    public List<User> getFriends() {
+        User user = getCurrentUser().user;
+       return user.getFriends();
     }
 
 }
