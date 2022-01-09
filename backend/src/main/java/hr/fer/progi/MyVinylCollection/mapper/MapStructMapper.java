@@ -1,7 +1,9 @@
 package hr.fer.progi.MyVinylCollection.mapper;
 
+import hr.fer.progi.MyVinylCollection.domain.SaleAd;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
+import hr.fer.progi.MyVinylCollection.rest.ad.dto.NewSaleAdDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
 import org.mapstruct.BeanMapping;
@@ -20,4 +22,5 @@ public interface MapStructMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Vinyl updateVinylDTOToVinyl(UpdateVinylDTO dto, @MappingTarget Vinyl entity);
+
 }
