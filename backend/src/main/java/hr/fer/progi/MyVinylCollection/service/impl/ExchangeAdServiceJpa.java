@@ -2,14 +2,14 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 
 import hr.fer.progi.MyVinylCollection.dao.ExchangeAdRepository;
 import hr.fer.progi.MyVinylCollection.domain.ExchangeAd;
-import hr.fer.progi.MyVinylCollection.service.AdService;
+import hr.fer.progi.MyVinylCollection.service.ExchangeAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ExchangeAdServiceJpa implements AdService {
+public class ExchangeAdServiceJpa implements ExchangeAdService {
 
     @Autowired
     private ExchangeAdRepository exchangeAdRepo;
@@ -20,7 +20,7 @@ public class ExchangeAdServiceJpa implements AdService {
     }
 
     @Override
-    public Object newAd(Object newAd) {
-        return null;
+    public ExchangeAd newAd(ExchangeAd newAd) {
+        return exchangeAdRepo.save(newAd);
     }
 }

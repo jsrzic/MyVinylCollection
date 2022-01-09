@@ -2,14 +2,14 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 
 import hr.fer.progi.MyVinylCollection.dao.SaleAdRepository;
 import hr.fer.progi.MyVinylCollection.domain.SaleAd;
-import hr.fer.progi.MyVinylCollection.service.AdService;
+import hr.fer.progi.MyVinylCollection.service.SaleAdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SaleAdServiceJpa implements AdService {
+public class SaleAdServiceJpa implements SaleAdService {
 
     @Autowired
     private SaleAdRepository saleAdRepo;
@@ -20,7 +20,7 @@ public class SaleAdServiceJpa implements AdService {
     }
 
     @Override
-    public Object newAd(Object newAd) {
-        return saleAdRepo.save((SaleAd) newAd);
+    public SaleAd newAd(SaleAd newAd) {
+        return saleAdRepo.save(newAd);
     }
 }
