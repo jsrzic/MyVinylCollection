@@ -59,4 +59,16 @@
     <changeSet id="20"  author="Marta">
         <dropColumn tableName="vinyl" columnName="name"/>
     </changeSet>
+    <changeSet id="27"  author="Marta">
+        <addColumn tableName="vinyl">
+            <column  name="artist_id"  type="int8">
+                <constraints  validateForeignKey="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="vinyl">
+            <column  name="owner_id"  type="int8">
+                <constraints  validateForeignKey="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -11,6 +11,15 @@ public class RegisterUserDTO {
     private String password;
     private String email;
     private List<Long> preferredGenres;
+    private String ip;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
     public String getName() {
         return name;

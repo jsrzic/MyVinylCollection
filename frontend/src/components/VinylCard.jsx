@@ -42,7 +42,7 @@ function VinylCard({ vinylData }) {
       <div style={saleHeaderStyle}>
         <FavoriteBorderIcon />
       </div>
-      <VinylComponent size={vinylDimension} name={vinylData.name} />
+      <VinylComponent size={vinylDimension} name={vinylData.album} />
     </Card>
   );
 }

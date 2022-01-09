@@ -54,15 +54,16 @@ R      <Formik
           };
           fetch(api + "/users/auth/login", requestOptions)
             .then((response) => {
-              if (response.ok) {
-                localStorage.setItem("user", "");
-                response
-                  .json()
-                  .then((r) => localStorage.setItem("user", JSON.stringify(r)));
-                history.push("/dashboard/homepage");
-              } else {
+              if (!response.ok) {
                 setErrorMessage(true);
+                throw new Error("HTTP status code: " + response.status);
+              } else {
+                return response.json();
               }
+              })
+            .then(data => {
+              localStorage.setItem("user", JSON.stringify(data));
+              history.push("/dashboard/homepage");
             })
             .catch((err) => {
               console.log(err);
@@ -74,7 +75,7 @@ R      <Formik
             <Form style={formStyle}>
               {errorMessage && (
                 <p style={{ color: "red", fontSize: "13.5px", margin: "auto" }}>
-                  Invalid username/password. Try again
+                  Invalid username/password. Try again.
                 </p>
               )}
               <Form.Row

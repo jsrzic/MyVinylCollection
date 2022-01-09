@@ -1,9 +1,10 @@
 import React from "react";
 import VinylCollection from "../components/VinylCollection";
-import {Card} from "@mui/material";
+import {Autocomplete, Card, Fade, TextField} from "@mui/material";
 import {getRandomColor, IsMobile} from "../util/utils";
 import AddIcon from '@mui/icons-material/Add';
 import {useHistory} from "react-router-dom";
+import PickArtistForm from "../components/PickArtistForm";
 
 function CollectionPage() {
   const cardDimension = IsMobile() ? 100 : 200;
@@ -25,22 +26,80 @@ function CollectionPage() {
     justifySelf: "center"
   };
 
-  const mockData = [
-    {name: "Bohemian Rhapsody", forSale: true, ad: true},
-    {name: "Tražena si roba u gradu", forSale: true, ad: false},
-    {name: "Mesečar", forSale: false, ad: true},
-    {name: "Vraćam se majci u Bosnu", forSale: false, ad: false},
-    {name: "Instant crush", forSale: false, ad: false},
-    {name: "Don't cry", forSale: false, ad: false},
-    {name: "Three little birds", forSale: true, ad: false},
-    {name: "Without me", forSale: false, ad: true},
-    {name: "Đuskanje ne pomaže", forSale: false, ad: false},
-    {name: "Highlife", forSale: true, ad: true},
-    {name: "Namazan U Kocki", forSale: false, ad: false},
-    {name: "Lemonade", forSale: true, ad: false},
-    {name: "Džin i limunada", forSale: false, ad: true},
-    {name: "Run to the hills", forSale: false, ad: true},
-  ]
+  const scrollContainerStyleDesktop = {
+    maxHeight: "90vh",
+    overflowY: "scroll",
+  }
+
+  const scrollContainerStyleMobile = {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    width: "100%",
+    zoom: `${window.innerWidth / 4}%`,
+  };
+
+  const vinylGridStyle = {
+    display: "grid",
+    gridTemplateColumns: "auto auto auto auto auto auto auto",
+    justifyContent: "space-between",
+    paddingRight: "3rem",
+  }
+
+  const api = process.env.REACT_APP_API_URL;
+  const origin = process.env.REACT_APP_URL;
+  const user = JSON.parse(localStorage.getItem("user"));
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + user["accessToken"],
+      Origin: origin
+    },
+  };
+
+  const [errorMessage, setErrorMessage] = React.useState(false);
+  const [mainCollection, setMainCollection] = React.useState([]);
+  const [subcollections, setSubcollections] = React.useState([]);
+  const [artists, setArtists] = React.useState([]);
+  const [isAdded, setIsAdded] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch(api + `/vinyls/${user["username"]}/collection`, requestOptions)
+      .then(response => {
+        if(!response.ok){
+          setErrorMessage(true);
+        }
+        return response.json();
+      })
+      .then(data => {
+          setMainCollection(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(true);
+      })
+  }, [isAdded]);
+
+  React.useEffect(() => {
+    fetch(api + `/vinyls/${user["username"]}/subcollection`, requestOptions)
+      .then(response => {
+        if(!response.ok){
+          setErrorMessage(true);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSubcollections(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(true);
+      })
+  }, [isAdded]);
+
+  React.useEffect(() => {
+    const subCollectionArtists = subcollections.map(v => v.name);
+    setArtists(mainCollection.filter(a => !subCollectionArtists.includes(a.artist.name)));
+  }, [mainCollection, subcollections]);
 
   const history = useHistory();
   const addNewVinylCard =
@@ -50,7 +109,30 @@ function CollectionPage() {
     </Card>;
 
   return (
-    <VinylCollection data={mockData} initialCard={addNewVinylCard}/>
+    <>
+      {errorMessage ? <h1>User not authorized.</h1> :
+      <div>
+        <h1>All Vinyls</h1>
+        <Fade in>
+          <div style={vinylGridStyle}>
+            {addNewVinylCard}
+            {mainCollection.length > 0 ? <VinylCollection data={mainCollection}/> : <h1>No vinyls in this collection.</h1>}
+          </div>
+        </Fade>
+        <h1>SUB-COLLECTIONS</h1>
+        <PickArtistForm updateFunction={setIsAdded} data={artists}/>
+        {subcollections.length > 0 ? subcollections.map(subc =>
+          <>
+            <h1>{subc.name}</h1>
+            <div style={vinylGridStyle}>
+              {addNewVinylCard}
+              {subc.items.length > 0 ? <VinylCollection data={subc.items}/> : <h1>No vinyls in this collection.</h1>}
+            </div>
+          </>
+        ) : <h1>No subcollections.</h1>}
+      </div>
+      }
+    </>
   );
 }
 

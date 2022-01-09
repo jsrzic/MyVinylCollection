@@ -29,7 +29,9 @@ public class User {
     @Column(name="contact_email")
     private String contactEmail;
 
-    private String location;
+    @OneToOne
+    @JoinColumn(name="location_id", nullable=false)
+    private Location location;
 
     @Column(name="is_active")
     private boolean isActive;
@@ -60,7 +62,7 @@ public class User {
 
     public User() {}
 
-    public User(RegisterUserDTO user, List<Genre> userGenrePreference) {
+    public User(RegisterUserDTO user, List<Genre> userGenrePreference, Location location) {
         this.name = user.getName();
         this.surname = user.getSurname();
         this.username = user.getUsername();
@@ -68,7 +70,7 @@ public class User {
         this.password = user.getPassword();
         this.contactEmail = user.getEmail();
         this.isActive = true;
-        this.location = "";
+        this.location = location;
         this.preferredGenres = userGenrePreference;
     }
 
@@ -136,14 +138,6 @@ public class User {
         this.preferredGenres = preferredGenres;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public boolean isActive() {
         return isActive;
     }
@@ -198,5 +192,13 @@ public class User {
 
     public void setExchangedAd(ExchangeAd exchangedAd) {
         this.exchangedAd = exchangedAd;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

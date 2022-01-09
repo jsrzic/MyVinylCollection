@@ -92,23 +92,26 @@ function TopNavBar() {
         </Toolbar>
         <Grow in={open}>
           <AppBar style={helpBarMarginStyle}>
-            <Toolbar style={helpBarStyle}>
-              <TextField
-                variant="filled"
-                hiddenLabel
-                size="small"
-                InputProps={{
-                  startAdornment: (
-                    <IconButton disableTouchRipple>
-                      <SearchIcon />
-                    </IconButton>
-                  ),
-                }}
-              />
-              <Button variant="contained" startIcon={<LogoutIcon />}>
-                Log out
-              </Button>
-            </Toolbar>
+            <form
+                autocomplete="off">
+              <Toolbar style={helpBarStyle}>
+                <TextField
+                  variant="filled"
+                  hiddenLabel
+                  size="small"
+                  InputProps={{
+                    startAdornment: (
+                      <IconButton disableTouchRipple>
+                        <SearchIcon />
+                      </IconButton>
+                    ),
+                  }}
+                />
+                <Button variant="contained" startIcon={<LogoutIcon />}>
+                  Log out
+                </Button>
+              </Toolbar>
+            </form>
           </AppBar>
         </Grow>
       </AppBar>

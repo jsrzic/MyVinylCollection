@@ -2,10 +2,12 @@ import React from "react";
 
 import ProfileHeader from "../components/ProfileHeader";
 
-import { Button, LinearProgress, TextField } from "@mui/material";
+import { Autocomplete, Button, LinearProgress, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+
 import {getCurrentUser, IsMobile} from "../util/utils";
 import authHeader from "../auth-header";
+import LocationMap from "../components/LocationMap";
 
 const infoContainerStyle = {
   display: "flex",
@@ -37,10 +39,16 @@ function ProfilePage() {
 
   const [name, setName] = React.useState();
   const [surname, setSurname] = React.useState();
-  const [location, setLocation] = React.useState();
+  const [location, setLocation] = React.useState({});
+  const [latitude, setLatitude] = React.useState();
+  const [longitude, setLongitude] = React.useState();
   const [email, setEmail] = React.useState();
   const [contactEmail, setContactEmail] = React.useState();
+
   const [password, setPassword] = React.useState();
+  const [newPassword, setNewPassword] = React.useState();
+  const [confirmPassword, setConfirmPassword] = React.useState();
+  const [errorMessage, setErrorMessage] = React.useState()
 
   React.useEffect(() => {
     fetch(api + `/users/info/${username}`, {
@@ -50,7 +58,13 @@ function ProfilePage() {
         Authorization: authHeader(),
       },
     }).then((response) => {
-      response.json().then((result) => setData(result));
+      response.json().then((result) => {
+        setData(result)
+        console.log(result)
+        setLatitude(result.location.latitude)
+        setLongitude(result.location.longitude)
+        console.log(result.location.latitude + "  " + result.location.longitude)
+      });
     });
   }, [api, username]);
 
@@ -62,9 +76,12 @@ function ProfilePage() {
       setEmail(data.email);
       setContactEmail(data.contactEmail);
       setPassword(data.password);
-      setTimeout(() => setLoading(false), 500);
-      console.log(typeof JSON.stringify(data));
+      console.log(data.password)
+      setTimeout(() => {
+        setLoading(false)
+      }, 500);
     } else {
+      console.log(data)
       localStorage.setItem("username", username);
       fetch(api + `/users/info/${username}`, {
         method: "PUT",
@@ -79,16 +96,27 @@ function ProfilePage() {
   }, [data]);
 
   function saveChanges() {
-    setEditingMode(false);
-    localStorage.setItem("username", username);
-    setData({
-      name: name,
-      surname: surname,
-      username: username,
-      location: location,
-      email: email,
-      password: password,
-    });
+    if (confirmPassword === newPassword) {
+      setEditingMode(false);
+      localStorage.setItem("username", username);
+      setErrorMessage("")
+      setConfirmPassword("")
+      setData({
+        name: name,
+        surname: surname,
+        username: username,
+        location: {
+          latitude: latitude,
+          longitude: longitude
+        },
+        email: email,
+        password: newPassword,
+      });
+    } else {
+      setErrorMessage("Passwords must match");
+      setConfirmPassword("")
+      setPassword("")
+    }
   }
 
   function cancelChanges() {
@@ -102,10 +130,11 @@ function ProfilePage() {
   }
 
   return (
-    <div
+    <form
       style={
         mobile ? { ...containerStyle, marginBottom: "4rem" } : containerStyle
       }
+      autocomplete="off"
     >
       <ProfileHeader />
       {loading ? (
@@ -148,13 +177,6 @@ function ProfilePage() {
           />
           <TextField
             style={{ marginTop: "2rem" }}
-            label="Location"
-            disabled={!editingMode}
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <TextField
-            style={{ marginTop: "2rem" }}
             label="e-mail"
             disabled={!editingMode}
             value={email}
@@ -167,13 +189,31 @@ function ProfilePage() {
             value={contactEmail}
             onChange={(e) => setEmail(e.target.value)}
           />
+
+          <LocationMap
+              lat={data.location.latitude} lng={data.location.longitude}
+              setLat={setLatitude} setLng={setLongitude}
+              editing={editingMode}
+          />
+
+          <p style={{color: "red", fontSize: "12px", marginTop: "1rem"}}>{errorMessage}</p>
+
           <TextField
-            style={{ marginTop: "2rem" }}
-            label="Password"
-            type="password"
-            disabled={!editingMode}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+              label="New Password"
+              type="password"
+              disabled={!editingMode}
+              autoComplete={false}
+              value=""
+              onChange={(e) => setNewPassword(e.target.value)}
+          />
+
+          <TextField
+              style={{ marginTop: "2rem" }}
+              label="Confirm Password"
+              type="password"
+              disabled={!editingMode}
+              autoComplete={false}
+              onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
           <div style={{ marginTop: "1rem" }}>
@@ -198,7 +238,7 @@ function ProfilePage() {
           </div>
         </div>
       )}
-    </div>
+    </form>
   );
 }
 
