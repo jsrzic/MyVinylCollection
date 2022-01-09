@@ -136,4 +136,16 @@ public class UserServiceJpa implements UserService {
         userRepo.save(user);
     }
 
+    @Override
+    public void addFriend(User currentUser, User newFriend) {
+        currentUser.getFriends().add(newFriend);
+        userRepo.save(currentUser);
+    }
+
+    @Override
+    public void removeFriend(User currentUser, User friend) {
+        currentUser.getFriends().remove(friend);
+        userRepo.save(currentUser);
+    }
+
 }

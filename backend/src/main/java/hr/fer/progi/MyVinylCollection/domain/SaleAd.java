@@ -22,7 +22,7 @@ public class SaleAd {
 
     @ManyToOne
     @JoinColumn(name="owner_id", nullable=false)
-    private User owner;
+    private User creator;
 
 
     public SaleAd() {
@@ -31,7 +31,7 @@ public class SaleAd {
     public SaleAd(NewSaleAdDTO adDTO) {
         this.isActive = true;
         this.price = adDTO.getPrice();
-        this.owner = adDTO.getOwner();
+        this.creator = adDTO.getOwner();
         this.vinyl = adDTO.getVinyl();
     }
 
@@ -67,11 +67,11 @@ public class SaleAd {
         this.vinyl = vinyl;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setCreator(User owner) {
+        this.creator = owner;
     }
 }

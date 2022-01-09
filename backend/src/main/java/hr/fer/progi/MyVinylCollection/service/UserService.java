@@ -25,5 +25,7 @@ public interface UserService {
     boolean updateUserInfo(UpdateUserDTO updatedUser);
     void addFavourite(User user, Vinyl vinyl);
     void removeFavourite(User user, Vinyl vinyl);
+    void addFriend(User currentUser, User newFriend);
+    void removeFriend(User currentUser, User friend);
 
 }
