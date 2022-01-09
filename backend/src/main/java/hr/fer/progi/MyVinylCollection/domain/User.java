@@ -2,6 +2,8 @@ package hr.fer.progi.MyVinylCollection.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -36,29 +38,36 @@ public class User {
     @Column(name="is_active")
     private boolean isActive;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Vinyl> vinyls;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Artist> subcollections;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade=CascadeType.ALL)
     private List<Vinyl> favourites;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<User> friends;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<SaleAd> saleAds;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ExchangeAd> exchangeAds;
-
-    @OneToOne(mappedBy = "newOwner")
-    private ExchangeAd exchangedAd;
 
     public User() {}
 
@@ -186,19 +195,19 @@ public class User {
         this.exchangeAds = exchangeAds;
     }
 
-    public ExchangeAd getExchangedAd() {
-        return exchangedAd;
-    }
-
-    public void setExchangedAd(ExchangeAd exchangedAd) {
-        this.exchangedAd = exchangedAd;
-    }
-
     public Location getLocation() {
         return location;
     }
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
     }
 }

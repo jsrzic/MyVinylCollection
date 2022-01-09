@@ -20,4 +20,7 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="29" author="Marta">
+        <renameColumn tableName="sale_ad" oldColumnName="owner_id" newColumnName="creator_id"/>
+    </changeSet>
 </databaseChangeLog>

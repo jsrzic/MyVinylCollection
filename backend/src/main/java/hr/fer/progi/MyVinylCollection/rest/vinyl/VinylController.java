@@ -2,6 +2,7 @@ package hr.fer.progi.MyVinylCollection.rest.vinyl;
 
 
 import hr.fer.progi.MyVinylCollection.domain.*;
+import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
@@ -36,15 +37,18 @@ public class VinylController {
     @Autowired
     private GenreService genreService;
 
-    @GetMapping("/{username}/collection")
-    public List<Vinyl> getVinylCollection(@PathVariable("username") String username) {
-        User user = userService.findByUsername(username);
+    @Autowired
+    UserSession userSession;
+
+    @GetMapping("/collection")
+    public List<Vinyl> getVinylCollection() {
+        User user = userService.findByUsername(userSession.getUsername());
         return user.getVinyls();
     }
 
-    @PostMapping("/{username}")
-    public Vinyl addVinyl(@PathVariable("username") String username, @RequestBody AddVinylDTO vinylDto) {
-        User user = userService.findByUsername(username);
+    @PostMapping("")
+    public Vinyl addVinyl(@RequestBody AddVinylDTO vinylDto) {
+        User user = userService.findByUsername(userSession.getUsername());
         Artist artist = artistService.findById(vinylDto.getArtistId());
         Genre genre = genreService.getGenreById(vinylDto.getGenreId());
         Subgenre subgenre = null;
@@ -83,21 +87,20 @@ public class VinylController {
         }
     }
 
-    @PutMapping("/{username}/subcollection/{id}")
-    public ResponseEntity<Object> createSubcollection(@PathVariable("id") Long artistId,
-                                                     @PathVariable("username") String username) {
-        User user = userService.findByUsername(username);
+    @PutMapping("/subcollection/{id}")
+    public ResponseEntity<Object> createSubcollection(@PathVariable("id") Long artistId) {
+        User user = userService.findByUsername(userSession.getUsername());
         Artist artist = artistService.findById(artistId);
         vinylService.createSubcollection(artist, user);
         return new ResponseEntity<Object>(user, HttpStatus.OK);
 
     }
 
-    @GetMapping("/{username}/subcollection")
-    public List<Subcollection> getUserSubcollections(@PathVariable("username") String username) {
-        User user = userService.findByUsername(username);
+    @GetMapping("subcollection")
+    public List<Subcollection> getUserSubcollections() {
+        User user = userService.findByUsername(userSession.getUsername());
         List<Vinyl> collection = user.getVinyls();
-        List<Subcollection> subcollections = new ArrayList<Subcollection>();
+        List<Subcollection> subcollections = new ArrayList();
         user.getSubcollections().forEach( s -> {
             List<Vinyl> subcollectionItems =  collection.stream().filter(v -> v.getArtist().getName()
                     .equals(s.getName())).collect(Collectors.toList());
@@ -106,10 +109,9 @@ public class VinylController {
         return subcollections;
     }
 
-    @DeleteMapping("/{username}/subcollection/{id}")
-    public ResponseEntity<Object> deleteSubcollection(@PathVariable("id") Long artistId,
-                                                      @PathVariable("username") String username) {
-        User user = userService.findByUsername(username);
+    @DeleteMapping("/subcollection/{id}")
+    public ResponseEntity<Object> deleteSubcollection(@PathVariable("id") Long artistId) {
+        User user = userService.findByUsername(userSession.getUsername());
         Artist artist = artistService.findById(artistId);
         vinylService.deleteSubcollection(artist, user);
         return new ResponseEntity<Object>(user, HttpStatus.OK);

@@ -5,6 +5,7 @@ import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.Location;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
+import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtResponse;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtUtils;
@@ -19,14 +20,11 @@ import hr.fer.progi.MyVinylCollection.service.impl.LocationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +58,9 @@ public class UserController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    UserSession userSession;
 
     @GetMapping("")
     public List<User> listUsers() {
@@ -134,10 +135,10 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/info/{username}")
-    public UpdateUserDTO getUserInfo(@PathVariable("username") String username){
+    @GetMapping("/info")
+    public UpdateUserDTO getUserInfo(){
         try{
-            return userService.getUserInfo(username);
+            return userService.getUserInfo(userSession.getUsername());
         }catch(RequestDeniedException e){
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -145,13 +146,13 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PutMapping("/info/{username}")
-    public ResponseEntity<Object> updateUserInfo(@PathVariable("username") String username, @RequestBody UpdateUserDTO updatedUser) {
+    @PutMapping("/info")
+    public ResponseEntity<Object> updateUserInfo(@RequestBody UpdateUserDTO updatedUser) {
         try {
             if (userService.updateUserInfo(updatedUser)) {
-                return new ResponseEntity<Object>(username, HttpStatus.OK);
+                return new ResponseEntity<Object>(userSession.getUsername(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<Object>(username, HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<Object>(userSession.getUsername(), HttpStatus.EXPECTATION_FAILED);
             }
         } catch (RequestDeniedException e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -159,16 +160,17 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("{username}/favourites")
-    public List<Vinyl> getFavourites(@PathVariable("username") String username) {
-        User user = userService.findByUsername(username);
+    @GetMapping("/favourites")
+    public List<Vinyl> getFavourites() {
+        User user = userService.findByUsername(userSession.getUsername());
         return user.getFavourites();
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PutMapping("{username}/favourites/{id}")
-    public ResponseEntity<Object> manageFavourites(@PathVariable("username") String username, @PathVariable("id") Long vinylId) {
+    @PutMapping("/favourites/{id}")
+    public ResponseEntity<Object> manageFavourites(@PathVariable("id") Long vinylId) {
         try {
-            User user = userService.findByUsername(username);
+            User user = userService.findByUsername(userSession.getUsername());
             Vinyl vinyl = vinylService.findById(vinylId);
             if(user.getFavourites().contains(vinyl)) {
                 userService.removeFavourite(user, vinyl);
@@ -182,17 +184,28 @@ public class UserController {
         }
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    @GetMapping("/current")
-    public Object getCurrentUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User user) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth.getPrincipal();
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PutMapping("friends/{username}")
+    public ResponseEntity<Object> manageFriends(@PathVariable("username") String username) {
+        try {
+            User currentUser = userService.findByUsername(userSession.getUsername());
+            User friend = userService.findByUsername(username);
+            if(currentUser.getFriends().contains(friend)) {
+                userService.removeFriend(currentUser, friend);
+                return new ResponseEntity<Object>("User removed from friends!", HttpStatus.OK);
+            } else {
+                userService.addFriend(currentUser, friend);
+                return new ResponseEntity<Object>("User added to friends!", HttpStatus.OK);
+            }
+        } catch (RequestDeniedException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    @GetMapping("/current_username")
-    public String getCurrentUsername(@CurrentSecurityContext(expression="authentication?.name") String username) {
-        return username;
+    @GetMapping("/friends")
+    public List<User> getFriends() {
+        User user = userSession.getUser().user;
+       return user.getFriends();
     }
 
 }

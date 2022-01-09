@@ -20,14 +20,14 @@ public class ExchangeAd {
 
     @ManyToOne
     @JoinColumn(name="owner_id", nullable=false)
-    private User owner;
+    private User creator;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "exchanged_vinyl_id", referencedColumnName = "id")
+    @JoinColumn(name = "exchanged_vinyl_id")
     private Vinyl exchangedVinyl;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "new_owner_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "new_owner_id")
     private User newOwner;
 
     public ExchangeAd() {
@@ -35,7 +35,7 @@ public class ExchangeAd {
 
     public ExchangeAd(NewExchangeAdDTO adDTO){
         this.isActive = true;
-        this.owner = adDTO.getOwner();
+        this.creator = adDTO.getOwner();
         this.vinyl = adDTO.getVinyl();
     }
 
@@ -63,12 +63,12 @@ public class ExchangeAd {
         this.vinyl = vinyl;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setCreator(User owner) {
+        this.creator = owner;
     }
 
     public Vinyl getExchangedVinyl() {
