@@ -5,10 +5,10 @@ import hr.fer.progi.MyVinylCollection.domain.SaleAd;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.NewSaleAdDTO;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.SaleAdDTO;
-import hr.fer.progi.MyVinylCollection.service.AdService;
+import hr.fer.progi.MyVinylCollection.service.ExchangeAdService;
+import hr.fer.progi.MyVinylCollection.service.SaleAdService;
 import hr.fer.progi.MyVinylCollection.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +20,11 @@ import java.util.List;
 @RequestMapping("/ads")
 public class AdController {
 
-    @Qualifier("saleAdServiceJpa")
     @Autowired
-    private AdService saleAdService;
+    private SaleAdService saleAdService;
 
-    @Qualifier("exchangeAdServiceJpa")
     @Autowired
-    private AdService exchangeAdService;
+    private ExchangeAdService exchangeAdService;
 
     @Autowired
     private VinylService vinylService;
