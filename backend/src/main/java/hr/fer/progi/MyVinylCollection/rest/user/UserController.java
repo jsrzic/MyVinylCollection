@@ -164,11 +164,12 @@ public class UserController {
         User user = userService.findByUsername(username);
         return user.getFavourites();
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PutMapping("{username}/favourites/{id}")
-    public ResponseEntity<Object> manageFavourites(@PathVariable("username") String username, @PathVariable("id") Long vinylId) {
+    @PutMapping("/favourites/{id}")
+    public ResponseEntity<Object> manageFavourites(@PathVariable("id") Long vinylId) {
         try {
-            User user = userService.findByUsername(username);
+            User user = userService.findByUsername(getCurrentUserUsername());
             Vinyl vinyl = vinylService.findById(vinylId);
             if(user.getFavourites().contains(vinyl)) {
                 userService.removeFavourite(user, vinyl);
@@ -187,6 +188,31 @@ public class UserController {
     public VinylUserDetails getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return (VinylUserDetails) auth.getPrincipal();
+    }
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @GetMapping("/current/username")
+    public String getCurrentUserUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return ((VinylUserDetails) auth.getPrincipal()).getUsername();
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PutMapping("friends/{username}")
+    public ResponseEntity<Object> manageFriends(@PathVariable("username") String username) {
+        try {
+            User currentUser = userService.findByUsername(getCurrentUserUsername());
+            User friend = userService.findByUsername(username);
+            if(currentUser.getFriends().contains(friend)) {
+                userService.removeFriend(currentUser, friend);
+                return new ResponseEntity<Object>("User removed from friends!", HttpStatus.OK);
+            } else {
+                userService.addFriend(currentUser, friend);
+                return new ResponseEntity<Object>("User added to friends!", HttpStatus.OK);
+            }
+        } catch (RequestDeniedException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     @GetMapping("/friends")

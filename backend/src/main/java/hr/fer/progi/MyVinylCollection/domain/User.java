@@ -2,6 +2,8 @@ package hr.fer.progi.MyVinylCollection.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -36,32 +38,36 @@ public class User {
     @Column(name="is_active")
     private boolean isActive;
 
-    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<Genre> preferredGenres;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Vinyl> vinyls;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<Artist> subcollections;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<Vinyl> favourites;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade=CascadeType.ALL)
     private List<User> friends;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<SaleAd> saleAds;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ExchangeAd> exchangeAds;
-
-    @OneToOne(mappedBy = "newOwner", fetch = FetchType.LAZY)
-    private ExchangeAd exchangedAd;
 
     public User() {}
 
@@ -187,14 +193,6 @@ public class User {
 
     public void setExchangeAds(List<ExchangeAd> exchangeAds) {
         this.exchangeAds = exchangeAds;
-    }
-
-    public ExchangeAd getExchangedAd() {
-        return exchangedAd;
-    }
-
-    public void setExchangedAd(ExchangeAd exchangedAd) {
-        this.exchangedAd = exchangedAd;
     }
 
     public Location getLocation() {

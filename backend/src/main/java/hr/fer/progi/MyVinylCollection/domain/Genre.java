@@ -1,6 +1,8 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Genre {
 
     private String name;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "genre", cascade=CascadeType.ALL)
     @JsonManagedReference
     private List<Subgenre> subgenres;
