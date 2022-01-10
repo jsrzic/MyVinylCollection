@@ -14,7 +14,7 @@ public interface ExchangeAdRepository extends JpaRepository<ExchangeAd, Long> {
     List<ExchangeAd> getActiveAds();
 
     @Modifying
-    @Query("UPDATE exchange_ad e SET e.isActive = false, e.newOwner = :newOwner WHERE e.id = :adId")
-    ExchangeAd exchangeOwners(@Param("adId") Long adId, @Param("newOwner") Long newOwner);
+    @Query("UPDATE exchange_ad e SET e.isActive = false, e.newOwner = :newOwner, e.exchangedVinyl = :exchangedVinylId WHERE e.id = :adId")
+    ExchangeAd exchangeOwners(@Param("adId") Long adId, @Param("newOwner") Long newOwner, @Param("exchangedVinylId") Long exchangedVinylId);
 
 }

@@ -2,10 +2,12 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 
 import hr.fer.progi.MyVinylCollection.dao.SaleAdRepository;
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
+import hr.fer.progi.MyVinylCollection.dao.VinylRepository;
 import hr.fer.progi.MyVinylCollection.domain.SaleAd;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.SaleAdService;
+import net.bytebuddy.implementation.FieldAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class SaleAdServiceJpa implements SaleAdService {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private VinylRepository vinylRepo;
+
     @Override
     public List<SaleAd> getActiveAds() {
         return saleAdRepo.getActiveAds();
@@ -28,6 +33,7 @@ public class SaleAdServiceJpa implements SaleAdService {
     @Override
     public SaleAd newAd(SaleAd newAd, User creator) {
         creator.getSaleAds().add(newAd);
+        userRepo.save(creator);
         return saleAdRepo.save(newAd);
     }
 
@@ -40,12 +46,16 @@ public class SaleAdServiceJpa implements SaleAdService {
     }
 
     @Override
-    public boolean setSaleAdInactive(Long id, User owner) {
+    public boolean setSaleAdInactive(Long id, User owner, User newOwner) {
         if(!owner.equals(saleAdRepo.findById(id).get().getCreator()))
             throw new RequestDeniedException("You are not owner of this ad.");
         SaleAd saleAd = saleAdRepo.setSaleAdInactive(id);
-        if(id.equals(saleAd.getId()))
-            return true;
-        return false;
+        saleAd.getVinyl().setOwner(newOwner);
+        vinylRepo.save(saleAd.getVinyl());
+        owner.getVinyls().remove(saleAd.getVinyl());
+        userRepo.save(owner);
+        newOwner.getVinyls().add(saleAd.getVinyl());
+        userRepo.save(newOwner);
+        return true;
     }
 }

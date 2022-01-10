@@ -10,6 +10,6 @@ public interface SaleAdService {
     List<SaleAd> getActiveAds();
     SaleAd newAd(SaleAd saleAd, User creator);
     boolean deleteAd(Long id, User owner);
-    boolean setSaleAdInactive(Long id, User owner);
+    boolean setSaleAdInactive(Long id, User owner, User newOwner);
 
 }

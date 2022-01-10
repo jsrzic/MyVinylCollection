@@ -79,7 +79,7 @@ public class AdController {
     @PutMapping("/exchange_ads/update/{id}")
     public ResponseEntity<Object> exchangeOwners(@PathVariable Long id, @RequestBody Long newOwnerId){
         User user = userService.findByUsername(userSession.getUsername());
-        if(exchangeAdService.exchangeOwners(id, newOwnerId, user))
+        if(exchangeAdService.exchangeOwners(id, newOwnerId, user, null))
             return new ResponseEntity<Object>(id, HttpStatus.OK);
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
@@ -87,7 +87,7 @@ public class AdController {
     @PutMapping("/sale_ads/update/{id}")
     public ResponseEntity<Object> setSaleAdInactive(@PathVariable Long id){
         User user = userService.findByUsername(userSession.getUsername());
-        if(saleAdService.setSaleAdInactive(id, user))
+        if(saleAdService.setSaleAdInactive(id, user, null))
             return new ResponseEntity<Object>(id, HttpStatus.OK);
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
 
