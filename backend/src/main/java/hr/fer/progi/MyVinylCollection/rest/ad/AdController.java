@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +51,7 @@ public class AdController {
     @PostMapping("/sale_ads")
     public SaleAd createNewSaleAd(@RequestBody SaleAdDTO adDTO){
         User user = userService.findByUsername(userSession.getUsername());
-        return saleAdService.newAd(new SaleAd(adDTO, user));
+        return saleAdService.newAd(new SaleAd(adDTO, user), user);
     }
 
     @PostMapping("/exchange_ads")
@@ -69,7 +68,7 @@ public class AdController {
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
 
-    @DeleteMapping("/exchange_ad/{id}")
+    @DeleteMapping("/exchange_ads/{id}")
     public ResponseEntity<Object> deleteExchangeAd(@PathVariable Long id){
         User user = userService.findByUsername(userSession.getUsername());
         if(exchangeAdService.deleteAd(id, user))
@@ -77,7 +76,7 @@ public class AdController {
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/exchange_ad/update/{id}")
+    @PutMapping("/exchange_ads/update/{id}")
     public ResponseEntity<Object> exchangeOwners(@PathVariable Long id, @RequestBody Long newOwnerId){
         User user = userService.findByUsername(userSession.getUsername());
         if(exchangeAdService.exchangeOwners(id, newOwnerId, user))
@@ -85,7 +84,7 @@ public class AdController {
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/sale_ad/update/{id}")
+    @PutMapping("/sale_ads/update/{id}")
     public ResponseEntity<Object> setSaleAdInactive(@PathVariable Long id){
         User user = userService.findByUsername(userSession.getUsername());
         if(saleAdService.setSaleAdInactive(id, user))

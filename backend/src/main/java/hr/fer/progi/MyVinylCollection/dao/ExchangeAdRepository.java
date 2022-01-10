@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface ExchangeAdRepository extends JpaRepository<ExchangeAd, Long> {
 
-    @Query("SELECT e FROM exchange_ad e WHERE e.isActive =: true")
+    @Query("SELECT e FROM exchange_ad e WHERE e.isActive = true")
     List<ExchangeAd> getActiveAds();
 
     @Modifying
-    @Query("UPDATE exchange_ad e SET e.isActive = :false, e.newOwner = :newOwner WHERE e.id = :adId")
+    @Query("UPDATE exchange_ad e SET e.isActive = false, e.newOwner = :newOwner WHERE e.id = :adId")
     ExchangeAd exchangeOwners(@Param("adId") Long adId, @Param("newOwner") Long newOwner);
 
 }

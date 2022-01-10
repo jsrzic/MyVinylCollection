@@ -46,6 +46,18 @@ public class VinylController {
         return user.getVinyls();
     }
 
+    @GetMapping("/collection/ad")
+    public List<Vinyl> getVinylCollectionForAd() {
+        User user = userService.findByUsername(userSession.getUsername());
+        return user.getVinyls().stream().filter(v -> isVinylAvailable(user, v)).collect(Collectors.toList());
+    }
+
+    private boolean isVinylAvailable(User user, Vinyl vinyl) {
+        return user.getSaleAds().stream().noneMatch(ad -> ad.getVinyl().getId().equals(vinyl.getId()) && ad.isActive())
+                && user.getExchangeAds().stream().noneMatch(ad -> ad.getVinyl().getId().equals(vinyl.getId()) && ad.isActive());
+    }
+
+
     @PostMapping("")
     public Vinyl addVinyl(@RequestBody AddVinylDTO vinylDto) {
         User user = userService.findByUsername(userSession.getUsername());
