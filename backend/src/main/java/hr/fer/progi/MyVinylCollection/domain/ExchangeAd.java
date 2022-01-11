@@ -1,6 +1,7 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
-import hr.fer.progi.MyVinylCollection.rest.ad.dto.NewExchangeAdDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import hr.fer.progi.MyVinylCollection.rest.ad.dto.ExchangeAdDTO;
 
 import javax.persistence.*;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 public class ExchangeAd {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name="is_active")
@@ -19,23 +20,24 @@ public class ExchangeAd {
     private Vinyl vinyl;
 
     @ManyToOne
-    @JoinColumn(name="owner_id", nullable=false)
-    private User owner;
+    @JoinColumn(name="creator_id", nullable=false)
+    @JsonBackReference
+    private User creator;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "exchanged_vinyl_id", referencedColumnName = "id")
+    @JoinColumn(name = "exchanged_vinyl_id")
     private Vinyl exchangedVinyl;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "new_owner_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "new_owner_id")
     private User newOwner;
 
     public ExchangeAd() {
     }
 
-    public ExchangeAd(NewExchangeAdDTO adDTO){
+    public ExchangeAd(ExchangeAdDTO adDTO, User creator){
         this.isActive = true;
-        this.owner = adDTO.getOwner();
+        this.creator = creator;
         this.vinyl = adDTO.getVinyl();
     }
 
@@ -63,12 +65,12 @@ public class ExchangeAd {
         this.vinyl = vinyl;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setCreator(User owner) {
+        this.creator = owner;
     }
 
     public Vinyl getExchangedVinyl() {

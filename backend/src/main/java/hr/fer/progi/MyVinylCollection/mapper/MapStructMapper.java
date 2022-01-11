@@ -23,6 +23,9 @@ public interface MapStructMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Vinyl updateVinylDTOToVinyl(UpdateVinylDTO dto, @MappingTarget Vinyl entity);
 
+<<<<<<< HEAD
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Event updateEventDTOtoEvent(EventDTO dto, @MappingTarget Event entity);
+=======
+>>>>>>> 9b5239049d7a35b77a4c8828bd0bed370f30c0b7
 }

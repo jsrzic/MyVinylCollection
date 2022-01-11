@@ -51,7 +51,7 @@ function ProfilePage() {
   const [errorMessage, setErrorMessage] = React.useState()
 
   React.useEffect(() => {
-    fetch(api + `/users/info/${username}`, {
+    fetch(api + `/users/info`, {
       method: "GET",
       headers: {
         Origin: origin,
@@ -83,7 +83,7 @@ function ProfilePage() {
     } else {
       console.log(data)
       localStorage.setItem("username", username);
-      fetch(api + `/users/info/${username}`, {
+      fetch(api + `/users/info`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

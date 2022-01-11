@@ -17,7 +17,6 @@ function AddVinylPage() {
   const [errorMessage, setErrorMessage] = React.useState(false);
   const [artists, setArtists] = React.useState([]);
   const [genre, setGenre] = React.useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
   let subgenresOptions = [];
 
   const formStyle = {
@@ -48,7 +47,7 @@ function AddVinylPage() {
   const requestOptions = {
     method: "GET",
     headers: {
-      Authorization: "Bearer " + user["accessToken"],
+      Authorization: authHeader(),
       Origin: origin
     },
   };
@@ -101,7 +100,7 @@ function AddVinylPage() {
     reproductionQuality: yup.string("Enter reproduction quality").required("Reproduction quality is required"),
     nmbOfAudioChannels: yup.number("Enter number of audio channels").typeError("Number of audio channels must be a number").moreThan(0).required("Number of audio channels is required"),
     timeOfReproduction: yup.string("Enter time of reproduction")
-      .matches(/\d\d:\d\d:\d\d/, "Invalid time format")
+      .matches(/^\d\d:\d\d:\d\d$/, "Invalid time format")
       .test("is-time", "Invalid time format", (value) => moment(value, "HH:mm:ss").isSameOrBefore(moment("24:00:00", "HH:mm:ss")))
       .required("Time of reproduction is required"),
   });
@@ -146,7 +145,7 @@ function AddVinylPage() {
 
 
           console.log(JSON.stringify(values, null, 2));
-          fetch(api + `/vinyls/${user.username}`, {
+          fetch(api + `/vinyls`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;;
 import java.time.LocalTime;
@@ -60,17 +62,6 @@ public class Vinyl {
 
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime timeOfReproduction;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<SaleAd> saleAds;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<ExchangeAd> exchangeAds;
-
-    @OneToOne(mappedBy = "exchangedVinyl")
-    private ExchangeAd exchangedAd;
 
     public Vinyl() {
 
@@ -234,27 +225,4 @@ public class Vinyl {
         this.owner = owner;
     }
 
-    public List<SaleAd> getSaleAds() {
-        return saleAds;
-    }
-
-    public void setSaleAds(List<SaleAd> saleAds) {
-        this.saleAds = saleAds;
-    }
-
-    public List<ExchangeAd> getExchangeAds() {
-        return exchangeAds;
-    }
-
-    public void setExchangeAds(List<ExchangeAd> exchangeAds) {
-        this.exchangeAds = exchangeAds;
-    }
-
-    public ExchangeAd getExchangedAd() {
-        return exchangedAd;
-    }
-
-    public void setExchangedAd(ExchangeAd exchangedAd) {
-        this.exchangedAd = exchangedAd;
-    }
 }

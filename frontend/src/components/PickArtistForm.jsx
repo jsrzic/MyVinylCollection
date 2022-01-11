@@ -4,12 +4,9 @@ import Form from "./Form";
 import {Autocomplete, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import authHeader from "../auth-header";
-import {useHistory} from "react-router-dom";
 
 function PickArtistForm({data, updateFunction}){
   const api = process.env.REACT_APP_API_URL;
-  const history = useHistory();
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const formStyle = {
     margin: "auto",
@@ -23,7 +20,7 @@ function PickArtistForm({data, updateFunction}){
       initialValues={{artist: ""}}
       onSubmit={values => {
         let id = data.filter(v => v.artist.name == values.artist)[0].artist.id;
-        fetch(api + `/vinyls/${user.username}/subcollection/${id}`, {
+        fetch(api + `/vinyls/subcollection/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
