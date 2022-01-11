@@ -4,6 +4,7 @@ import hr.fer.progi.MyVinylCollection.dao.ExchangeAdRepository;
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.dao.VinylRepository;
 import hr.fer.progi.MyVinylCollection.domain.ExchangeAd;
+import hr.fer.progi.MyVinylCollection.domain.ExchangeOffer;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.service.ExchangeAdService;
@@ -50,20 +51,27 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
     }
 
     @Override
-    public boolean exchangeOwners(Long adId, Long newOwnerId, User owner, Vinyl exchangedVinyl) {
-        if(!owner.equals(exchangeAdRepo.findById(adId).get().getCreator()))
-            throw new RequestDeniedException("You are not owner of this ad.");
-        ExchangeAd ad = exchangeAdRepo.exchangeOwners(adId, newOwnerId, exchangedVinyl.getId());
-        ad.getVinyl().setOwner(ad.getNewOwner());
-        vinylRepo.save(ad.getVinyl());
-        exchangedVinyl.setOwner(owner);
-        vinylRepo.save(exchangedVinyl);
-        owner.getVinyls().remove(ad.getVinyl());
-        owner.getVinyls().add(exchangedVinyl);
-        userRepo.save(owner);
-        userRepo.findById(newOwnerId).get().getVinyls().remove(exchangedVinyl);
-        userRepo.findById(newOwnerId).get().getVinyls().add(ad.getVinyl());
-        return true;
-
+    public boolean exchangeVinyls(ExchangeOffer offer, User user) {
+        if(offer.getAd().isActive()) {
+            List<Vinyl> userCollection = user.getVinyls();
+            userCollection.remove(offer.getGivingVinyl());
+            userCollection.add(offer.getReceivingVinyl());
+            userRepo.save(user);
+            List<Vinyl> offerorCollection = offer.getOfferor().getVinyls();
+            offerorCollection.remove(offer.getReceivingVinyl());
+            offerorCollection.add(offer.getGivingVinyl());
+            userRepo.save(offer.getOfferor());
+            ExchangeAd ad = offer.getAd();
+            ad.setActive(false);
+            ad.setExchangedVinyl(offer.getReceivingVinyl());
+            ad.setNewOwner(offer.getOfferor());
+            exchangeAdRepo.save(ad);
+            user.getOffers().remove(offer);
+            return true;
+        } else {
+            user.getOffers().remove(offer);
+            return false;
+        }
     }
+
 }

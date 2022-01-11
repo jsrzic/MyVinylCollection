@@ -1,8 +1,6 @@
 package hr.fer.progi.MyVinylCollection.rest.ad;
 
-import hr.fer.progi.MyVinylCollection.domain.ExchangeAd;
-import hr.fer.progi.MyVinylCollection.domain.SaleAd;
-import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.domain.*;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.ExchangeAdDTO;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.SaleAdDTO;
 import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
@@ -76,21 +74,39 @@ public class AdController {
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/exchange_ads/update/{id}")
-    public ResponseEntity<Object> exchangeOwners(@PathVariable Long id, @RequestBody Long newOwnerId){
-        User user = userService.findByUsername(userSession.getUsername());
-        if(exchangeAdService.exchangeOwners(id, newOwnerId, user, null))
-            return new ResponseEntity<Object>(id, HttpStatus.OK);
-        return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
+    @PutMapping("/exchange_ads/offer/{username}")
+    public ResponseEntity<Object> askForExchange(@PathVariable String username, @RequestBody Vinyl offeringVinyl){
+        //TODO
+       return null;
     }
 
-    @PutMapping("/sale_ads/update/{id}")
-    public ResponseEntity<Object> setSaleAdInactive(@PathVariable Long id){
+    @PutMapping("/exchange_ads/exchange/")
+    public ResponseEntity<Object> exchangeVinyls(@RequestBody ExchangeOffer offer) {
         User user = userService.findByUsername(userSession.getUsername());
-        if(saleAdService.setSaleAdInactive(id, user, null))
-            return new ResponseEntity<Object>(id, HttpStatus.OK);
-        return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
+        if(exchangeAdService.exchangeVinyls(offer, user))
+            return new ResponseEntity<Object>("Vinlys have been succesfully exchanged!", HttpStatus.OK);
+        return new ResponseEntity<Object>("Ad is inactive", HttpStatus.EXPECTATION_FAILED);
+    }
 
+    @PutMapping("/sale_ads/sell/{id}")
+    public ResponseEntity<Object> buyVinyl(@RequestBody SaleAd ad) {
+        User buyer = userService.findByUsername(userSession.getUsername());
+        if(saleAdService.buyVinyl(ad, ad.getCreator(), buyer))
+            return new ResponseEntity<Object>(ad, HttpStatus.OK);
+        return new ResponseEntity<Object>(ad, HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @GetMapping("/bought_vinyls")
+    public List<Vinyl> getBoughtVinyls(){
+        //TODO
+        return null;
+    }
+
+
+    @GetMapping("/sold_vinyls")
+    public List<Vinyl> getSoldVinyls(){
+        //TODO
+        return null;
     }
 
 }

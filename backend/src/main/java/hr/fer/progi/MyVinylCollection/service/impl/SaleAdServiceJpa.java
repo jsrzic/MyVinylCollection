@@ -5,6 +5,7 @@ import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.dao.VinylRepository;
 import hr.fer.progi.MyVinylCollection.domain.SaleAd;
 import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.SaleAdService;
 import net.bytebuddy.implementation.FieldAccessor;
@@ -46,10 +47,8 @@ public class SaleAdServiceJpa implements SaleAdService {
     }
 
     @Override
-    public boolean setSaleAdInactive(Long id, User owner, User newOwner) {
-        if(!owner.equals(saleAdRepo.findById(id).get().getCreator()))
-            throw new RequestDeniedException("You are not owner of this ad.");
-        SaleAd saleAd = saleAdRepo.setSaleAdInactive(id);
+    public boolean buyVinyl(SaleAd ad, User owner, User newOwner) {
+        SaleAd saleAd = saleAdRepo.setSaleAdInactive(ad);
         saleAd.getVinyl().setOwner(newOwner);
         vinylRepo.save(saleAd.getVinyl());
         owner.getVinyls().remove(saleAd.getVinyl());

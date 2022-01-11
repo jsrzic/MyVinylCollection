@@ -69,6 +69,11 @@ public class User {
     @JsonManagedReference
     private List<ExchangeAd> exchangeAds;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<ExchangeOffer> offers;
+
     public User() {}
 
     public User(RegisterUserDTO user, List<Genre> userGenrePreference, Location location) {
@@ -209,5 +214,13 @@ public class User {
 
     public void setFriends(List<User> friends) {
         this.friends = friends;
+    }
+
+    public List<ExchangeOffer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<ExchangeOffer> offers) {
+        this.offers = offers;
     }
 }

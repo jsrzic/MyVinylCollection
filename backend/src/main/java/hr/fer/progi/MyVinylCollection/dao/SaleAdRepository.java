@@ -14,6 +14,6 @@ public interface SaleAdRepository extends JpaRepository<SaleAd, Long> {
     List<SaleAd> getActiveAds();
 
     @Modifying
-    @Query("UPDATE sale_ad s SET s.isActive = false WHERE s.id =: id")
-    SaleAd setSaleAdInactive(@Param("id") Long id);
+    @Query("UPDATE sale_ad s SET s.isActive = false WHERE s =: ad")
+    SaleAd setSaleAdInactive(@Param("ad") SaleAd ad);
 }
