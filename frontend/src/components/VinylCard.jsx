@@ -58,7 +58,7 @@ function VinylCard({ vinylData, favVinyls, updateFunction}) {
 
         if(favVinyls.map(v => v.id).includes(vinylData.id)){
           let array = [...favVinyls];
-          array.splice(array.indexOf(vinylData), 1);
+          array.splice(array.findIndex(e => (e.id == vinylData.id)), 1);
           updateFunction(array);
         } else {
           let array = [...favVinyls];
