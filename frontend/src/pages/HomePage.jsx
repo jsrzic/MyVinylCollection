@@ -22,7 +22,7 @@ function HomePage() {
 
   return (
     <>
-      <VinylCollection data={mockData} />
+      <VinylCollection data={mockData} favVinyls={mockData}/>
     </>
   );
 }

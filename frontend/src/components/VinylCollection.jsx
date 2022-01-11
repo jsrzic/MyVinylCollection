@@ -1,22 +1,12 @@
-import React, {useState} from "react";
-import {IsMobile} from "../util/utils";
+import React, {useEffect, useState} from "react";
 import VinylCard from "./VinylCard";
-import {Fade} from "@mui/material";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-function VinylCollection({data}) {
-  // const scrollContainerStyleDesktop = {
-  //   display: "grid",
-  //   gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-  //   justifyContent: "space-between",
-  //   maxHeight: "90vh",
-  //   overflowY: "scroll",
-  //   width: "100%",
-  //   paddingRight: "3rem"
-  // };
+function VinylCollection({data, favVinyls, updateFunction}) {
+  const api = process.env.REACT_APP_API_URL;
 
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState(0);
 
   const incrementIndex = () => {
     if(index + 4 < data.length){
@@ -34,7 +24,7 @@ function VinylCollection({data}) {
     <>
       <ArrowBackIosIcon onClick={decrementIndex} style={{height: "16rem"}}/>
       {data.slice(index, index + 4).map((v) => (
-        <VinylCard vinylData={v} />
+        <VinylCard vinylData={v} favVinyls={favVinyls} updateFunction={updateFunction}/>
       ))}
       <ArrowForwardIosIcon onClick={incrementIndex} style={{height: "16rem"}}/>
     </>

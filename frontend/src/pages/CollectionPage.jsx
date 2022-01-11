@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import VinylCollection from "../components/VinylCollection";
 import {Autocomplete, Card, Fade, TextField} from "@mui/material";
 import {getRandomColor, IsMobile} from "../util/utils";
@@ -62,6 +62,25 @@ function CollectionPage() {
   const [subcollections, setSubcollections] = React.useState([]);
   const [artists, setArtists] = React.useState([]);
   const [isAdded, setIsAdded] = React.useState(false);
+  const [favVinyls, setFavVinyls] = useState([]);
+
+
+  React.useEffect(() => {
+    fetch(api + "/users/favourites", requestOptions)
+      .then(response => {
+        if(response.ok){
+          return response.json();
+        }
+        else {
+          throw new Error(response.status);
+        }
+      })
+      .then(favVinlys => {
+        setFavVinyls(favVinlys);
+      })
+      .catch(err => console.log(err));
+
+  }, []);
 
   React.useEffect(() => {
     fetch(api + `/vinyls/collection`, requestOptions)
@@ -117,7 +136,7 @@ function CollectionPage() {
         <Fade in>
           <div style={vinylGridStyle}>
             {addNewVinylCard}
-            {mainCollection.length > 0 ? <VinylCollection data={mainCollection}/> : <h1>No vinyls in this collection.</h1>}
+            {mainCollection.length > 0 ? <VinylCollection data={mainCollection} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
           </div>
         </Fade>
         <h1>SUB-COLLECTIONS</h1>
@@ -126,11 +145,13 @@ function CollectionPage() {
           <>
             <h1>{subc.name}</h1>
             <div style={vinylGridStyle}>
-              {addNewVinylCard}
-              {subc.items.length > 0 ? <VinylCollection data={subc.items}/> : <h1>No vinyls in this collection.</h1>}
+              {subc.items.length > 0 ? <VinylCollection data={subc.items} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
             </div>
           </>
         ) : <h1>No subcollections.</h1>}
+
+        <h1>FAVOURITES</h1>
+        {favVinyls.length > 0 ? <VinylCollection data={favVinyls} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
       </div>
       }
     </>

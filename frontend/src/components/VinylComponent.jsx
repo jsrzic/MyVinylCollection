@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { getRandomColor, ThemeContext } from "../util/utils";
 import { Grow } from "@mui/material";
@@ -10,6 +10,10 @@ const flexedCenterStyle = {
 };
 
 function VinylComponent({ size, name }) {
+  const { theme } = React.useContext(ThemeContext);
+  const outline = theme.palette.mode === "dark" ? "black" : "white";
+  const [color, setColor] = useState(getRandomColor());
+
   const containerStyle = {
     background: "rgb(33,33,33)",
     borderRadius: size,
@@ -20,10 +24,10 @@ function VinylComponent({ size, name }) {
     borderRadius: size,
     height: 0.5 * size,
     width: 0.5 * size,
-    background: getRandomColor(),
+    background: color,
   };
-  const { theme } = React.useContext(ThemeContext);
-  const outline = theme.palette.mode === "dark" ? "black" : "white";
+
+
 
   return (
     <Grow in timeout={500}>

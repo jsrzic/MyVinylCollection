@@ -27,7 +27,7 @@ function PickArtistForm({data, updateFunction}){
             Authorization: authHeader(),
           },
         }).then(response => {
-            updateFunction(true);
+            updateFunction();
         }).catch(err => {
           console.log(err);
         });
