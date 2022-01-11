@@ -24,7 +24,6 @@ public class VinylServiceJpa implements VinylService {
     @Autowired
     private MapStructMapper mapstructMapper;
 
-
     @Override
     public Vinyl findById(Long id) {
         return vinylRepo.findById(id).orElseThrow(
