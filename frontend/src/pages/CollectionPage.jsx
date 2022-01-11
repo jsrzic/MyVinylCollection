@@ -5,6 +5,7 @@ import {getRandomColor, IsMobile} from "../util/utils";
 import AddIcon from '@mui/icons-material/Add';
 import {useHistory} from "react-router-dom";
 import PickArtistForm from "../components/PickArtistForm";
+import authHeader from "../auth-header";
 
 function CollectionPage() {
   const cardDimension = IsMobile() ? 100 : 200;
@@ -47,11 +48,11 @@ function CollectionPage() {
 
   const api = process.env.REACT_APP_API_URL;
   const origin = process.env.REACT_APP_URL;
-  const user = JSON.parse(localStorage.getItem("user"));
+
   const requestOptions = {
     method: "GET",
     headers: {
-      Authorization: "Bearer " + user["accessToken"],
+      Authorization: authHeader(),
       Origin: origin
     },
   };
@@ -63,7 +64,7 @@ function CollectionPage() {
   const [isAdded, setIsAdded] = React.useState(false);
 
   React.useEffect(() => {
-    fetch(api + `/vinyls/${user["username"]}/collection`, requestOptions)
+    fetch(api + `/vinyls/collection`, requestOptions)
       .then(response => {
         if(!response.ok){
           setErrorMessage(true);
@@ -80,7 +81,7 @@ function CollectionPage() {
   }, [isAdded]);
 
   React.useEffect(() => {
-    fetch(api + `/vinyls/${user["username"]}/subcollection`, requestOptions)
+    fetch(api + `/vinyls/subcollection`, requestOptions)
       .then(response => {
         if(!response.ok){
           setErrorMessage(true);
