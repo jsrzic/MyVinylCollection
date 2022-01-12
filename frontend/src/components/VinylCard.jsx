@@ -8,9 +8,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VinylComponent from "./VinylComponent";
 import { getRandomColor, IsMobile } from "../util/utils";
 import authHeader from "../auth-header";
+import {useHistory} from "react-router-dom";
 
 function VinylCard({ vinylData, favVinyls, updateFunction}) {
   const api = process.env.REACT_APP_API_URL;
+
+  const history = useHistory()
 
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
@@ -72,7 +75,7 @@ function VinylCard({ vinylData, favVinyls, updateFunction}) {
   }
 
   return (
-    <Card style={cardStyle}>
+    <Card style={cardStyle} onClick={() => history.push("/vinyl/info")}>
       <div style={saleHeaderStyle}>
         {favVinyls.map(v => v.id).includes(vinylData.id) ? <FavoriteIcon onClick={toggleFavourite}/> : <FavoriteBorderIcon onClick={toggleFavourite}/>}
       </div>
