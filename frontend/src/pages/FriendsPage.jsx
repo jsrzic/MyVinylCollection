@@ -45,7 +45,7 @@ function FriendsPage() {
 
         (errorMessage ? <Alert variant="outlined" severity="error">Error occurred while communicating with the server.</Alert> :
             <>
-              {friends.length > 0 ? friends.map(f => <FriendListItem userData={f} username={f.username}/>) : <Alert variant="outlined" severity="info">No users are followed.</Alert>}
+              {friends.length > 0 ? friends.map(f => <div style={{marginTop: "2rem"}}><FriendListItem userData={f} username={f.username}/></div>) : <Alert variant="outlined" severity="info">No users are followed.</Alert>}
             </>
         )
       }

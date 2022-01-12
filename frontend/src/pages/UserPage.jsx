@@ -54,7 +54,6 @@ function UserPage() {
         }
       })
       .then(data => {
-        console.log(JSON.stringify(data, null, 2));
         setData(data);
         setLoading(false);
       })
@@ -84,7 +83,7 @@ function UserPage() {
               <h2>Contact Mail: {data.contactEmail}</h2>
               <h2>Location: {data.location ? data.location.city : "unknown"}</h2>
               <h2>{data.username}'s collection:</h2>
-              {data.vinyls.length > 0 ? <VinylCollection data={data.vinyls} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
+              {data.vinyls.length > 0 ? <VinylCollection data={data.vinyls} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <Alert variant="outlined" severity="info">No vinyls in this collection.</Alert>}
             </>
         )
       }

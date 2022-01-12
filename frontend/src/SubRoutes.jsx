@@ -7,6 +7,7 @@ import CollectionPage from "./pages/CollectionPage";
 import AddVinylPage from "./pages/AddVinylPage";
 import UserPage from "./pages/UserPage";
 import FriendsPage from "./pages/FriendsPage";
+import SearchResultPage from "./pages/SearchResultPage";
 
 function SubRoutes() {
   return (
@@ -49,6 +50,11 @@ function SubRoutes() {
       <Route path="/dashboard/users/:username">
         <DashboardWrap>
           <UserPage />
+        </DashboardWrap>
+      </Route>
+      <Route path="/dashboard/search-result">
+        <DashboardWrap>
+          <SearchResultPage />
         </DashboardWrap>
       </Route>
     </>
