@@ -49,13 +49,19 @@ public class SaleAdServiceJpa implements SaleAdService {
 
     @Override
     public boolean buyVinyl(SaleAd ad, User owner, User newOwner) {
-        SaleAd saleAd = saleAdRepo.setSaleAdInactive(ad);
-        saleAd.getVinyl().setOwner(newOwner);
-        vinylRepo.save(saleAd.getVinyl());
-        owner.getVinyls().remove(saleAd.getVinyl());
+        ad.getVinyl().setOwner(newOwner);
+        vinylRepo.save(ad.getVinyl());
+        owner.getVinyls().remove(ad.getVinyl());
         userRepo.save(owner);
-        newOwner.getVinyls().add(saleAd.getVinyl());
+        newOwner.getVinyls().add(ad.getVinyl());
         userRepo.save(newOwner);
         return true;
+    }
+
+    @Override
+    public SaleAd findById(Long id) {
+        return saleAdRepo.findById(id).orElseThrow(
+                () -> new RequestDeniedException("No ad with id " + id)
+        );
     }
 }

@@ -102,9 +102,10 @@ public class AdController {
         return new ResponseEntity<Object>("Ad is inactive", HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/sale_ads/buy/")
-    public ResponseEntity<Object> buyVinyl(@RequestBody SaleAd ad) {
+    @PutMapping("/sale_ads/buy/{id}")
+    public ResponseEntity<Object> buyVinyl(@PathVariable Long id) {
         User buyer = userService.findByUsername(userSession.getUsername());
+        SaleAd ad = saleAdService.findById(id);
         if(saleAdService.buyVinyl(ad, ad.getCreator(), buyer))
             return new ResponseEntity<Object>(ad, HttpStatus.OK);
         return new ResponseEntity<Object>(ad, HttpStatus.EXPECTATION_FAILED);

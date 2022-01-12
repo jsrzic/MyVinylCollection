@@ -16,5 +16,5 @@ public interface SaleAdRepository extends JpaRepository<SaleAd, Long> {
 
     @Modifying
     @Query("UPDATE sale_ad s SET s.isActive = false WHERE s =: ad")
-    SaleAd setSaleAdInactive(@Param("ad") SaleAd ad);
+    void setSaleAdInactive(@Param("ad") SaleAd ad);
 }
