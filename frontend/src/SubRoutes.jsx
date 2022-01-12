@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import CollectionPage from "./pages/CollectionPage";
 import AddVinylPage from "./pages/AddVinylPage";
+import VinylInfoPage from "./pages/VinylInfoPage";
 
 function SubRoutes() {
   return (
@@ -44,6 +45,11 @@ function SubRoutes() {
           <AddVinylPage />
         </DashboardWrap>
       </Route>
+        <Route path="/vinyl/info">
+            <DashboardWrap>
+                <VinylInfoPage />
+            </DashboardWrap>
+        </Route>
     </>
   );
 }
