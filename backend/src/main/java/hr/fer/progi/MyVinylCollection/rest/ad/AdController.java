@@ -84,11 +84,11 @@ public class AdController {
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/exchange_ads/{id}/offer/{username}")
-    public ExchangeOffer askForExchange(@PathVariable("username") String username, @PathVariable("id") Long adId, @RequestBody Long offeringVinylId) {
+    @PutMapping("/exchange_ads/{id}/offer/")
+    public ExchangeOffer askForExchange(@PathVariable("id") Long adId, @RequestBody Long offeringVinylId) {
        User offeror = userService.findByUsername(userSession.getUsername());
-       User adCreator = userService.findByUsername(username);
        ExchangeAd ad = exchangeAdService.findById(adId);
+       User adCreator = userService.findByUsername(ad.getCreator().getUsername());
        Vinyl offeringVinyl = vinylService.findById(offeringVinylId);
        return exchangeAdService.askForExchange(new ExchangeOffer(offeringVinyl, ad.getVinyl(), offeror, ad), adCreator);
     }
@@ -101,6 +101,13 @@ public class AdController {
             return new ResponseEntity<Object>("Vinlys have been succesfully exchanged!", HttpStatus.OK);
         return new ResponseEntity<Object>("Ad is inactive", HttpStatus.EXPECTATION_FAILED);
     }
+
+    @PutMapping("/exchange_ads/decline/")
+    public ResponseEntity<Object> declineOffer(){
+        //TODO
+        return null;
+    }
+
 
     @PutMapping("/sale_ads/buy/{id}")
     public ResponseEntity<Object> buyVinyl(@PathVariable Long id) {
