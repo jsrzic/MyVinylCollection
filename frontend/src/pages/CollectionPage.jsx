@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import VinylCollection from "../components/VinylCollection";
-import {Autocomplete, Card, Fade, TextField} from "@mui/material";
+import {Alert, Autocomplete, Card, Divider, Fade, TextField} from "@mui/material";
 import {getRandomColor, IsMobile} from "../util/utils";
 import AddIcon from '@mui/icons-material/Add';
 import {useHistory} from "react-router-dom";
@@ -39,11 +39,8 @@ function CollectionPage() {
     zoom: `${window.innerWidth / 4}%`,
   };
 
-  const vinylGridStyle = {
-    display: "grid",
-    gridTemplateColumns: "auto auto auto auto auto auto auto",
-    justifyContent: "space-between",
-    paddingRight: "3rem",
+  const collectionStyle = {
+    display: "flex"
   }
 
   const api = process.env.REACT_APP_API_URL;
@@ -129,32 +126,31 @@ function CollectionPage() {
     </Card>;
 
   return (
-    <>
+    <div style={{flexGrow: 1}}>
       {errorMessage ? <h1>User not authorized.</h1> :
       <div>
-        <h1>All Vinyls</h1>
+        <Divider style={{marginTop: "1rem"}} textAlign="left"><h1>ALL VINYLS</h1></Divider>
         <Fade in>
-          <div style={vinylGridStyle}>
+          <div style={collectionStyle}>
             {addNewVinylCard}
-            {mainCollection.length > 0 ? <VinylCollection data={mainCollection} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
+            {mainCollection.length > 0 ? <VinylCollection data={mainCollection} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <Alert variant="outlined" severity="info">No vinyls in this collection.</Alert>}
           </div>
         </Fade>
-        <h1>SUB-COLLECTIONS</h1>
+
+        <Divider style={{marginTop: "4rem"}} textAlign="left"><h1>SUB-COLLECTIONS</h1></Divider>
         <PickArtistForm updateFunction={setIsAdded} data={artists}/>
         {subcollections.length > 0 ? subcollections.map(subc =>
           <>
-            <h1>{subc.name}</h1>
-            <div style={vinylGridStyle}>
-              {subc.items.length > 0 ? <VinylCollection data={subc.items} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
-            </div>
+            <h2>{subc.name}</h2>
+            {subc.items.length > 0 ? <VinylCollection data={subc.items} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <Alert variant="outlined" severity="info">No vinyls in this collection.</Alert>}
           </>
         ) : <h1>No subcollections.</h1>}
 
-        <h1>FAVOURITES</h1>
-        {favVinyls.length > 0 ? <VinylCollection data={favVinyls} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
+        <Divider style={{marginTop: "4rem"}} textAlign="left"><h1>FAVOURITES</h1></Divider>
+        {favVinyls.length > 0 ? <VinylCollection data={favVinyls} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <Alert variant="outlined" severity="info">No vinyls in this collection.</Alert>}
       </div>
       }
-    </>
+    </div>
   );
 }
 

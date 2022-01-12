@@ -2,7 +2,7 @@ import React from "react";
 
 import { Avatar, Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import {getCurrentUser, IsMobile} from "../util/utils";
+import {IsMobile} from "../util/utils";
 
 const headerStyleDesktop = {
   background: "#d59a88",
@@ -30,8 +30,7 @@ const avatarStyleMobile = {
   fontSize: "30px",
 };
 
-function ProfileHeader() {
-  const username = getCurrentUser();
+function ProfileHeader({username}) {
 
   return (
     <Paper style={IsMobile() ? headerStyleMobile : headerStyleDesktop}>

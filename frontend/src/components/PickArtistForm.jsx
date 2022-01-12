@@ -37,7 +37,7 @@ function PickArtistForm({data, updateFunction}){
         (formik) => {
           return (
             <Form style={formStyle}>
-              <h1>Create new sub-collection</h1>
+              <h1 style={{margin: "auto"}}>Create a new sub-collection</h1>
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
