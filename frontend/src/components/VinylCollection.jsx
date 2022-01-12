@@ -21,13 +21,13 @@ function VinylCollection({data, favVinyls, updateFunction}) {
   }
 
   return(
-    <>
+    <div style={{display: "flex"}}>
       <ArrowBackIosIcon onClick={decrementIndex} style={{height: "16rem"}}/>
       {data.slice(index, index + 4).map((v) => (
         <VinylCard vinylData={v} favVinyls={favVinyls} updateFunction={updateFunction}/>
       ))}
       <ArrowForwardIosIcon onClick={incrementIndex} style={{height: "16rem"}}/>
-    </>
+    </div>
   );
 
 

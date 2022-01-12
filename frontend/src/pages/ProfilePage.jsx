@@ -136,7 +136,7 @@ function ProfilePage() {
       }
       autocomplete="off"
     >
-      <ProfileHeader />
+      <ProfileHeader username={username}/>
       {loading ? (
         <LinearProgress />
       ) : (
@@ -203,7 +203,7 @@ function ProfilePage() {
               type="password"
               disabled={!editingMode}
               autoComplete={false}
-              value=""
+              value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
           />
 
@@ -213,6 +213,7 @@ function ProfilePage() {
               type="password"
               disabled={!editingMode}
               autoComplete={false}
+              value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
