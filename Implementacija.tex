@@ -7,22 +7,22 @@
 %			
 %			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
 			
-			Tehnologije koje se bile korištene u svrhu komunikacije tima su bile WhatsApp i Discord. Za izradu obrazaca uporabe i UML dijagrama korišten je alat Astah UML, a kao sustav za upravljanje kodom projekta Git. Kompletni kod i dokumentacija projekta dostupna je na udaljenom repozitoriju platforme Gitlab.
+			Tehnologije koje se bile korištene u svrhu komunikacije tima su bile \underline{WhatsApp}\footnote{\url{https://www.whatsapp.com/}} i \underline{Discord}\footnote{\url{https://discord.com/}}. Za izradu obrazaca uporabe i UML dijagrama korišten je alat \underline{Astah UML}\footnote{\url{https://astah.net/}}, a kao sustav za upravljanje kodom projekta \underline{Git}\footnote{\url{https://git-scm.com/}}. Kompletni kod i dokumentacija projekta dostupna je na udaljenom repozitoriju platforme \underline{Gitlab}\footnote{\url{https://gitlab.com/}}.
 			
-			Kao razvojno okruženje korišteno je IntelliJ IDEA, integrirano razvojno okruženje razvijeno od tvrtke JetBrains. Napisano je u Javi u svrhu razvoja računalnog softvera. IDE pruža integraciju s alatima za izradu/pakiranje kao što su bower, gradle, i sl. Podržava sustave kao Git i SVN te baze podataka tipa Microsoft SQL Server, Oracle, PostrgeSQL, i sl.
+			Kao razvojno okruženje korišteno je \underline{IntelliJ IDEA}\footnote{\url{https://www.jetbrains.com/idea/}}, integrirano razvojno okruženje razvijeno od tvrtke JetBrains. Napisano je u Javi u svrhu razvoja računalnog softvera. IDE pruža integraciju s alatima za izradu/pakiranje kao što su bower, gradle, i sl. Podržava sustave kao Git i SVN te baze podataka tipa Microsoft SQL Server, Oracle, PostrgeSQL, i sl.
 			
-			\textit{Frontend} dio web aplikacije napisan je korištenjem Javascript biblioteke React i programskog jezika JavaScript, dok je \textit{backend} dio napisan je korištenjem radnog okvira Spring Boot i programskog jezika Java. React (također poznat kao React.js ili ReactJS) open-source biblioteka za izgradnju korisničkih sučelja temeljenih na UI komponentama. React se bavi samo upravljanjem stanjem i prikazivanjem tog stanja DOM-u, s obzirom na to stvaranje aplikacija obično zahtijeva korištenje dodatnih biblioteka za interakciju s API-jem. Radni okvir Spring Boot olakšava stvaranje samostalnih aplikacija koje se temelje na Springu koje se mogu samo "pokrenuti".
+			\textit{Frontend} dio web aplikacije napisan je korištenjem Javascript biblioteke \underline{React}\footnote{\url{https://reactjs.org/}} i programskog jezika \underline{JavaScript}\footnote{\url{https://www.javascript.com/}}, dok je \textit{backend} dio napisan je korištenjem radnog okvira \underline{Spring Boot}\footnote{\url{https://spring.io/projects/spring-boot}} i programskog jezika \underline{Java}\footnote{\url{https://www.java.com/en/}}. React (također poznat kao React.js ili ReactJS) open-source biblioteka za izgradnju korisničkih sučelja temeljenih na UI komponentama. React se bavi samo upravljanjem stanjem i prikazivanjem tog stanja DOM-u, s obzirom na to stvaranje aplikacija obično zahtijeva korištenje dodatnih biblioteka za interakciju s API-jem. Radni okvir Spring Boot olakšava stvaranje samostalnih aplikacija koje se temelje na Springu koje se mogu samo "pokrenuti".
 			
-			Za upravljanje relacijskom bazom podataka korišten je sustav PostgreSQL, a za pokretanje i rad aplikacije korištena je platforma Heroku.
-			
-			\eject 
-		
+			Za upravljanje relacijskom bazom podataka korišten je sustav \underline{PostgreSQL}\footnote{\url{https://www.postgresql.org/}}, a za pokretanje i rad aplikacije korištena je platforma \underline{Heroku}\footnote{\url{https://id.heroku.com/login}}. Dokumentacija je napisana u Latex uredniku \underline{Texmaker}\footnote{\url{https://www.xm1math.net/texmaker/}}, UML dijagrami su napravljeni u programu \underline{AstahUML}\footnote{\url{https://astah.net/}} i ispitivanje programskog rješenja je odrađeno korištenjem metode JUnit u Javi za ispitivanje komponenti i programa \underline{Selenium IDE}\footnote{\url{https://www.selenium.dev/selenium-ide/}} za ispitivanje sustava.
+
 	
 		\section{Ispitivanje programskog rješenja}
 			
 %			\textbf{\textit{dio 2. revizije}}\\
 %			
 %			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
+
+		Za ispitivanje sustava koristio se Selenium IDE.
 	
 			
 			\subsection{Ispitivanje komponenti}
@@ -41,6 +41,95 @@
 %			 \end{itemize}
 %		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
 %			
+
+\textbf{Ispitni slučaj 1: Prijava u sustav - uspješna prijava}
+			
+				\noindent\textbf{Ulaz:}
+				
+					\begin{packed_enum}
+					
+						\item Otvaranje naslovne stranice web aplikacije
+						\item Pomak kursora iznad polja za upis korisničkog imena
+						\item Pritisak na polje za upis korisničkog imena
+						\item Upis korisničkog imena
+						\item Pomak kursora iznad polja za upis lozinke
+						\item Pritisak na polje za upis lozinke
+						\item Upis lozinke
+						\item Pomak kursora iznad gumba za prijavu
+						\item Pritisak gumba "Prijava"
+						
+					\end{packed_enum}
+				
+				\noindent\textbf{Očekivani rezultat:}
+				
+					\begin{packed_enum}
+					
+						\item Prikazuje se početna stranica web aplikacije
+						
+					\end{packed_enum}
+				
+				\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen. \textcolor{green}{Aplikacija je prošla test.}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/login_steps.png}
+					\centering
+					\caption{Potrebni koraci za uspješnu prijavu}
+					\label{fig:login_steps}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/login_home_page.png}
+					\centering
+					\caption{Početna stranica nakon uspješne prijave}
+					\label{fig:login_home_page}
+				\end{figure}
+
+\noindent\textbf{Ispitni slučaj 2: Prijava u sustav - neuspješna prijava}
+				
+				\noindent\textbf{Ulaz:}
+				
+					\begin{packed_enum}
+					
+						\item Otvaranje naslovne stranice web aplikacije
+						\item Pomak kursora iznad polja za upis korisničkog imena
+						\item Pritisak na polje za upis korisničkog imena
+						\item Upis pogrešnog korisničkog imena
+						\item Pomak kursora iznad polja za upis lozinke
+						\item Pritisak na polje za upis lozinke
+						\item Upis lozinke
+						\item Pomak kursora iznad gumba za prijavu
+						\item Pritisak gumba "Prijava"
+						
+					\end{packed_enum}
+				
+				\noindent\textbf{Očekivani rezultat:}
+				
+					\begin{packed_enum}
+					
+						\item Prikazuje se naslovna stranica web aplikacije
+						\item Sustav izabucje poruku o pogrešno upisanim korisničkim imenom ili lozinkom
+						
+					\end{packed_enum}
+				
+				\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen. \textcolor{green}{Aplikacija je prošla test.}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/login_fail_steps.png}
+					\centering
+					\caption{Potrebni koraci za neuspješnu prijavu}
+					\label{fig:login_steps}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/login_fail_frontpage.png}
+					\centering
+					\caption{Naslovna stranica nakon neuspješne prijave}
+					\label{fig:login_home_page}
+				\end{figure}
+				
+				\noindent\textbf{Ispitni slučaj 3: Dodavanje oglasa}
+				\noindent\textbf{Ispitni slučaj 4: Stvaranje kolekcije}
+			
 			\eject 
 		
 		
@@ -69,6 +158,7 @@
 %			
 %			
 %			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			
 			
 			
 			\eject 
