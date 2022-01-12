@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
+import java.net.URLDecoder;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -25,7 +26,7 @@ public class LocationServiceImpl implements LocationService {
     private DatabaseReader dbReader;
 
     public LocationServiceImpl() throws IOException {
-        File database =new File(this.getClass().getResource("/GeoLite2-City.mmdb").getPath());
+        File database = new File(URLDecoder.decode(this.getClass().getClassLoader().getResource("GeoLite2-City.mmdb").getFile(),"UTF-8"));
         dbReader = new DatabaseReader.Builder(database).build();
     }
 
