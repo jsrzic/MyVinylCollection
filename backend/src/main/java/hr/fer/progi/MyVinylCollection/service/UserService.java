@@ -7,6 +7,7 @@ import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.UserProfileDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,5 +28,7 @@ public interface UserService {
     void removeFavourite(User user, Vinyl vinyl);
     void addFriend(User currentUser, User newFriend);
     void removeFriend(User currentUser, User friend);
+    List<String> searchByRegex(String regex);
+    UserProfileDTO getUserProfile(User user);
 
 }
