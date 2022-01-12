@@ -9,6 +9,7 @@ import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtUtils;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.UserProfileDTO;
 import hr.fer.progi.MyVinylCollection.service.GenreService;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
@@ -210,5 +211,18 @@ public class UserController {
         User user = userSession.getUser().user;
         return user.getOffers();
     }
+
+    @GetMapping("/search/{regex}")
+    public List<String> searchUsersByRegex(@PathVariable String regex) {
+        return userService.searchByRegex(regex);
+    }
+
+    @GetMapping("/profile/{username}")
+    public UserProfileDTO getUserProfile(@PathVariable String username) {
+        return userService.getUserProfile(userService.findByUsername(username));
+    }
+
+
+
 
 }
