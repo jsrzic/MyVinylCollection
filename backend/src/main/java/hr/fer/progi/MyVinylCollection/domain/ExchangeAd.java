@@ -2,6 +2,8 @@ package hr.fer.progi.MyVinylCollection.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.ExchangeAdDTO;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 
@@ -17,18 +19,22 @@ public class ExchangeAd {
 
     @ManyToOne
     @JoinColumn(name="vinyl_id", nullable=false)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Vinyl vinyl;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
     @JoinColumn(name="creator_id", nullable=false)
     @JsonBackReference
     private User creator;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "exchanged_vinyl_id")
     private Vinyl exchangedVinyl;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "new_owner_id")
     private User newOwner;
 

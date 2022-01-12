@@ -1,10 +1,7 @@
 package hr.fer.progi.MyVinylCollection.rest.user;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import hr.fer.progi.MyVinylCollection.domain.Genre;
-import hr.fer.progi.MyVinylCollection.domain.Location;
-import hr.fer.progi.MyVinylCollection.domain.User;
-import hr.fer.progi.MyVinylCollection.domain.Vinyl;
+import hr.fer.progi.MyVinylCollection.domain.*;
 import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtResponse;
@@ -206,6 +203,12 @@ public class UserController {
     public List<User> getFriends() {
         User user = userSession.getUser().user;
        return user.getFriends();
+    }
+
+    @GetMapping("/offers")
+    public List<ExchangeOffer> getOffers() {
+        User user = userSession.getUser().user;
+        return user.getOffers();
     }
 
 }

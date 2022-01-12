@@ -71,7 +71,6 @@ public class User {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<ExchangeOffer> offers;
 
     public User() {}

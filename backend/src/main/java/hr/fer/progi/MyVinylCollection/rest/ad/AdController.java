@@ -1,6 +1,7 @@
 package hr.fer.progi.MyVinylCollection.rest.ad;
 
 import hr.fer.progi.MyVinylCollection.domain.*;
+import hr.fer.progi.MyVinylCollection.rest.ad.dto.ActiveAdsDto;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.ExchangeAdDTO;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.SaleAdDTO;
 import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
@@ -36,14 +37,23 @@ public class AdController {
     @Autowired
     private VinylService vinylService;
 
+    @GetMapping("/active")
+    public ActiveAdsDto getActiveAds(){
+        List<SaleAd> saleAds = getSaleAds();
+        List<ExchangeAd> exchangeAds = getExchangeAds();
+        return new ActiveAdsDto(saleAds, exchangeAds);
+    }
+
     @GetMapping("/sale_ads")
     public List<SaleAd> getSaleAds(){
-        return saleAdService.getActiveAds();
+        User user = userService.findByUsername(userSession.getUsername());
+        return saleAdService.getActiveAds(user);
     }
 
     @GetMapping("/exchange_ads")
     public List<ExchangeAd> getExchangeAds(){
-        return exchangeAdService.getActiveAds();
+        User user = userService.findByUsername(userSession.getUsername());
+        return exchangeAdService.getActiveAds(user);
     }
 
     @PostMapping("/sale_ads")
@@ -74,21 +84,25 @@ public class AdController {
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/exchange_ads/offer/{username}")
-    public ResponseEntity<Object> askForExchange(@PathVariable String username, @RequestBody Vinyl offeringVinyl){
-        //TODO
-       return null;
+    @PutMapping("/exchange_ads/{id}/offer/{username}")
+    public ExchangeOffer askForExchange(@PathVariable("username") String username, @PathVariable("id") Long adId, @RequestBody Long offeringVinylId) {
+       User offeror = userService.findByUsername(userSession.getUsername());
+       User adCreator = userService.findByUsername(username);
+       ExchangeAd ad = exchangeAdService.findById(adId);
+       Vinyl offeringVinyl = vinylService.findById(offeringVinylId);
+       return exchangeAdService.askForExchange(new ExchangeOffer(offeringVinyl, ad.getVinyl(), offeror, ad), adCreator);
     }
 
     @PutMapping("/exchange_ads/exchange/")
-    public ResponseEntity<Object> exchangeVinyls(@RequestBody ExchangeOffer offer) {
+    public ResponseEntity<Object> exchangeVinyls(@RequestBody Long offerId) {
         User user = userService.findByUsername(userSession.getUsername());
+        ExchangeOffer offer = exchangeAdService.findOfferById(offerId);
         if(exchangeAdService.exchangeVinyls(offer, user))
             return new ResponseEntity<Object>("Vinlys have been succesfully exchanged!", HttpStatus.OK);
         return new ResponseEntity<Object>("Ad is inactive", HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/sale_ads/sell/{id}")
+    @PutMapping("/sale_ads/buy/")
     public ResponseEntity<Object> buyVinyl(@RequestBody SaleAd ad) {
         User buyer = userService.findByUsername(userSession.getUsername());
         if(saleAdService.buyVinyl(ad, ad.getCreator(), buyer))

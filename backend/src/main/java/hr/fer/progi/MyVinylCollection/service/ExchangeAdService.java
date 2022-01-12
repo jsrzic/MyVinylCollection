@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface ExchangeAdService {
 
-    List<ExchangeAd> getActiveAds();
+    List<ExchangeAd> getActiveAds(User user);
     ExchangeAd newAd(ExchangeAd newAd);
     boolean deleteAd(Long id, User owner);
     boolean exchangeVinyls(ExchangeOffer offer, User user);
-
+    ExchangeOffer askForExchange(ExchangeOffer exchangeOffer, User adCreator);
+    ExchangeAd findById(Long id);
+    ExchangeOffer findOfferById(Long id);
 }

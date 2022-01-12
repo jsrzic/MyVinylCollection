@@ -25,6 +25,17 @@ public class ExchangeOffer {
     @JoinColumn(name="ad_id")
     private ExchangeAd ad;
 
+    public ExchangeOffer(Vinyl givingVinyl, Vinyl receivingVinyl, User offeror, ExchangeAd ad) {
+        this.givingVinyl = givingVinyl;
+        this.receivingVinyl = receivingVinyl;
+        this.offeror = offeror;
+        this.ad = ad;
+    }
+
+    public ExchangeOffer() {
+
+    }
+
     public Long getId() {
         return id;
     }

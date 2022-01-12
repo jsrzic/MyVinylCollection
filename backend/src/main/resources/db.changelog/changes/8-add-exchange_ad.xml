@@ -26,4 +26,8 @@
     <changeSet id="30" author="Marta">
         <renameColumn tableName="exchange_ad" oldColumnName="owner_id" newColumnName="creator_id"/>
     </changeSet>
+    <changeSet id="31" author="Marta">
+        <dropColumn tableName="exchange_ad" columnName="exchangedVinyl"/>
+        <dropColumn tableName="exchange_ad" columnName="newOwner"/>
+    </changeSet>
 </databaseChangeLog>

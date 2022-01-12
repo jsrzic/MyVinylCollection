@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SaleAdService {
 
-    List<SaleAd> getActiveAds();
+    List<SaleAd> getActiveAds(User user);
     SaleAd newAd(SaleAd saleAd, User creator);
     boolean deleteAd(Long id, User owner);
     boolean buyVinyl(SaleAd ad, User owner, User newOwner);

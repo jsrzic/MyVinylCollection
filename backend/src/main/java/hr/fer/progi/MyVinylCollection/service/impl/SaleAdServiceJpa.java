@@ -27,15 +27,16 @@ public class SaleAdServiceJpa implements SaleAdService {
     private VinylRepository vinylRepo;
 
     @Override
-    public List<SaleAd> getActiveAds() {
-        return saleAdRepo.getActiveAds();
+    public List<SaleAd> getActiveAds(User user) {
+        return saleAdRepo.getActiveAds(user);
     }
 
     @Override
     public SaleAd newAd(SaleAd newAd, User creator) {
         creator.getSaleAds().add(newAd);
+        saleAdRepo.save(newAd);
         userRepo.save(creator);
-        return saleAdRepo.save(newAd);
+        return newAd;
     }
 
     @Override
