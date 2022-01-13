@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import VinylCollection from "../components/VinylCollection";
-import {Alert, Autocomplete, Card, Divider, Fade, TextField} from "@mui/material";
+import {Alert, Autocomplete, Button, Card, Divider, Fade, TextField} from "@mui/material";
 import {getRandomColor, IsMobile} from "../util/utils";
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {useHistory} from "react-router-dom";
 import PickArtistForm from "../components/PickArtistForm";
 import authHeader from "../auth-header";
@@ -59,6 +60,7 @@ function CollectionPage() {
   const [subcollections, setSubcollections] = React.useState([]);
   const [artists, setArtists] = React.useState([]);
   const [isAdded, setIsAdded] = React.useState(false);
+  const [isSubcollectionRemoved, setIsSubcollectionRemoved] = React.useState(false);
   const [favVinyls, setFavVinyls] = useState([]);
 
 
@@ -111,12 +113,33 @@ function CollectionPage() {
         console.log(err);
         setErrorMessage(true);
       })
-  }, [isAdded]);
+  }, [isAdded, isSubcollectionRemoved]);
 
   React.useEffect(() => {
     const subCollectionArtists = subcollections.map(v => v.name);
     setArtists(mainCollection.filter(a => !subCollectionArtists.includes(a.artist.name)));
   }, [mainCollection, subcollections]);
+
+
+  const handleDelete = (artistName) => {
+      let artistId = mainCollection.filter(v => v.artist.name == artistName)[0].artist.id;
+      fetch(api + `/vinyls/subcollection/${artistId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: authHeader(),
+          Origin: origin
+        },
+      })
+        .then(response => {
+          if(response.ok){
+            setIsSubcollectionRemoved(!isSubcollectionRemoved);
+          }
+          else {
+            throw new Error(response.status);
+          }
+        })
+        .catch(err => console.log(err));
+  };
 
   const history = useHistory();
   const addNewVinylCard =
@@ -138,11 +161,14 @@ function CollectionPage() {
         </Fade>
 
         <Divider style={{marginTop: "4rem"}} textAlign="left"><h1>SUB-COLLECTIONS</h1></Divider>
-        <PickArtistForm updateFunction={setIsAdded} data={artists}/>
+        <PickArtistForm updateFunction={() => setIsAdded(!isAdded)} data={artists}/>
         {subcollections.length > 0 ? subcollections.map(subc =>
           <>
             <h2>{subc.name}</h2>
             {subc.items.length > 0 ? <VinylCollection data={subc.items} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <Alert variant="outlined" severity="info">No vinyls in this collection.</Alert>}
+            <Button style={{margin: "1rem 0 4rem 2rem"}} variant="outlined" startIcon={<DeleteIcon />} onClick={() => handleDelete(subc.name)}>
+              Delete sub-collection
+            </Button>
           </>
         ) : <h1>No subcollections.</h1>}
 
