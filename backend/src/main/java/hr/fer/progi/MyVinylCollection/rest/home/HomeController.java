@@ -5,6 +5,8 @@ import hr.fer.progi.MyVinylCollection.domain.SaleAd;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
 import hr.fer.progi.MyVinylCollection.rest.ad.dto.ActiveAdsDto;
+import hr.fer.progi.MyVinylCollection.rest.home.dto.ExchangeHomeDTO;
+import hr.fer.progi.MyVinylCollection.rest.home.dto.SaleHomeDTO;
 import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
 import hr.fer.progi.MyVinylCollection.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +33,15 @@ public class HomeController {
     }
 
     @GetMapping("/sale_ads")
-    public List<SaleAd> getSaleAds(){
+    public List<SaleHomeDTO> getSaleAds(){
         User user = userSession.getUser();
-        return null;
+        return homeService.getSaleAds(user);
     }
 
     @GetMapping("/exchange_ads")
-    public List<ExchangeAd> getExchangeAds(){
+    public List<ExchangeHomeDTO> getExchangeAds(){
         User user = userSession.getUser();
-        return null;
+        return homeService.getExchangeAds(user);
     }
 
 

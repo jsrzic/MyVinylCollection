@@ -3,9 +3,9 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 import hr.fer.progi.MyVinylCollection.dao.ExchangeAdRepository;
 import hr.fer.progi.MyVinylCollection.dao.SaleAdRepository;
 import hr.fer.progi.MyVinylCollection.dao.VinylRepository;
-import hr.fer.progi.MyVinylCollection.domain.Genre;
-import hr.fer.progi.MyVinylCollection.domain.User;
-import hr.fer.progi.MyVinylCollection.domain.Vinyl;
+import hr.fer.progi.MyVinylCollection.domain.*;
+import hr.fer.progi.MyVinylCollection.rest.home.dto.ExchangeHomeDTO;
+import hr.fer.progi.MyVinylCollection.rest.home.dto.SaleHomeDTO;
 import hr.fer.progi.MyVinylCollection.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +29,19 @@ public class HomeServiceJpa implements HomeService {
     public List<Vinyl> getVinyls(User user) {
         List<Genre> genres = user.getPreferredGenres();
         return vinylRepo.findByOwnerNot(user).stream().filter(v -> genres.contains(v.getGenre()) && !v.getOwner().getId().equals(user.getId())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SaleHomeDTO> getSaleAds(User user) {
+        List<Genre> genres = user.getPreferredGenres();
+        List<SaleAd> ads = saleAdRepo.findByCreatorNot(user).stream().filter(v -> genres.contains(v.getVinyl().getGenre()) && !v.getCreator().getId().equals(user.getId())).collect(Collectors.toList());
+        return ads.stream().map(ad -> new SaleHomeDTO(ad.getCreator().getUsername(), ad)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ExchangeHomeDTO> getExchangeAds(User user) {
+        List<Genre> genres = user.getPreferredGenres();
+        List<ExchangeAd> ads = exchangeAdRepo.findByCreatorNot(user).stream().filter(v -> genres.contains(v.getVinyl().getGenre()) && !v.getCreator().getId().equals(user.getId())).collect(Collectors.toList());
+        return ads.stream().map(ad -> new ExchangeHomeDTO(ad.getCreator().getUsername(), ad)).collect(Collectors.toList());
     }
 }
