@@ -103,9 +103,11 @@ public class AdController {
     }
 
     @PutMapping("/exchange_ads/decline/")
-    public ResponseEntity<Object> declineOffer(){
-        //TODO
-        return null;
+    public ResponseEntity<Object> declineOffer(@RequestBody Long offerId){
+        User user = userService.findByUsername(userSession.getUsername());
+        ExchangeOffer offer = exchangeAdService.findOfferById(offerId);
+        exchangeAdService.declineOffer(offer, user);
+        return new ResponseEntity<Object>("Offer declined!", HttpStatus.OK);
     }
 
 
