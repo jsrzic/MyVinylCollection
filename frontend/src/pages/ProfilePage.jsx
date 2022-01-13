@@ -5,7 +5,7 @@ import ProfileHeader from "../components/ProfileHeader";
 import { Autocomplete, Button, LinearProgress, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-import {getCurrentUser, IsMobile} from "../util/utils";
+import { getCurrentUser, IsMobile } from "../util/utils";
 import authHeader from "../auth-header";
 import LocationMap from "../components/LocationMap";
 
@@ -130,7 +130,7 @@ function ProfilePage() {
       }
       autocomplete="off"
     >
-      <ProfileHeader username={username}/>
+      <ProfileHeader username={username} />
       {loading ? (
         <LinearProgress />
       ) : (
@@ -162,13 +162,7 @@ function ProfilePage() {
               onChange={(e) => setSurname(e.target.value)}
             />
           </div>
-          <TextField
-            style={{ marginTop: "2rem" }}
-            label="Username"
-            disabled={!editingMode}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+
           <TextField
             style={{ marginTop: "2rem" }}
             label="e-mail"
@@ -181,7 +175,7 @@ function ProfilePage() {
             label="Contact e-mail"
             disabled={!editingMode}
             value={contactEmail}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setContactEmail(e.target.value)}
           />
 
           <LocationMap
@@ -197,22 +191,22 @@ function ProfilePage() {
           </p>
 
           <TextField
-              label="New Password"
-              type="password"
-              disabled={!editingMode}
-              autoComplete={false}
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+            label="New Password"
+            type="password"
+            disabled={!editingMode}
+            autoComplete={false}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
           />
 
           <TextField
-              style={{ marginTop: "2rem" }}
-              label="Confirm Password"
-              type="password"
-              disabled={!editingMode}
-              autoComplete={false}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+            style={{ marginTop: "2rem" }}
+            label="Confirm Password"
+            type="password"
+            disabled={!editingMode}
+            autoComplete={false}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
           <div style={{ marginTop: "1rem" }}>
