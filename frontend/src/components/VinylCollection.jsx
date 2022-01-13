@@ -1,37 +1,42 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import VinylCard from "./VinylCard";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-function VinylCollection({data, favVinyls, updateFunction}) {
-  const api = process.env.REACT_APP_API_URL;
+function VinylCollection({ data, favVinyls, updateFunction }) {
+  const [scrolled, setScrolled] = React.useState(false);
 
-  const [index, setIndex] = useState(0);
-
-  const incrementIndex = () => {
-    if(index + 4 < data.length){
-      setIndex(index + 4);
-    }
-  }
-
-  const decrementIndex = () => {
-    if(index - 4 >= 0){
-      setIndex(index - 4);
-    }
-  }
-
-  return(
-    <div style={{display: "flex"}}>
-      <ArrowBackIosIcon onClick={decrementIndex} style={{height: "16rem"}}/>
-      {data.slice(index, index + 4).map((v) => (
-        <VinylCard vinylData={v} favVinyls={favVinyls} updateFunction={updateFunction}/>
+  return (
+    <div
+      style={{
+        display: "flex",
+        maxWidth: window.innerWidth * 0.83,
+        height: "20rem",
+        overflow: "scroll",
+        position: "relative",
+      }}
+      onScroll={() => setScrolled(true)}
+    >
+      {!scrolled && data.length > 3 && (
+        <div
+          style={{
+            height: "100%",
+            width: "20px",
+            position: "absolute",
+            zIndex: 5,
+            right: 0,
+            backgroundImage:
+              "radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%)",
+          }}
+        />
+      )}
+      {data.map((d) => (
+        <VinylCard
+          vinylData={d}
+          favVinyls={favVinyls}
+          updateFunction={updateFunction}
+        />
       ))}
-      <ArrowForwardIosIcon onClick={incrementIndex} style={{height: "16rem"}}/>
     </div>
   );
-
-
-
 }
 
 export default VinylCollection;

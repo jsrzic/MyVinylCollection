@@ -10,10 +10,12 @@ const flexedCenterStyle = {
   alignItems: "center",
 };
 
-function VinylComponent({ size, name, id }) {
+function AdComponent({ size, name, id }) {
   const { theme } = React.useContext(ThemeContext);
   const outline = theme.palette.mode === "dark" ? "black" : "white";
+
   const [color, setColor] = useState(getRandomColor());
+
   const history = useHistory();
 
   const containerStyle = {
@@ -21,6 +23,7 @@ function VinylComponent({ size, name, id }) {
     borderRadius: size,
     width: size,
     height: size,
+    margin: "5px",
     cursor: "pointer",
   };
   const vinylStyle = {
@@ -44,8 +47,7 @@ function VinylComponent({ size, name, id }) {
           <h3
             align="center"
             style={{
-              textShadow: `-1px -1px 0 ${outline}, 
-          1px -1px 0 ${outline}, -1px 1px 0 ${outline}, 1px 1px 0 ${outline}`,
+              textShadow: `-1px -1px 0 ${outline}, 1px -1px 0 ${outline}, -1px 1px 0 ${outline}, 1px 1px 0 ${outline}`,
             }}
           >
             {name}
@@ -56,4 +58,4 @@ function VinylComponent({ size, name, id }) {
   );
 }
 
-export default VinylComponent;
+export default AdComponent;

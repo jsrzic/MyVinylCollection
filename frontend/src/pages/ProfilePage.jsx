@@ -30,9 +30,7 @@ function ProfilePage() {
   const api = process.env.REACT_APP_API_URL;
   const origin = process.env.REACT_APP_URL;
   const mobile = IsMobile();
-  const [username, setUsername] = React.useState(
-      getCurrentUser()
-  );
+  const [username, setUsername] = React.useState(getCurrentUser());
   const [data, setData] = React.useState({});
   const [editingMode, setEditingMode] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -48,7 +46,7 @@ function ProfilePage() {
   const [password, setPassword] = React.useState();
   const [newPassword, setNewPassword] = React.useState();
   const [confirmPassword, setConfirmPassword] = React.useState();
-  const [errorMessage, setErrorMessage] = React.useState()
+  const [errorMessage, setErrorMessage] = React.useState();
 
   React.useEffect(() => {
     fetch(api + `/users/info`, {
@@ -59,11 +57,9 @@ function ProfilePage() {
       },
     }).then((response) => {
       response.json().then((result) => {
-        setData(result)
-        console.log(result)
-        setLatitude(result.location.latitude)
-        setLongitude(result.location.longitude)
-        console.log(result.location.latitude + "  " + result.location.longitude)
+        setData(result);
+        setLatitude(result.location.latitude);
+        setLongitude(result.location.longitude);
       });
     });
   }, [api, username]);
@@ -76,12 +72,10 @@ function ProfilePage() {
       setEmail(data.email);
       setContactEmail(data.contactEmail);
       setPassword(data.password);
-      console.log(data.password)
       setTimeout(() => {
-        setLoading(false)
+        setLoading(false);
       }, 500);
     } else {
-      console.log(data)
       localStorage.setItem("username", username);
       fetch(api + `/users/info`, {
         method: "PUT",
@@ -99,23 +93,23 @@ function ProfilePage() {
     if (confirmPassword === newPassword) {
       setEditingMode(false);
       localStorage.setItem("username", username);
-      setErrorMessage("")
-      setConfirmPassword("")
+      setErrorMessage("");
+      setConfirmPassword("");
       setData({
         name: name,
         surname: surname,
         username: username,
         location: {
           latitude: latitude,
-          longitude: longitude
+          longitude: longitude,
         },
         email: email,
         password: newPassword,
       });
     } else {
       setErrorMessage("Passwords must match");
-      setConfirmPassword("")
-      setPassword("")
+      setConfirmPassword("");
+      setPassword("");
     }
   }
 
@@ -191,12 +185,16 @@ function ProfilePage() {
           />
 
           <LocationMap
-              lat={data.location.latitude} lng={data.location.longitude}
-              setLat={setLatitude} setLng={setLongitude}
-              editing={editingMode}
+            lat={data.location.latitude}
+            lng={data.location.longitude}
+            setLat={setLatitude}
+            setLng={setLongitude}
+            editing={editingMode}
           />
 
-          <p style={{color: "red", fontSize: "12px", marginTop: "1rem"}}>{errorMessage}</p>
+          <p style={{ color: "red", fontSize: "12px", marginTop: "1rem" }}>
+            {errorMessage}
+          </p>
 
           <TextField
               label="New Password"

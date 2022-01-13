@@ -25,13 +25,14 @@ function CollectionPage() {
     paddingTop: "1rem",
     paddingBottom: "1rem",
     position: "relative",
-    justifySelf: "center"
+    justifySelf: "center",
+    cursor: "pointer",
   };
 
   const scrollContainerStyleDesktop = {
     maxHeight: "90vh",
     overflowY: "scroll",
-  }
+  };
 
   const scrollContainerStyleMobile = {
     display: "grid",
@@ -43,6 +44,12 @@ function CollectionPage() {
   const collectionStyle = {
     display: "flex"
   }
+  const vinylGridStyle = {
+    display: "grid",
+    gridTemplateColumns: "auto auto auto auto auto auto auto",
+    justifyContent: "space-between",
+    paddingRight: "3rem",
+  };
 
   const api = process.env.REACT_APP_API_URL;
   const origin = process.env.REACT_APP_URL;
@@ -51,7 +58,7 @@ function CollectionPage() {
     method: "GET",
     headers: {
       Authorization: authHeader(),
-      Origin: origin
+      Origin: origin,
     },
   };
 
@@ -63,50 +70,48 @@ function CollectionPage() {
   const [isSubcollectionRemoved, setIsSubcollectionRemoved] = React.useState(false);
   const [favVinyls, setFavVinyls] = useState([]);
 
-
   React.useEffect(() => {
     fetch(api + "/users/favourites", requestOptions)
-      .then(response => {
-        if(response.ok){
+      .then((response) => {
+        if (response.ok) {
           return response.json();
-        }
-        else {
+        } else {
           throw new Error(response.status);
         }
       })
-      .then(favVinlys => {
+      .then((favVinlys) => {
         setFavVinyls(favVinlys);
       })
-      .catch(err => console.log(err));
-
+      .catch((err) => console.log(err));
   }, []);
 
   React.useEffect(() => {
     fetch(api + `/vinyls/collection`, requestOptions)
-      .then(response => {
-        if(!response.ok){
+      .then((response) => {
+        if (!response.ok) {
           setErrorMessage(true);
         }
         return response.json();
       })
-      .then(data => {
-          setMainCollection(data);
+      .then((data) => {
+        setMainCollection(data);
+        console.log(data);
       })
       .catch((err) => {
         console.log(err);
         setErrorMessage(true);
-      })
+      });
   }, [isAdded]);
 
   React.useEffect(() => {
     fetch(api + `/vinyls/subcollection`, requestOptions)
-      .then(response => {
-        if(!response.ok){
+      .then((response) => {
+        if (!response.ok) {
           setErrorMessage(true);
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setSubcollections(data);
       })
       .catch((err) => {
@@ -116,8 +121,12 @@ function CollectionPage() {
   }, [isAdded, isSubcollectionRemoved]);
 
   React.useEffect(() => {
-    const subCollectionArtists = subcollections.map(v => v.name);
-    setArtists(mainCollection.filter(a => !subCollectionArtists.includes(a.artist.name)));
+    const subCollectionArtists = subcollections.map((v) => v.name);
+    setArtists(
+      mainCollection.filter(
+        (a) => !subCollectionArtists.includes(a.artist.name)
+      )
+    );
   }, [mainCollection, subcollections]);
 
 
@@ -142,11 +151,15 @@ function CollectionPage() {
   };
 
   const history = useHistory();
-  const addNewVinylCard =
-    <Card style={cardStyle} onClick={() => history.push("/dashboard/add-vinyl")}>
-      <AddIcon style={{width: "100px", height: "100px"}}/>
+  const addNewVinylCard = (
+    <Card
+      style={cardStyle}
+      onClick={() => history.push("/dashboard/add-vinyl")}
+    >
+      <AddIcon style={{ width: "100px", height: "100px" }} />
       <h2>Add new Vinyl</h2>
-    </Card>;
+    </Card>
+  );
 
   return (
     <div style={{flexGrow: 1}}>
