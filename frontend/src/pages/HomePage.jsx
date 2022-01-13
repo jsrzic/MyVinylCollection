@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Tabs, Tab, LinearProgress, Alert} from "@mui/material";
+import {Box, Tabs, Tab, LinearProgress, Alert, Paper} from "@mui/material";
 import authHeader from "../auth-header";
 import HomePageAds from "../components/HomePageAds";
 
@@ -10,6 +10,7 @@ function HomePage() {
   const [errorMessage, setErrorMessage] = useState(false);
   const [saleAds, setSaleAds] = useState([]);
   const [exchangeAds, setExchangeAds] = useState([]);
+  const [vinyls, setVinyls] = useState([]);
 
   const requestOptionsGet = {
     method: "GET",
@@ -20,7 +21,7 @@ function HomePage() {
   }
 
   function getSaleAds() {
-    return fetch(api + "/ads/sale_ads", requestOptionsGet)
+    return fetch(api + "/home/sale_ads", requestOptionsGet)
       .then(response => {
         if(response.ok){
           return response.json();
@@ -40,7 +41,7 @@ function HomePage() {
   }
 
   function getExchangeAds() {
-    return fetch(api + "/ads/exchange_ads", requestOptionsGet)
+    return fetch(api + "/home/exchange_ads", requestOptionsGet)
       .then(response => {
         if(response.ok){
           return response.json();
@@ -59,8 +60,28 @@ function HomePage() {
       })
   }
 
+  function getVinyls() {
+    return fetch(api + "/home/vinyls", requestOptionsGet)
+      .then(response => {
+        if(response.ok){
+          return response.json();
+        } else {
+          throw new Error(response.status);
+        }
+      })
+      .then(data => {
+        setVinyls(data);
+        setLoading(false);
+        console.log(data);
+      })
+      .catch(err => {
+        setErrorMessage(true);
+        console.log(err);
+      })
+  }
+
   useEffect(() => {
-    Promise.all([getExchangeAds(), getSaleAds()])
+    Promise.all([getExchangeAds(), getSaleAds(), getVinyls()])
       .then(() => {
         setLoading(false);
       })
@@ -73,7 +94,7 @@ function HomePage() {
 
   return (
     <Box sx={{ width: '100%'}}>
-      <Tabs value={tabIndex} onChange={handleChange} centered>
+      <Tabs style={{marginBottom: "3rem"}} value={tabIndex} onChange={handleChange} centered>
         <Tab label="Vinyls" />
         <Tab label="Ads" />
         <Tab label="Events" />
@@ -86,7 +107,7 @@ function HomePage() {
               errorMessage ?
                 <Alert variant="outlined" severity="error">Error occurred while communicating with the server.</Alert> :
                 <>
-                  {tabIndex == 1 && <HomePageAds />}
+                  {tabIndex == 1 && <HomePageAds saleAds={saleAds} exchangeAds={exchangeAds}/>}
                 </>
             }
           </>

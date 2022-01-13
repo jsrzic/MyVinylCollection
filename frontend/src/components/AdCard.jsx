@@ -76,10 +76,10 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
                 />
               </Tooltip>
             )}
-            <ClearIcon
-              onClick={() => removeAd(id)}
-              style={{ cursor: "pointer" }}
-            />
+            {/*<ClearIcon*/}
+            {/*  onClick={() => removeAd(id)}*/}
+            {/*  style={{ cursor: "pointer" }}*/}
+            {/*/>*/}
           </div>
         </div>
         <AdComponent id={id} size={vinylDimension} name={name} />
