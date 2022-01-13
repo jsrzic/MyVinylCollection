@@ -44,6 +44,7 @@ public class SaleAdServiceJpa implements SaleAdService {
         owner.getSaleAds().remove(saleAdRepo.findById(id).orElseThrow(
                 () -> new RequestDeniedException("You are not owner of this ad.")));
         saleAdRepo.deleteById(id);
+        userRepo.save(owner);
         return true;
     }
 

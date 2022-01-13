@@ -47,8 +47,8 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
     public boolean deleteAd(Long id, User owner) {
         owner.getExchangeAds().remove(exchangeAdRepo.findById(id).orElseThrow(
                 () -> new RequestDeniedException("You are not owner of this ad.")));
-        userRepo.save(owner);
         exchangeAdRepo.deleteById(id);
+        userRepo.save(owner);
         return true;
     }
 
