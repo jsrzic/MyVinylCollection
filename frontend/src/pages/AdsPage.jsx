@@ -22,8 +22,8 @@ const postData =  {
         "subgenre": null,
         "conditionEvaluation": 4,
         "description": "ok",
-        "priceKn": 90,
-        "diameter": 78,
+        "priceKn": 90.0,
+        "diameter": 78.0,
         "capacity": "89",
         "reproductionQuality": "ok",
         "nmbOfAudioChannels": 7,
@@ -42,6 +42,7 @@ function AdsPage() {
             method: "POST",
             headers: {
                 Authorization: authHeader(),
+                'Content-Type': 'application/json',
                 Origin: origin
             },
             body: JSON.stringify(postData)
