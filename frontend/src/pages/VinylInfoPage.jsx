@@ -1,6 +1,6 @@
 import React from "react";
 
-
+import { useLocation } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -22,11 +22,12 @@ const infoStyle = {
 function VinylInfo() {
     const api = process.env.REACT_APP_API_URL;
     const username = getCurrentUser();
+    const vinylId = useLocation().state.id;
 
     const [vinyl, setVinyl] = React.useState()
 
     React.useEffect(() => {
-        fetch(api + "/vinyls/3", {
+        fetch(api + `/vinyls/${vinylId}`, {
             method: "GET",
             headers: {
                 Authorization: authHeader(),

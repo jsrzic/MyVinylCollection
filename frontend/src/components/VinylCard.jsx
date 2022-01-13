@@ -75,7 +75,7 @@ function VinylCard({ vinylData, favVinyls, updateFunction}) {
   }
 
   return (
-    <Card style={cardStyle} onClick={() => history.push("/vinyl/info")}>
+    <Card style={cardStyle} onClick={() => history.push("/vinyl/info", {id: vinylData.id})}>
       <div style={saleHeaderStyle}>
         {favVinyls.map(v => v.id).includes(vinylData.id) ? <FavoriteIcon onClick={toggleFavourite}/> : <FavoriteBorderIcon onClick={toggleFavourite}/>}
       </div>
