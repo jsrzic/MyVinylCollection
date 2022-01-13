@@ -27,21 +27,22 @@ function VinylInfo() {
 
   const [vinyl, setVinyl] = React.useState();
 
-    React.useEffect(() => {
-        fetch(api + `/vinyls/${id}`, {
-            method: "GET",
-            headers: {
-                Authorization: authHeader(),
-            },
-        }).then(r => r.json()
-            .then(result => {
-                setVinyl(result)
-            }))
-    }, [])
+  React.useEffect(() => {
+    fetch(api + `/vinyls/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: authHeader(),
+      },
+    }).then((r) =>
+      r.json().then((result) => {
+        setVinyl(result);
+      })
+    );
+  }, []);
 
   return (
     <div style={infoStyle}>
-      <VinylInfoHeader albumName={vinyl ? vinyl.album : ""} />
+      <VinylInfoHeader vinyl={vinyl && vinyl} />
       {vinyl ? (
         <div
           style={{
@@ -185,12 +186,14 @@ function VinylInfo() {
               <p>{vinyl.capacity}</p>
             </div>
 
-                    <div style={{
-                        borderBottom: "rgb(164,164,164) solid 0.3px",
-                    }}>
-                        <h2>Reproduction quality</h2>
-                        <p>{vinyl.reproductionQuality}</p>
-                    </div>
+            <div
+              style={{
+                borderBottom: "rgb(164,164,164) solid 0.3px",
+              }}
+            >
+              <h2>Reproduction quality</h2>
+              <p>{vinyl.reproductionQuality}</p>
+            </div>
 
             <div
               style={{
