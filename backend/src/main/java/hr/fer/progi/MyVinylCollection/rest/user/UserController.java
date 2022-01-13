@@ -210,6 +210,11 @@ public class UserController {
         return userSession.getUser().getOffers();
     }
 
+    @GetMapping("/purchaseOffers")
+    public List<PurchaseOffer> getPurchaseOffers() {
+        return userSession.getUser().getPurchaseOffers();
+    }
+
     @GetMapping("/search/{regex}")
     public List<String> searchUsersByRegex(@PathVariable String regex) {
         return userService.searchByRegex(regex);

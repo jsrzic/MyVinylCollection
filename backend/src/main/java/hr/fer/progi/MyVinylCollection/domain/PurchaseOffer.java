@@ -25,6 +25,10 @@ public class PurchaseOffer {
         this.ad = ad;
     }
 
+    public PurchaseOffer() {
+
+    }
+
     public Long getId() {
         return id;
     }
