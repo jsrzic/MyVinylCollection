@@ -5,11 +5,12 @@ import { Card, Chip, IconButton, Tooltip } from "@mui/material";
 import FaceIcon from "@mui/icons-material/Face";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import { getRandomColor, IsMobile } from "../util/utils";
 import AdComponent from "./AdComponent";
 
-function AdCard({ username, price, name, isSale, id }) {
+function AdCard({ username, price, name, isSale, id, removeAd }) {
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
   const [color, setColor] = useState(getRandomColor());
@@ -41,32 +42,45 @@ function AdCard({ username, price, name, isSale, id }) {
     <div style={wrapperStyle}>
       <Card style={cardStyle}>
         <div style={saleHeaderStyle}>
-          {isSale ? (
-            <Chip
-              icon={<AttachMoneyIcon />}
-              label={
-                <p
-                  style={{
-                    fontWeight: 700,
-                    fontSize: 16,
-                  }}
-                >
-                  {price}
-                </p>
-              }
-              color="success"
-            />
-          ) : (
-            <Tooltip title="Exchange">
-              <ChangeCircleIcon
-                style={{
-                  color: "white",
-                  border: "5px dodgerblue solid",
-                  borderRadius: 100,
-                }}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexGrow: 1,
+              alignItems: "center",
+            }}
+          >
+            {isSale ? (
+              <Chip
+                icon={<AttachMoneyIcon />}
+                label={
+                  <p
+                    style={{
+                      fontWeight: 700,
+                      fontSize: 16,
+                    }}
+                  >
+                    {price}
+                  </p>
+                }
+                color="success"
               />
-            </Tooltip>
-          )}
+            ) : (
+              <Tooltip title="Exchange">
+                <ChangeCircleIcon
+                  style={{
+                    color: "white",
+                    border: "5px dodgerblue solid",
+                    borderRadius: 100,
+                  }}
+                />
+              </Tooltip>
+            )}
+            <ClearIcon
+              onClick={() => removeAd(id)}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
         </div>
         <AdComponent id={id} size={vinylDimension} name={name} />
         <div style={saleHeaderStyle}>

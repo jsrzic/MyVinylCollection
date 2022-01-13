@@ -8,14 +8,14 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { getCurrentUser, IsMobile } from "../util/utils";
-import { useHistory } from "react-router-dom";
 import VinylComponent from "../components/VinylComponent";
 
 function AdsPage() {
@@ -23,6 +23,8 @@ function AdsPage() {
   const origin = process.env.REACT_APP_URL;
 
   const [ads, setAds] = React.useState();
+  const [saleAds, setSaleAds] = React.useState();
+  const [exchangeAds, setExchangeAds] = React.useState();
 
   const username = getCurrentUser();
 
@@ -37,21 +39,52 @@ function AdsPage() {
     }).then((r) =>
       r.json().then((data) => {
         setAds(data);
-        console.log(data);
       })
     );
   }, []);
 
+  React.useEffect(() => {
+    if (ads !== undefined) {
+      setSaleAds(ads.saleAds);
+      setExchangeAds(ads.exchangeAds);
+    }
+  }, [ads]);
+
   const [open, setOpen] = React.useState(false);
+
+  function removeAd(id) {
+    let removeAd = saleAds.filter((ad) => ad.vinyl.id === id);
+    if (removeAd.length === 0)
+      removeAd = exchangeAds.filter((ad) => ad.vinyl.id === id);
+    console.log(removeAd);
+    setSaleAds(saleAds.filter((ad) => ad.vinyl.id !== id));
+    setExchangeAds(exchangeAds.filter((ad) => ad.vinyl.id !== id));
+    fetch(api + `/ads/sale_ads/${removeAd[0].id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin,
+        "Content-Type": "application/json",
+      },
+    }).then((r) => r.json().then((data) => console.log(data)));
+    fetch(api + `/ads/exchange_ads/${removeAd[0].id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin,
+        "Content-Type": "application/json",
+      },
+    }).then((r) => r.json().then((data) => console.log(data)));
+  }
 
   return (
     <>
       <div>
         <h1>Active Ads</h1>
-        {ads ? (
+        {ads && saleAds && exchangeAds ? (
           <div style={{ display: "flex" }}>
             <div>
-              <AddNewSaleAd setOpen={setOpen} open={open} />
+              <AddNewSaleAd setOpen={setOpen} open={open} setAds={setAds} />
             </div>
             <div
               style={{
@@ -61,20 +94,22 @@ function AdsPage() {
                 overflow: "scroll",
               }}
             >
-              {ads.saleAds.map((ad) => (
+              {saleAds.map((ad) => (
                 <AdCard
                   username={username}
                   price={ad.price}
                   name={ad.vinyl.album}
                   id={ad.vinyl.id}
                   isSale
+                  removeAd={removeAd}
                 />
               ))}
-              {ads.exchangeAds.map((ad) => (
+              {exchangeAds.map((ad) => (
                 <AdCard
                   username={username}
                   name={ad.vinyl.album}
                   id={ad.vinyl.id}
+                  removeAd={removeAd}
                 />
               ))}
             </div>
@@ -109,13 +144,14 @@ function AdsPage() {
   );
 }
 
-function AddNewSaleAd({ setOpen, open }) {
+function AddNewSaleAd({ setOpen, open, setAds }) {
   const api = process.env.REACT_APP_API_URL;
   const origin = process.env.REACT_APP_URL;
 
   const [vinyls, setVinyls] = React.useState();
   const [vinyl, setVinyl] = React.useState({});
   const [price, setPrice] = React.useState();
+  const [type, setType] = React.useState("sale");
 
   React.useEffect(() => {
     fetch(api + "/vinyls/collection/ad", {
@@ -130,7 +166,7 @@ function AddNewSaleAd({ setOpen, open }) {
 
   function postSaleAd() {
     setOpen(false);
-    fetch(api + "/ads/sale_ads", {
+    fetch(api + `/ads/${type}_ads`, {
       method: "POST",
       headers: {
         Authorization: authHeader(),
@@ -141,7 +177,23 @@ function AddNewSaleAd({ setOpen, open }) {
         price: price,
         vinyl,
       }),
-    }).then((r) => console.log(r.json()));
+    }).then((r) =>
+      r.json().then(() => {
+        fetch(api + "/ads/active", {
+          method: "GET",
+          headers: {
+            Authorization: authHeader(),
+            Origin: origin,
+            "Content-Type": "application/json",
+          },
+        }).then((r) =>
+          r.json().then((data) => {
+            setAds(data);
+            console.log(data);
+          })
+        );
+      })
+    );
   }
   const cardDimension = IsMobile() ? 100 : 200;
 
@@ -180,7 +232,17 @@ function AddNewSaleAd({ setOpen, open }) {
         <DialogContent>
           {vinyls ? (
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Vinyl</InputLabel>
+              <ToggleButtonGroup value={type}>
+                <ToggleButton value="sale" onClick={() => setType("sale")}>
+                  Sale
+                </ToggleButton>
+                <ToggleButton
+                  value="exchange"
+                  onClick={() => setType("exchange")}
+                >
+                  Exchange
+                </ToggleButton>
+              </ToggleButtonGroup>
               <Select label="Vinyl" value={vinyl} onChange={handleChange}>
                 {vinyls.map((v) => (
                   <MenuItem style={{ height: "3rem" }} value={v}>
