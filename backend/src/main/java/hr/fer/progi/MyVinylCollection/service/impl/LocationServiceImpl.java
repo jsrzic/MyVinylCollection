@@ -26,7 +26,7 @@ public class LocationServiceImpl implements LocationService {
     private DatabaseReader dbReader;
 
     public LocationServiceImpl() throws IOException {
-        File database = new File(URLDecoder.decode(this.getClass().getClassLoader().getResource("GeoLite2-City.mmdb").getFile(),"UTF-8"));
+        InputStream database = getClass().getResourceAsStream("/GeoLite2-City.mmdb");
         dbReader = new DatabaseReader.Builder(database).build();
     }
 
