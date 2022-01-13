@@ -46,31 +46,31 @@ public class AdController {
 
     @GetMapping("/sale_ads")
     public List<SaleAd> getSaleAds(){
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         return saleAdService.getActiveAds(user);
     }
 
     @GetMapping("/exchange_ads")
     public List<ExchangeAd> getExchangeAds(){
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         return exchangeAdService.getActiveAds(user);
     }
 
     @PostMapping("/sale_ads")
     public SaleAd createNewSaleAd(@RequestBody SaleAdDTO adDTO){
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         return saleAdService.newAd(new SaleAd(adDTO, user), user);
     }
 
     @PostMapping("/exchange_ads")
     public ExchangeAd createNewExchangeAd(@RequestBody ExchangeAdDTO adDTO){
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         return exchangeAdService.newAd(new ExchangeAd(adDTO, user));
     }
 
     @DeleteMapping("/sale_ads/{id}")
     public ResponseEntity<Object> deleteSaleAd(@PathVariable Long id){
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         if(saleAdService.deleteAd(id, user))
             return new ResponseEntity<Object>(id, HttpStatus.OK);
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
@@ -78,7 +78,7 @@ public class AdController {
 
     @DeleteMapping("/exchange_ads/{id}")
     public ResponseEntity<Object> deleteExchangeAd(@PathVariable Long id){
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         if(exchangeAdService.deleteAd(id, user))
             return new ResponseEntity<Object>(id, HttpStatus.OK);
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
@@ -86,7 +86,7 @@ public class AdController {
 
     @PutMapping("/exchange_ads/{id}/offer/")
     public ExchangeOffer askForExchange(@PathVariable("id") Long adId, @RequestBody Long offeringVinylId) {
-       User offeror = userService.findByUsername(userSession.getUsername());
+        User offeror = userSession.getUser();
        ExchangeAd ad = exchangeAdService.findById(adId);
        User adCreator = userService.findByUsername(ad.getCreator().getUsername());
        Vinyl offeringVinyl = vinylService.findById(offeringVinylId);
@@ -95,7 +95,7 @@ public class AdController {
 
     @PutMapping("/exchange_ads/exchange/")
     public ResponseEntity<Object> exchangeVinyls(@RequestBody Long offerId) {
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         ExchangeOffer offer = exchangeAdService.findOfferById(offerId);
         if(exchangeAdService.exchangeVinyls(offer, user))
             return new ResponseEntity<Object>("Vinlys have been succesfully exchanged!", HttpStatus.OK);
@@ -104,7 +104,7 @@ public class AdController {
 
     @PutMapping("/exchange_ads/decline/")
     public ResponseEntity<Object> declineOffer(@RequestBody Long offerId){
-        User user = userService.findByUsername(userSession.getUsername());
+        User user = userSession.getUser();
         ExchangeOffer offer = exchangeAdService.findOfferById(offerId);
         exchangeAdService.declineOffer(offer, user);
         return new ResponseEntity<Object>("Offer declined!", HttpStatus.OK);
@@ -113,7 +113,7 @@ public class AdController {
 
     @PutMapping("/sale_ads/buy/{id}")
     public ResponseEntity<Object> buyVinyl(@PathVariable Long id) {
-        User buyer = userService.findByUsername(userSession.getUsername());
+        User buyer = userSession.getUser();
         SaleAd ad = saleAdService.findById(id);
         if(saleAdService.buyVinyl(ad, ad.getCreator(), buyer))
             return new ResponseEntity<Object>(ad, HttpStatus.OK);

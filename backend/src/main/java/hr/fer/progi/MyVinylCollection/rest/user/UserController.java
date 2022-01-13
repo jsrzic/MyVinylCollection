@@ -202,14 +202,12 @@ public class UserController {
 
     @GetMapping("/friends")
     public List<User> getFriends() {
-        User user = userSession.getUser().user;
-       return user.getFriends();
+        return userSession.getUser().getFriends();
     }
 
     @GetMapping("/offers")
     public List<ExchangeOffer> getOffers() {
-        User user = userSession.getUser().user;
-        return user.getOffers();
+        return userSession.getUser().getOffers();
     }
 
     @GetMapping("/search/{regex}")
