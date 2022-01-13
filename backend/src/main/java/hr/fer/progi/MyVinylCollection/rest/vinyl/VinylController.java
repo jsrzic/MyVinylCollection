@@ -72,11 +72,11 @@ public class VinylController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteVinyl(@PathVariable Long vinylId){
-        if(vinylService.deleteVinyl(vinylId)){
-            return new ResponseEntity<Object>(vinylId, HttpStatus.OK);
+    public ResponseEntity<Object> deleteVinyl(@PathVariable Long id){
+        if(vinylService.deleteVinyl(id)){
+            return new ResponseEntity<Object>(id, HttpStatus.OK);
         }else{
-            return new ResponseEntity<Object>(vinylId, HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
         }
     }
 

@@ -74,6 +74,11 @@ public class User {
     @JsonManagedReference
     private List<ExchangeOffer> offers;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<PurchaseOffer> purchaseOffers;
+
     public User() {}
 
     public User(RegisterUserDTO user, List<Genre> userGenrePreference, Location location) {
@@ -222,5 +227,13 @@ public class User {
 
     public void setOffers(List<ExchangeOffer> offers) {
         this.offers = offers;
+    }
+
+    public List<PurchaseOffer> getPurchaseOffers() {
+        return purchaseOffers;
+    }
+
+    public void setPurchaseOffers(List<PurchaseOffer> purchaseOffers) {
+        this.purchaseOffers = purchaseOffers;
     }
 }
