@@ -26,7 +26,7 @@ public class LocationServiceImpl implements LocationService {
     private DatabaseReader dbReader;
 
     public LocationServiceImpl() throws IOException {
-        File database = getResourceAsFile("GeoLite2-City.mmdb");
+        InputStream database = getClass().getResourceAsStream("/GeoLite2-City.mmdb");
         dbReader = new DatabaseReader.Builder(database).build();
     }
 
@@ -46,30 +46,5 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location saveLocation(Location location) {
         return locationRepo.save(location);
-    }
-
-    public static File getResourceAsFile(String resourcePath) {
-        try {
-            InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(resourcePath);
-            if (in == null) {
-                return null;
-            }
-
-            File tempFile = File.createTempFile(String.valueOf(in.hashCode()), ".tmp");
-            tempFile.deleteOnExit();
-
-            try (FileOutputStream out = new FileOutputStream(tempFile)) {
-                //copy stream
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, bytesRead);
-                }
-            }
-            return tempFile;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
