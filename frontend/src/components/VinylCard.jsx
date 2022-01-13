@@ -9,7 +9,7 @@ import VinylComponent from "./VinylComponent";
 import { getRandomColor, IsMobile } from "../util/utils";
 import authHeader from "../auth-header";
 
-function VinylCard({ vinylData, favVinyls, updateFunction }) {
+function VinylCard({ vinylData, favVinyls, updateFunction, hasHeart }) {
   const api = process.env.REACT_APP_API_URL;
 
   const cardDimension = IsMobile() ? 100 : 200;
@@ -80,13 +80,15 @@ function VinylCard({ vinylData, favVinyls, updateFunction }) {
   return (
     <div style={wrapperStyle}>
       <Card style={cardStyle}>
+        {hasHeart &&
         <div style={saleHeaderStyle}>
           {favVinyls.map((v) => v.id).includes(vinylData.id) ? (
             <FavoriteIcon onClick={toggleFavourite} />
           ) : (
             <FavoriteBorderIcon onClick={toggleFavourite} />
           )}
-        </div>
+        </div>}
+
         <VinylComponent
           size={vinylDimension}
           name={vinylData.album}

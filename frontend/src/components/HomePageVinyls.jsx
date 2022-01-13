@@ -35,7 +35,7 @@ function HomePageVinyls({vinyls}) {
 
   return (
     <div style={containerGridStyle}>
-      {vinyls.map(vinyl => <VinylCard vinylData={vinyl} favVinyls={favVinyls} updateFunction={setFavVinyls}/>)}
+      {vinyls.map(vinyl => <VinylCard vinylData={vinyl} favVinyls={favVinyls} updateFunction={setFavVinyls} hasHeart/>)}
     </div>
   );
 }

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { Card, Chip, IconButton, Tooltip } from "@mui/material";
+import {
+  Card,
+  Chip, Dialog, DialogContent, DialogTitle, FormControl, MenuItem, Select, TextField, ToggleButton, ToggleButtonGroup,
+  Tooltip
+} from "@mui/material";
 
 import FaceIcon from "@mui/icons-material/Face";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -9,11 +13,16 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 import { getRandomColor, IsMobile } from "../util/utils";
 import AdComponent from "./AdComponent";
+import authHeader from "../auth-header";
+import VinylComponent from "./VinylComponent";
+import Button from "@mui/material/Button";
+
 
 function AdCard({ username, price, name, isSale, id, removeAd }) {
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
   const [color, setColor] = useState(getRandomColor());
+  const [modalOpen, setModalOpen] = useState(false);
 
   const wrapperStyle = {
     width: cardDimension,
@@ -40,6 +49,7 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
 
   return (
     <div style={wrapperStyle}>
+      <ExchangeOfferDialog open={modalOpen} setOpen={setModalOpen} adId={id}/>
       <Card style={cardStyle}>
         <div style={saleHeaderStyle}>
           <div
@@ -68,12 +78,13 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
             ) : (
               <Tooltip title="Exchange">
                 <ChangeCircleIcon
+                  onClick={() => setModalOpen(true)}
                   style={{
                     color: "white",
                     border: "5px dodgerblue solid",
                     borderRadius: 100,
                   }}
-                />
+              />
               </Tooltip>
             )}
             {/*<ClearIcon*/}
@@ -103,5 +114,74 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
     </div>
   );
 }
+
+function ExchangeOfferDialog({open, setOpen, adId}) {
+  const api = process.env.REACT_APP_API_URL;
+  const origin = process.env.REACT_APP_URL;
+  const [vinyls, setVinyls] = useState([]);
+  const [vinyl, setVinyl] = useState({});
+
+  useEffect(() => {
+    fetch(api + "/vinyls/collection/ad", {
+      method: "GET",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin,
+        "Content-Type": "application/json",
+      },
+    }).then((r) => r.json().then((data) => setVinyls(data)));
+  }, []);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setVinyl(value);
+  };
+
+  const askForExchange = () => {
+    fetch(api + `/ads/exchange_ads/${adId}/offer/${vinyl.id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin,
+        "Content-Type": "application/json",
+      }
+    }).then(response => {
+      if(!response.ok) {
+        throw new Error(response.status);
+      }
+      setOpen(false);
+    }).catch(err => console.log(err));
+  }
+
+  return (
+    <div>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Make an exchange offer</DialogTitle>
+        <DialogContent>
+          {vinyls ? (
+            <FormControl fullWidth>
+              <Select value={vinyl} onChange={handleChange}>
+                {vinyls.map((v) => (
+                  <MenuItem style={{ height: "3rem" }} value={v}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <VinylComponent size={20} />
+                      <p style={{ marginLeft: "10px" }}>{v.album}</p>
+                    </div>
+                  </MenuItem>
+                ))}
+              </Select>
+              <Button style={{marginTop: "1rem"}} variant="contained" onClick={askForExchange}>
+                OFFER
+              </Button>
+            </FormControl>
+          ) : <p>Loading...</p>}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
 
 export default AdCard;
