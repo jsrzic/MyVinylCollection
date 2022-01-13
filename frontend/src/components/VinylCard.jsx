@@ -44,6 +44,11 @@ function VinylCard({ vinylData, favVinyls, updateFunction}) {
     top: "1.3rem"
   };
 
+  const wrapperStyle = {
+    width: cardDimension,
+    height: cardDimension,
+    margin: "1rem",
+  }
 
   const toggleFavourite = () => {
     const requestOptions = {
@@ -75,12 +80,17 @@ function VinylCard({ vinylData, favVinyls, updateFunction}) {
   }
 
   return (
-    <Card style={cardStyle} onClick={() => history.push("/vinyl/info", {id: vinylData.id})}>
-      <div style={saleHeaderStyle}>
-        {favVinyls.map(v => v.id).includes(vinylData.id) ? <FavoriteIcon onClick={toggleFavourite}/> : <FavoriteBorderIcon onClick={toggleFavourite}/>}
+      <div style={wrapperStyle}>
+        <Card style={cardStyle} onClick={() => history.push("/vinyl/info", {
+            id: vinylData.id
+          })
+        }>
+          <div style={saleHeaderStyle}>
+            {favVinyls.map(v => v.id).includes(vinylData.id) ? <FavoriteIcon onClick={toggleFavourite}/> : <FavoriteBorderIcon onClick={toggleFavourite}/>}
+          </div>
+          <VinylComponent size={vinylDimension} name={vinylData.album} />
+        </Card>
       </div>
-      <VinylComponent size={vinylDimension} name={vinylData.album} />
-    </Card>
   );
 }
 

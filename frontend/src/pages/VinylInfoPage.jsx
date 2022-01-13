@@ -1,6 +1,5 @@
 import React from "react";
 
-import { useLocation } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,6 +8,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VinylInfoHeader from "../components/VinylInfoHeader";
 import {getCurrentUser, IsMobile} from "../util/utils";
 import authHeader from "../auth-header";
+import {useLocation} from "react-router-dom";
 
 
 const infoStyle = {
@@ -22,12 +22,14 @@ const infoStyle = {
 function VinylInfo() {
     const api = process.env.REACT_APP_API_URL;
     const username = getCurrentUser();
-    const vinylId = useLocation().state.id;
+
+    const location = useLocation()
+    const id = location.state.id
 
     const [vinyl, setVinyl] = React.useState()
 
     React.useEffect(() => {
-        fetch(api + `/vinyls/${vinylId}`, {
+        fetch(api + `/vinyls/${id}`, {
             method: "GET",
             headers: {
                 Authorization: authHeader(),
@@ -41,7 +43,7 @@ function VinylInfo() {
 
     return (
         <div style={infoStyle}>
-            <VinylInfoHeader/>
+            <VinylInfoHeader albumName={vinyl ? vinyl.album : ""}/>
             { vinyl ?
                 (<div style={{
                 display: "grid",
@@ -186,7 +188,9 @@ function VinylInfo() {
                         <p>{vinyl.timeOfReproduction}</p>
                     </div>
                 </div>
-            </div>) : <p>loading</p>}
+            </div>) :
+                <p>loading</p>
+            }
         </div>
 
 

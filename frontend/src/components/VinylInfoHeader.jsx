@@ -2,46 +2,39 @@ import React from "react";
 
 import { Avatar, Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import {getCurrentUser, IsMobile} from "../util/utils";
+import {getCurrentUser, getRandomColor, IsMobile} from "../util/utils";
+import VinylComponent from "./AdComponent";
 
-const infoStyleDesktop = {
-    background: "#d59a88",
-    margin: "2rem",
-    padding: "1rem",
-    display: "flex",
-    justifyContent: "space-between",
-};
-
-const infoStyleMobile = {
-    background: "#d59a88",
-    width: "90%",
-    margin: "auto",
-    padding: "1rem",
-    display: "flex",
-    justifyContent: "space-between",
-};
-
-const avatarStyleDesktop = {
-    width: "150px",
-    height: "150px",
-    fontSize: "75px",
-};
-const avatarStyleMobile = {
-    width: "75px",
-    height: "75px",
-    fontSize: "30px",
-};
-
-function VinylInfoHeader() {
+function VinylInfoHeader({albumName}) {
     const username = getCurrentUser();
+    const vinylDimension = IsMobile() ? 75 : 150;
+    const color = getRandomColor()
+
+    const infoStyleDesktop = {
+        background: color,
+        margin: "2rem",
+        padding: "1rem",
+        display: "flex",
+        justifyContent: "space-between",
+    };
+
+    const infoStyleMobile = {
+        background: color,
+        width: "90%",
+        margin: "auto",
+        padding: "1rem",
+        display: "flex",
+        justifyContent: "space-between",
+    };
 
     return (
         <Paper style={IsMobile() ? infoStyleMobile : infoStyleDesktop}>
             <div style={{ display: "flex" }}>
-                <Avatar sx={IsMobile() ? avatarStyleMobile : avatarStyleDesktop}>
-                    {username.substring(0, 1).toUpperCase()}
-                </Avatar>
-                <h1 style={{ marginLeft: "1rem" }}>{username}</h1>
+                <VinylComponent size={vinylDimension} />
+                <div style={{display: "flex", flexDirection: "column"}}>
+                    <h1 style={{ marginLeft: "1rem" }}>{albumName}</h1>
+                    <h2 style={{ marginLeft: "1rem" }}>{username}</h2>
+                </div>
             </div>
             <div>
 

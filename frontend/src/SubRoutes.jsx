@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import CollectionPage from "./pages/CollectionPage";
 import AddVinylPage from "./pages/AddVinylPage";
+import AdsPage from "./pages/AdsPage";
 import UserPage from "./pages/UserPage";
 import FriendsPage from "./pages/FriendsPage";
 import SearchResultPage from "./pages/SearchResultPage";
@@ -30,7 +31,7 @@ function SubRoutes() {
       </Route>
       <Route path="/dashboard/ads">
         <DashboardWrap>
-          <h1>profile</h1>
+          <AdsPage />
         </DashboardWrap>
       </Route>
       <Route path="/dashboard/settings">
