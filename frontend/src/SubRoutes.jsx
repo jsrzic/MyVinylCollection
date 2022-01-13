@@ -34,9 +34,9 @@ function SubRoutes() {
           <AdsPage />
         </DashboardWrap>
       </Route>
-      <Route path="/dashboard/settings">
+      <Route path="/dashboard/inbox">
         <DashboardWrap>
-          <h1>settings</h1>
+          <h1>inbox</h1>
         </DashboardWrap>
       </Route>
       <Route path="/dashboard/friends">

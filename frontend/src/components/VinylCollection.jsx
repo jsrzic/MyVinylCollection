@@ -8,7 +8,7 @@ function VinylCollection({ data, favVinyls, updateFunction }) {
     <div
       style={{
         display: "flex",
-        maxWidth: window.innerWidth * 0.83,
+        maxWidth: window.innerWidth * 0.68,
         height: "20rem",
         overflow: "scroll",
         position: "relative",
