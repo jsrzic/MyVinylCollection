@@ -75,12 +75,13 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
             userRepo.save(offer.getOfferor());
             userCollection.add(offer.getGivingVinyl());
             offerorCollection.add(offer.getReceivingVinyl());
+            user.getOffers().remove(offer);
             userRepo.save(user);
             userRepo.save(offer.getOfferor());
-
             return true;
         } else {
             user.getOffers().remove(offer);
+            userRepo.save(user);
             return false;
         }
     }
@@ -91,6 +92,12 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
         adCreator.getOffers().add(exchangeOffer);
         userRepo.save(adCreator);
         return exchangeOffer;
+    }
+
+    @Override
+    public void declineOffer(ExchangeOffer offer, User user) {
+        user.getOffers().remove(offer);
+        userRepo.save(user);
     }
 
     @Override
