@@ -2,6 +2,8 @@ package hr.fer.progi.MyVinylCollection.rest.user;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import hr.fer.progi.MyVinylCollection.domain.*;
+import hr.fer.progi.MyVinylCollection.rest.inbox.ExchangeMessage;
+import hr.fer.progi.MyVinylCollection.rest.inbox.PurchaseMessage;
 import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtResponse;
@@ -206,13 +208,15 @@ public class UserController {
     }
 
     @GetMapping("/offers")
-    public List<ExchangeOffer> getOffers() {
-        return userSession.getUser().getOffers();
+    public List<ExchangeMessage> getOffers() {
+        return userSession.getUser().getOffers()
+                .stream().map(o -> new ExchangeMessage(o.getOfferor().getUsername(), o)).collect(Collectors.toList());
     }
 
     @GetMapping("/purchaseOffers")
-    public List<PurchaseOffer> getPurchaseOffers() {
-        return userSession.getUser().getPurchaseOffers();
+    public List<PurchaseMessage> getPurchaseOffers() {
+        return userSession.getUser().getPurchaseOffers()
+                .stream().map(o -> new PurchaseMessage(o.getBuyer().getUsername(), o)).collect(Collectors.toList());
     }
 
     @GetMapping("/search/{regex}")
