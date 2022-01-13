@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import { getRandomColor, ThemeContext } from "../util/utils";
 import { Grow } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 const flexedCenterStyle = {
   display: "flex",
@@ -9,16 +10,18 @@ const flexedCenterStyle = {
   alignItems: "center",
 };
 
-function VinylComponent({ size, name }) {
+function VinylComponent({ size, name, id }) {
   const { theme } = React.useContext(ThemeContext);
   const outline = theme.palette.mode === "dark" ? "black" : "white";
   const [color, setColor] = useState(getRandomColor());
+  const history = useHistory();
 
   const containerStyle = {
     background: "rgb(33,33,33)",
     borderRadius: size,
     width: size,
     height: size,
+    cursor: "pointer",
   };
   const vinylStyle = {
     borderRadius: size,
@@ -27,11 +30,16 @@ function VinylComponent({ size, name }) {
     background: color,
   };
 
-
-
   return (
     <Grow in timeout={500}>
-      <div style={{ ...containerStyle, ...flexedCenterStyle }}>
+      <div
+        style={{ ...containerStyle, ...flexedCenterStyle }}
+        onClick={() =>
+          history.push("/vinyl/info", {
+            id: id,
+          })
+        }
+      >
         <div style={{ ...vinylStyle, ...flexedCenterStyle }}>
           <h3
             align="center"

@@ -59,11 +59,11 @@ function SubRoutes() {
           <SearchResultPage />
         </DashboardWrap>
       </Route>
-        <Route path="/vinyl/info">
-            <DashboardWrap>
-                <VinylInfoPage />
-            </DashboardWrap>
-        </Route>
+      <Route path="/vinyl/info">
+        <DashboardWrap>
+          <VinylInfoPage />
+        </DashboardWrap>
+      </Route>
     </>
   );
 }
