@@ -1,9 +1,11 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name="location")
 public class Location {
@@ -16,6 +18,11 @@ public class Location {
     private String city;
     private String latitude;
     private String longitude;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Event> event;
 
     public Location(String ipAddress, String city, String latitude, String longitude) {
         this.ipAddress = ipAddress;
@@ -66,5 +73,13 @@ public class Location {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public List<Event> getEvent() {
+        return event;
+    }
+
+    public void setEvent(List<Event> event) {
+        this.event = event;
     }
 }
