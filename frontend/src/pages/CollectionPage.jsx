@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import VinylCollection from "../components/VinylCollection";
-import {Alert, Autocomplete, Button, Card, Divider, Fade, TextField} from "@mui/material";
+import {Alert, Autocomplete, Button, Card, Divider, Fade, Snackbar, TextField} from "@mui/material";
 import {getRandomColor, IsMobile} from "../util/utils";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -68,7 +68,9 @@ function CollectionPage() {
   const [artists, setArtists] = React.useState([]);
   const [isAdded, setIsAdded] = React.useState(false);
   const [isSubcollectionRemoved, setIsSubcollectionRemoved] = React.useState(false);
-  const [favVinyls, setFavVinyls] = useState([]);
+  const [favVinyls, setFavVinyls] = React.useState([]);
+  const [snackbar, setSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState("");
 
   React.useEffect(() => {
     fetch(api + "/users/favourites", requestOptions)
@@ -142,6 +144,8 @@ function CollectionPage() {
         .then(response => {
           if(response.ok){
             setIsSubcollectionRemoved(!isSubcollectionRemoved);
+            setSnackbarMessage("Vinyl subcollection successfully removed")
+            setSnackbar(true);
           }
           else {
             throw new Error(response.status);
@@ -187,6 +191,13 @@ function CollectionPage() {
 
         <Divider style={{marginTop: "4rem"}} textAlign="left"><h1>FAVOURITES</h1></Divider>
         {favVinyls.length > 0 ? <VinylCollection data={favVinyls} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <Alert variant="outlined" severity="info">No vinyls in this collection.</Alert>}
+        <Snackbar
+          open={snackbar}
+          autoHideDuration={3000}
+          onClose={() => setSnackbar(false)}
+          message={snackbarMessage}
+          action={null}
+        />
       </div>
       }
     </div>
