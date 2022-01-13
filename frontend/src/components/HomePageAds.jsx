@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AdCard from "./AdCard";
 
 function HomePageAds({exchangeAds, saleAds}) {
@@ -10,8 +10,8 @@ function HomePageAds({exchangeAds, saleAds}) {
 
   return (
     <div style={containerGridStyle}>
-      {saleAds.map(ad => <AdCard username={"MATE"} price={ad.price} name={ad.vinyl.album} isSale id={ad.id}/>)}
-      {exchangeAds.map(ad => <AdCard username={"MATE"}  name={ad.vinyl.album} id={ad.id}/>)}
+      {saleAds.map(ad => <AdCard username={ad.username} price={ad.saleAd.price} name={ad.saleAd.vinyl.album} isSale id={ad.saleAd.id}/>)}
+      {exchangeAds.map(ad => <AdCard username={ad.username}  name={ad.exchangeAd.vinyl.album} id={ad.exchangeAd.id}/>)}
     </div>
   );
 }

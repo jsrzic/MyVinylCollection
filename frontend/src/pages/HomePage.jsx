@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Box, Tabs, Tab, LinearProgress, Alert, Paper} from "@mui/material";
 import authHeader from "../auth-header";
 import HomePageAds from "../components/HomePageAds";
+import HomePageVinyls from "../components/HomePageVinyls";
 
 function HomePage() {
   const api = process.env.REACT_APP_API_URL;
@@ -31,8 +32,8 @@ function HomePage() {
       })
       .then(data => {
         setSaleAds(data);
-        console.log(data);
         setLoading(false);
+        console.log(data);
       })
       .catch(err => {
         setErrorMessage(true);
@@ -107,6 +108,7 @@ function HomePage() {
               errorMessage ?
                 <Alert variant="outlined" severity="error">Error occurred while communicating with the server.</Alert> :
                 <>
+                  {tabIndex == 0 && <HomePageVinyls vinyls={vinyls}/>}
                   {tabIndex == 1 && <HomePageAds saleAds={saleAds} exchangeAds={exchangeAds}/>}
                 </>
             }
