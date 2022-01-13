@@ -1,8 +1,10 @@
 package hr.fer.progi.MyVinylCollection.service.impl;
 
+import hr.fer.progi.MyVinylCollection.dao.PurchaseOfferRepository;
 import hr.fer.progi.MyVinylCollection.dao.SaleAdRepository;
 import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.dao.VinylRepository;
+import hr.fer.progi.MyVinylCollection.domain.PurchaseOffer;
 import hr.fer.progi.MyVinylCollection.domain.SaleAd;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
@@ -25,6 +27,9 @@ public class SaleAdServiceJpa implements SaleAdService {
 
     @Autowired
     private VinylRepository vinylRepo;
+
+    @Autowired
+    private PurchaseOfferRepository purchaseOfferRepo;
 
     @Override
     public List<SaleAd> getActiveAds(User user) {
@@ -63,5 +68,26 @@ public class SaleAdServiceJpa implements SaleAdService {
         return saleAdRepo.findById(id).orElseThrow(
                 () -> new RequestDeniedException("No ad with id " + id)
         );
+    }
+
+    @Override
+    public PurchaseOffer showInterest(PurchaseOffer offer, User adCreator) {
+        purchaseOfferRepo.save(offer);
+        adCreator.getPurchaseOffers().add(offer);
+        userRepo.save(adCreator);
+        return offer;
+    }
+
+    @Override
+    public PurchaseOffer findOfferById(Long id) {
+        return purchaseOfferRepo.findById(id).orElseThrow(
+                () -> new RequestDeniedException("No offer with id " + id)
+        );
+    }
+
+    @Override
+    public void declineOffer(PurchaseOffer offer, User user) {
+        user.getPurchaseOffers().remove(offer);
+        userRepo.save(user);
     }
 }

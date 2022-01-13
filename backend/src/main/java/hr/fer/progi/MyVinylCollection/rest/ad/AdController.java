@@ -84,12 +84,12 @@ public class AdController {
         return new ResponseEntity<Object>(id, HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/exchange_ads/{id}/offer/")
-    public ExchangeOffer askForExchange(@PathVariable("id") Long adId, @RequestBody Long offeringVinylId) {
+    @PutMapping("/exchange_ads/{id}/offer/{offeringId}")
+    public ExchangeOffer askForExchange(@PathVariable("id") Long adId, @PathVariable("offeringId") Long offeringId) {
         User offeror = userSession.getUser();
        ExchangeAd ad = exchangeAdService.findById(adId);
        User adCreator = userService.findByUsername(ad.getCreator().getUsername());
-       Vinyl offeringVinyl = vinylService.findById(offeringVinylId);
+       Vinyl offeringVinyl = vinylService.findById(offeringId);
        return exchangeAdService.askForExchange(new ExchangeOffer(offeringVinyl, ad.getVinyl(), offeror, ad), adCreator);
     }
 
@@ -102,12 +102,20 @@ public class AdController {
         return new ResponseEntity<Object>("Ad is inactive", HttpStatus.EXPECTATION_FAILED);
     }
 
-    @PutMapping("/exchange_ads/decline/")
-    public ResponseEntity<Object> declineOffer(@RequestBody Long offerId){
+    @PutMapping("/exchange_ads/decline/{id}")
+    public ResponseEntity<Object> declineOffer(@PathVariable("id") Long offerId){
         User user = userSession.getUser();
         ExchangeOffer offer = exchangeAdService.findOfferById(offerId);
         exchangeAdService.declineOffer(offer, user);
         return new ResponseEntity<Object>("Offer declined!", HttpStatus.OK);
+    }
+
+    @PutMapping("/sale_ads/{id}/offer/")
+    public PurchaseOffer showInterestToBuy(@PathVariable("id") Long adId) {
+        User user = userSession.getUser();
+        SaleAd ad = saleAdService.findById(adId);
+        User adCreator = userService.findByUsername(ad.getCreator().getUsername());
+        return saleAdService.showInterest(new PurchaseOffer(user, ad), adCreator);
     }
 
 
@@ -118,6 +126,14 @@ public class AdController {
         if(saleAdService.buyVinyl(ad, ad.getCreator(), buyer))
             return new ResponseEntity<Object>(ad, HttpStatus.OK);
         return new ResponseEntity<Object>(ad, HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @PutMapping("/sale_ads/decline/{id}")
+    public ResponseEntity<Object> declinePurchaseOffer(@PathVariable("id id") Long id){
+        User user = userSession.getUser();
+        PurchaseOffer offer = saleAdService.findOfferById(id);
+        saleAdService.declineOffer(offer, user);
+        return new ResponseEntity<Object>("Offer declined!", HttpStatus.OK);
     }
 
     @GetMapping("/bought_vinyls")
