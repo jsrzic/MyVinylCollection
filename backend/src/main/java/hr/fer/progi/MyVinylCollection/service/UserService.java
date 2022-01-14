@@ -21,7 +21,7 @@ public interface UserService {
     boolean checkUsernameExists(LoginUserDTO user);
     boolean checkPassword(LoginUserDTO user);
     String getUserContactEmail(Long userId);
-    boolean updateUserStatus(Long userId, boolean status);
+    boolean updateUserStatus(String username);
     UpdateUserDTO getUserInfo(String username);
     boolean updateUserInfo(UpdateUserDTO updatedUser);
     void addFavourite(User user, Vinyl vinyl);
