@@ -23,7 +23,16 @@ import authHeader from "../auth-header";
 import VinylComponent from "./VinylComponent";
 import Button from "@mui/material/Button";
 
-function AdCard({ username, price, name, isSale, id, removeAd, ad }) {
+function AdCard({
+  username,
+  price,
+  name,
+  isSale,
+  id,
+  removeAd,
+  ad,
+  fromHomepage,
+}) {
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
 
@@ -105,11 +114,16 @@ function AdCard({ username, price, name, isSale, id, removeAd, ad }) {
             )}
           </div>
         </div>
-        <AdComponent
-          id={ad.exchangeAd.vinyl.id}
-          size={vinylDimension}
-          name={name}
-        />
+        {fromHomepage ? (
+          <AdComponent id={id} size={vinylDimension} name={name} />
+        ) : (
+          <AdComponent
+            id={ad && ad.vinyl.id}
+            size={vinylDimension}
+            name={name}
+          />
+        )}
+
         <div style={saleHeaderStyle}>
           <Chip
             icon={<FaceIcon style={{ color: "black" }} />}

@@ -94,24 +94,28 @@ function AdsPage() {
                 overflow: "scroll",
               }}
             >
-              {saleAds.map((ad) => (
-                <AdCard
-                  username={username}
-                  price={ad.price}
-                  name={ad.vinyl.album}
-                  id={ad.vinyl.id}
-                  isSale
-                  removeAd={removeAd}
-                />
-              ))}
-              {exchangeAds.map((ad) => (
-                <AdCard
-                  username={username}
-                  name={ad.vinyl.album}
-                  id={ad.vinyl.id}
-                  removeAd={removeAd}
-                />
-              ))}
+              {saleAds &&
+                saleAds.map((ad) => (
+                  <AdCard
+                    username={username}
+                    price={ad.price}
+                    name={ad.vinyl.album}
+                    id={ad.vinyl.id}
+                    isSale
+                    ad={ad}
+                    removeAd={removeAd}
+                  />
+                ))}
+              {exchangeAds &&
+                exchangeAds.map((ad) => (
+                  <AdCard
+                    username={username}
+                    ad={ad}
+                    name={ad.vinyl.album}
+                    id={ad && ad.vinyl.id}
+                    removeAd={removeAd}
+                  />
+                ))}
             </div>
           </div>
         ) : (

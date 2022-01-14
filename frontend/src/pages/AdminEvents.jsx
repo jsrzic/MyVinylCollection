@@ -33,7 +33,7 @@ function AdminEvents() {
         setEvents(d);
       })
     );
-  }, [open]);
+  }, []);
 
   function postEvent() {
     fetch(api + "/event/createEvent", {
@@ -48,7 +48,21 @@ function AdminEvents() {
         description: newDescription,
         social_network_link: newLink,
       }),
-    }).then((response) => response.json().then((d) => console.log(d)));
+    }).then((response) =>
+      response.json().then(() =>
+        fetch(api + "/event", {
+          method: "GET",
+          headers: {
+            Authorization: authHeader(),
+            Origin: origin,
+          },
+        }).then((response) =>
+          response.json().then((d) => {
+            setEvents(d);
+          })
+        )
+      )
+    );
     setOpen(false);
   }
 
