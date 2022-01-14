@@ -7,8 +7,7 @@ Link na radnu deployanu verziju aplikacije: https://my-vinyl-collection-frontend
 Cilj ovog projekta je stvaranje web aplikacije ”My Vinyl Collection” koja će služiti
 kao mjesto na kojem će korisnici, koji su zainteresirani, ljubitelji ili kolekcionari vinila,
 pronalaziti nove vinile, prodavati, kupovati ili razmjenjivati vinile s drugima.
-U planu nam je olakšati korisnicima traženje tako da korištenjem njihove lokacije
-prikazujemo oglase u njihovoj blizini.
+U planu nam je olakšati korisnicima traženje tako da prikazujemo vinile preferiranih kategorija. 
 
 ## Arhitektura i dizajn sustava
 
