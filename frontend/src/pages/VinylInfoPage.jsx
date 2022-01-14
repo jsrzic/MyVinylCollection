@@ -27,7 +27,7 @@ function VinylInfo() {
   const [vinyl, setVinyl] = React.useState();
 
   React.useEffect(() => {
-    fetch(api + `/vinyls/${id}`, {
+    fetch(api + `/home/vinyl/${id}`, {
       method: "GET",
       headers: {
         Authorization: authHeader(),

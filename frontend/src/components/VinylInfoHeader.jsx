@@ -17,7 +17,7 @@ function VinylInfoHeader({ vinyl, id }) {
   const history = useHistory();
 
   useEffect(() => {
-    fetch(api + `/vinyls/owner/${id}`, {
+    fetch(api + `/home/vinyl/owner/${id}`, {
       method: "GET",
       headers: {
         Authorization: authHeader(),
@@ -47,7 +47,7 @@ function VinylInfoHeader({ vinyl, id }) {
     }).then((r) =>
       r.json().then((data) => {
         const id = Number(data.filter((d) => d.album === vinyl.album)[0].id);
-        fetch(api + `/vinyls/${id}`, {
+        fetch(api + `/home/vinyl/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: authHeader(),

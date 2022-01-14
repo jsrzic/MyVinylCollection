@@ -44,7 +44,7 @@ function TopNavBar() {
   const handleSearch = () => {
     if(searchValue == "") return;
 
-    fetch(api + `/users/search/${searchValue}`, {
+    fetch(api + `/home/search/${searchValue}`, {
       method: "GET",
       headers: {
         Authorization: authHeader(),

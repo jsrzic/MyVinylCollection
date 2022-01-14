@@ -40,7 +40,7 @@ function UserPage() {
   }, []);
 
   React.useEffect(() => {
-    fetch(api + `/users/profile/${params.username}`, requestOptions)
+    fetch(api + `/home/profile/${params.username}`, requestOptions)
       .then((response) => {
         console.log(response)
         if (response.ok) {
