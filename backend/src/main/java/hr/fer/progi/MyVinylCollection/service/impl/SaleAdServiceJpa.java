@@ -54,13 +54,16 @@ public class SaleAdServiceJpa implements SaleAdService {
     }
 
     @Override
-    public boolean buyVinyl(SaleAd ad, User owner, User newOwner) {
-        ad.getVinyl().setOwner(newOwner);
-        vinylRepo.save(ad.getVinyl());
-        owner.getVinyls().remove(ad.getVinyl());
-        userRepo.save(owner);
-        newOwner.getVinyls().add(ad.getVinyl());
-        userRepo.save(newOwner);
+    public boolean sellVinyl(PurchaseOffer offer, User seller) {
+        offer.getAd().getVinyl().setOwner(offer.getBuyer());
+        vinylRepo.save(offer.getAd().getVinyl());
+        seller.getVinyls().remove(offer.getAd().getVinyl());
+        seller.getSoldVinyls().add(offer.getAd().getVinyl());
+        seller.getPurchaseOffers().remove(offer);
+        userRepo.save(seller);
+        offer.getBuyer().getVinyls().add(offer.getAd().getVinyl());
+        offer.getBuyer().getBoughtVinyls().add(offer.getAd().getVinyl());
+        userRepo.save(offer.getBuyer());
         return true;
     }
 

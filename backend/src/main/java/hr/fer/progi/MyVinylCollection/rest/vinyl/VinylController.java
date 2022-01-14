@@ -129,6 +129,19 @@ public class VinylController {
         return new ResponseEntity<Object>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/bought_vinyls")
+    public List<Vinyl> getBoughtVinyls(){
+        User user = userSession.getUser();
+        return user.getBoughtVinyls();
+    }
+
+
+    @GetMapping("/sold_vinyls")
+    public List<Vinyl> getSoldVinyls(){
+        User user = userSession.getUser();
+        return user.getSoldVinyls();
+    }
+
 
 
 

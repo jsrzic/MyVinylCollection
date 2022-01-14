@@ -9,7 +9,7 @@ public interface SaleAdService {
     List<SaleAd> getActiveAds(User user);
     SaleAd newAd(SaleAd saleAd, User creator);
     boolean deleteAd(Long id, User owner);
-    boolean buyVinyl(SaleAd ad, User owner, User newOwner);
+    boolean sellVinyl(PurchaseOffer offer, User seller);
     SaleAd findById(Long id);
     PurchaseOffer showInterest(PurchaseOffer offer,  User adCreator);
     PurchaseOffer findOfferById(Long id);

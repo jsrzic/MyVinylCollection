@@ -79,6 +79,16 @@ public class User {
     @JsonManagedReference
     private List<PurchaseOffer> purchaseOffers;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Vinyl> boughtVinyls;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Vinyl> soldVinyls;
+
     public User() {}
 
     public User(RegisterUserDTO user, List<Genre> userGenrePreference, Location location) {
@@ -235,5 +245,21 @@ public class User {
 
     public void setPurchaseOffers(List<PurchaseOffer> purchaseOffers) {
         this.purchaseOffers = purchaseOffers;
+    }
+
+    public List<Vinyl> getBoughtVinyls() {
+        return boughtVinyls;
+    }
+
+    public void setBoughtVinyls(List<Vinyl> boughtVinyls) {
+        this.boughtVinyls = boughtVinyls;
+    }
+
+    public List<Vinyl> getSoldVinyls() {
+        return soldVinyls;
+    }
+
+    public void setSoldVinyls(List<Vinyl> soldVinyls) {
+        this.soldVinyls = soldVinyls;
     }
 }

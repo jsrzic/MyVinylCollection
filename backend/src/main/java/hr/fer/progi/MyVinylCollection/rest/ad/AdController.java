@@ -93,8 +93,8 @@ public class AdController {
        return exchangeAdService.askForExchange(new ExchangeOffer(offeringVinyl, ad.getVinyl(), offeror, ad), adCreator);
     }
 
-    @PutMapping("/exchange_ads/exchange/")
-    public ResponseEntity<Object> exchangeVinyls(@RequestBody Long offerId) {
+    @PutMapping("/exchange_ads/exchange/{id}")
+    public ResponseEntity<Object> exchangeVinyls(@PathVariable("id") Long offerId) {
         User user = userSession.getUser();
         ExchangeOffer offer = exchangeAdService.findOfferById(offerId);
         if(exchangeAdService.exchangeVinyls(offer, user))
@@ -119,13 +119,13 @@ public class AdController {
     }
 
 
-    @PutMapping("/sale_ads/buy/{id}")
-    public ResponseEntity<Object> buyVinyl(@PathVariable Long id) {
-        User buyer = userSession.getUser();
-        SaleAd ad = saleAdService.findById(id);
-        if(saleAdService.buyVinyl(ad, ad.getCreator(), buyer))
-            return new ResponseEntity<Object>(ad, HttpStatus.OK);
-        return new ResponseEntity<Object>(ad, HttpStatus.EXPECTATION_FAILED);
+    @PutMapping("/sale_ads/sell/{id}")
+    public ResponseEntity<Object> sellVinyl(@PathVariable Long id) {
+        User seller = userSession.getUser();
+        PurchaseOffer offer = saleAdService.findOfferById(id);
+        if(saleAdService.sellVinyl(offer, seller))
+            return new ResponseEntity<Object>(offer, HttpStatus.OK);
+        return new ResponseEntity<Object>(offer, HttpStatus.EXPECTATION_FAILED);
     }
 
     @PutMapping("/sale_ads/decline/{id}")
@@ -136,17 +136,5 @@ public class AdController {
         return new ResponseEntity<Object>("Offer declined!", HttpStatus.OK);
     }
 
-    @GetMapping("/bought_vinyls")
-    public List<Vinyl> getBoughtVinyls(){
-        //TODO
-        return null;
-    }
-
-
-    @GetMapping("/sold_vinyls")
-    public List<Vinyl> getSoldVinyls(){
-        //TODO
-        return null;
-    }
 
 }

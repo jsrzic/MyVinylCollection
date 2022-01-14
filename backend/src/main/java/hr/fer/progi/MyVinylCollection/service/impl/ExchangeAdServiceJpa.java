@@ -54,6 +54,7 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
 
     @Override
     public boolean exchangeVinyls(ExchangeOffer offer, User user) {
+        //Boilerplate code that makes you cry, but it works at least! :)
         if(offer.getAd().isActive()) {
             offer.getGivingVinyl().setOwner(user);
             offer.getReceivingVinyl().setOwner(offer.getOfferor());
@@ -74,6 +75,10 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
             userRepo.save(user);
             userRepo.save(offer.getOfferor());
             userCollection.add(offer.getGivingVinyl());
+            user.getBoughtVinyls().add(offer.getGivingVinyl());
+            user.getSoldVinyls().add(offer.getReceivingVinyl());
+            offer.getOfferor().getBoughtVinyls().add(offer.getGivingVinyl());
+            offer.getOfferor().getSoldVinyls().add(offer.getReceivingVinyl());
             offerorCollection.add(offer.getReceivingVinyl());
             user.getOffers().remove(offer);
             userRepo.save(user);
