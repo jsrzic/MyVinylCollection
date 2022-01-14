@@ -61,6 +61,8 @@ public class SaleAdServiceJpa implements SaleAdService {
         saleAdRepo.save(ad);
         vinylRepo.save(offer.getAd().getVinyl());
         seller.getVinyls().remove(offer.getAd().getVinyl());
+        offer.getAd().setActive(false);
+        saleAdRepo.save(offer.getAd());
         seller.getSoldVinyls().add(offer.getAd().getVinyl());
         seller.getPurchaseOffers().remove(offer);
         userRepo.save(seller);

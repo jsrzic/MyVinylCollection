@@ -1,5 +1,6 @@
 package hr.fer.progi.MyVinylCollection.rest.security;
 
+import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.AuthEntryPointJwt;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,14 +59,21 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        User guest = new User();
+        guest.setUsername("guest");
+        VinylUserDetails anonymousUser = new VinylUserDetails(guest);
+        http.anonymous().principal(anonymousUser);
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
+                .antMatchers("/home/*","/vinyls/global/*").permitAll()
                 .antMatchers("/users/auth/*").permitAll()
                 .antMatchers("/genres").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
+
 }

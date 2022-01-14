@@ -44,4 +44,21 @@ public class HomeServiceJpa implements HomeService {
         List<ExchangeAd> ads = exchangeAdRepo.findByCreatorNot(user).stream().filter(v -> genres.contains(v.getVinyl().getGenre()) && !v.getCreator().getId().equals(user.getId())).collect(Collectors.toList());
         return ads.stream().map(ad -> new ExchangeHomeDTO(ad.getCreator().getUsername(), ad)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Vinyl> getAllVinyls() {
+        return vinylRepo.findAll();
+    }
+
+    @Override
+    public List<SaleHomeDTO> getAllSaleAds() {
+        List<SaleAd> ads = saleAdRepo.findAll();
+        return ads.stream().map(ad -> new SaleHomeDTO(ad.getCreator().getUsername(), ad)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ExchangeHomeDTO> getAllExchangeAds() {
+        List<ExchangeAd> ads = exchangeAdRepo.findAll();
+        return ads.stream().map(ad -> new ExchangeHomeDTO(ad.getCreator().getUsername(), ad)).collect(Collectors.toList());
+    }
 }

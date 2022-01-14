@@ -11,11 +11,12 @@ import static org.springframework.security.core.authority.AuthorityUtils.commaSe
 
 public class VinylUserDetails implements UserDetails {
 
-    public final User user;
+    public User user;
 
     public VinylUserDetails(User user) {
         this.user = user;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
