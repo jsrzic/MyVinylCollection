@@ -3,6 +3,7 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 import hr.fer.progi.MyVinylCollection.dao.*;
 import hr.fer.progi.MyVinylCollection.domain.*;
 import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
+import hr.fer.progi.MyVinylCollection.rest.security.WebSecurity;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -26,19 +28,22 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalTime;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles({"test"})
+@WebMvcTest(VinylServiceJpa.class)
 @ExtendWith(MockitoExtension.class)
 class VinylServiceJpaTest {
 
-    @Mock
+    @MockBean
     private VinylRepository vinylRepository;
 
     @InjectMocks
@@ -56,7 +61,10 @@ class VinylServiceJpaTest {
     @MockBean
     private UserRepository userRepository;
 
-    @Mock
+    @MockBean
+    private WebSecurity webSecurity;
+
+    @MockBean
     private MapStructMapper mapstructMapper;
 
     @BeforeEach
@@ -67,19 +75,19 @@ class VinylServiceJpaTest {
         Genre genre2 = new Genre();
         genre2.setId(2L);
         genre2.setName("Pop");
-        when(genreRepository.getById(1L)).thenReturn(genre1);
-        when(genreRepository.getById(2L)).thenReturn(genre2);
+        given(genreRepository.getById(1L)).willReturn(genre1);
+        given(genreRepository.getById(2L)).willReturn(genre2);
 
         Subgenre subgenre = new Subgenre();
         subgenre.setId(1L);
         subgenre.setName("subgenre");
         subgenre.setGenre(genre1);
-        when(subgenreRepository.getById(1L)).thenReturn(subgenre);
+        given(subgenreRepository.getById(1L)).willReturn(subgenre);
 
         Artist artist = new Artist();
         artist.setId(1L);
         artist.setName("Mate Mišo");
-        when(artistRepository.getById(1L)).thenReturn(artist);
+        given(artistRepository.getById(1L)).willReturn(artist);
 
         RegisterUserDTO registerUserDTO = new RegisterUserDTO();
         registerUserDTO.setName("Marta");
@@ -109,8 +117,8 @@ class VinylServiceJpaTest {
 
         Vinyl vinyl1 = new Vinyl(vinylDto, artist, genre1, subgenre);
         vinyl1.setOwner(user);
-        //vinylRepository.save(vinyl1);
-        given(vinylRepository.findById(1L)).willReturn(java.util.Optional.of(vinyl1));
+        user.getVinyls().add(vinyl1);
+        given(vinylRepository.findById(1L)).willReturn(Optional.of(vinyl1));
     }
 
 
@@ -123,7 +131,6 @@ class VinylServiceJpaTest {
     void testFindById(){
         Vinyl v = vinylServiceJpa.findById(1L);
         assertEquals("Slušaj mater", v.getAlbum());
-        System.out.println(v);
     }
 
     @Test
@@ -165,14 +172,17 @@ class VinylServiceJpaTest {
 
         Vinyl vinyl = new Vinyl(vinylDto, artist, genre, subgenre);
         vinylServiceJpa.addVinyl(vinyl, userRepository.getById(1L));
+        given(vinylRepository.getById(1L)).willReturn(vinyl);
+
         System.out.println(vinylRepository.findAll());
         //System.out.println(user);
     }
 
+    //user get vinyls je nulla
     @Test
     public void testDeleteVinyl(){
-        vinylServiceJpa.deleteVinyl(1L);
-        verify(vinylRepository).deleteById(1L);
+        assertEquals(true, vinylServiceJpa.deleteVinyl(1L));
+
     }
 
 }

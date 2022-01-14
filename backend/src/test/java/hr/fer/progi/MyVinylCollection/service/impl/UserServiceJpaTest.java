@@ -13,29 +13,38 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(SpringExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles({"test"})
 @ExtendWith(MockitoExtension.class)
 class UserServiceJpaTest {
 
     @MockBean
     private UserRepository userRepository;
 
+    @MockBean
     private UserServiceJpa userServiceJpa;
 
-    @Mock
+    @MockBean
     private GenreRepository genreRepository;
 
-    @Mock
+    @MockBean
     private PasswordEncoder passwordEncoder;
 
     @MockBean
@@ -49,7 +58,6 @@ class UserServiceJpaTest {
 
     @BeforeEach
     public void setUp(){
-        userServiceJpa = new UserServiceJpa();
 
         registerUserDTO = new RegisterUserDTO();
         registerUserDTO.setName("Marta");
@@ -66,21 +74,36 @@ class UserServiceJpaTest {
         genre2.setName("Pop");
 
         userGenrePreference = new ArrayList<Genre>();
-        when(genreRepository.getById(1L)).thenReturn(genre1);
-        when(genreRepository.getById(2L)).thenReturn(genre2);
+        given(genreRepository.getById(1L)).willReturn(genre1);
+        given(genreRepository.getById(2L)).willReturn(genre2);
         userGenrePreference.add(genreRepository.getById(1L));
         userGenrePreference.add(genreRepository.getById(2L));
+
+        User user1 = new User(registerUserDTO, null, null);
+
+        given(userRepository.findByUsername("mdulibic")).willReturn(Optional.of(user1));
+        given(userRepository.findById(1L)).willReturn(Optional.of(user1));
 
     }
 
     @Test
-    void testGetAllUsers() {
+    public void testGetAllUsers() {
         userServiceJpa.listAll();
         verify(userRepository).findAll();
     }
 
     @Test
-    void testRegisterUser(){
+    public void testFindByUsername(){
+        userServiceJpa.findByUsername("mdulibic");
+        verify(userRepository).findByUsername("mdulibic");
+        User foundUser = userServiceJpa.findByUsername("mdulibic");
+        assertEquals("mdulibic", foundUser.getUsername());
+    }
+
+
+
+    @Test
+    public void testRegisterUser(){
         User newUser = userServiceJpa.registerUser(registerUserDTO, null, null);
         //registerUserDTO.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
         //user =  userRepository.save(new User(registerUserDTO, null, null));
