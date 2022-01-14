@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import { Paper, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -8,13 +8,33 @@ import VinylComponent from "./AdComponent";
 import { useHistory } from "react-router-dom";
 import authHeader from "../auth-header";
 
-function VinylInfoHeader({ vinyl }) {
+function VinylInfoHeader({ vinyl, id }) {
   const api = process.env.REACT_APP_API_URL;
 
-  const username = getCurrentUser();
+  const [username, setUsername] = useState("");
   const vinylDimension = IsMobile() ? 75 : 150;
   const color = getRandomColor();
   const history = useHistory();
+
+  useEffect(() => {
+    fetch(api + `/vinyls/owner/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin
+      }
+    }).then(response => {
+        if(response.ok){
+          return response.text();
+        } else {
+          throw new Error(response.status);
+        }
+      })
+      .then(username => {
+        setUsername(username);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   function deleteVinyl() {
     fetch(api + "/vinyls/collection", {
@@ -66,6 +86,7 @@ function VinylInfoHeader({ vinyl }) {
           <h2 style={{ marginLeft: "1rem" }}>{username}</h2>
         </div>
       </div>
+      {getCurrentUser() === username &&
       <Tooltip title="Delete Vinyl">
         <DeleteIcon
           style={{ fontSize: "2rem", cursor: "pointer" }}
@@ -74,6 +95,7 @@ function VinylInfoHeader({ vinyl }) {
           }}
         />
       </Tooltip>
+      }
     </Paper>
   );
 }
