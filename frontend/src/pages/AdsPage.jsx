@@ -243,7 +243,7 @@ function AddNewSaleAd({ setOpen, open, setAds }) {
                   Exchange
                 </ToggleButton>
               </ToggleButtonGroup>
-              <Select label="Vinyl" value={vinyl} onChange={handleChange}>
+              <Select style={{marginTop: "1rem"}} value={vinyl} onChange={handleChange}>
                 {vinyls.map((v) => (
                   <MenuItem style={{ height: "3rem" }} value={v}>
                     <div style={{ display: "flex", alignItems: "center" }}>

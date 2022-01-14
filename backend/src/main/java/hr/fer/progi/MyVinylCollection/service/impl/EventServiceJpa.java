@@ -10,7 +10,9 @@ import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceJpa implements EventService {
@@ -35,6 +37,12 @@ public class EventServiceJpa implements EventService {
     @Override
     public List<Event> listAll() {
         return eventRepo.findAll();
+    }
+
+    @Override
+    public List<Event> listSorted() {
+        Comparator<Event>  REVERSED = (x1, x2) -> Long.compare(x2.getId(),x1.getId());
+        return eventRepo.findAll().stream().sorted(REVERSED).collect(Collectors.toList());
     }
 
     @Override
