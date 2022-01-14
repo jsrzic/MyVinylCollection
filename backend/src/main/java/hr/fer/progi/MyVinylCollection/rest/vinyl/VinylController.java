@@ -133,6 +133,25 @@ public class VinylController {
         return user.getSoldVinyls();
     }
 
+    @GetMapping("/owner/{id}")
+    public String getVinylOwner(@PathVariable Long id){
+        try{
+            Vinyl vinyl = vinylService.findById(id);
+            return vinyl.getOwner().getUsername();
+        }catch(RequestDeniedException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    public UpdateVinylDTO getVinylInfo(@PathVariable Long id){
+        try{
+            return vinylService.getVinylInfo(id);
+        }catch(RequestDeniedException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
 
 
 

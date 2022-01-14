@@ -29,59 +29,22 @@ public class HomeController {
     @Autowired
     HomeService homeService;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private VinylService vinylService;
-
     @GetMapping("/vinyls")
     public List<Vinyl> getVinyls(){
       User user = userSession.getUser();
-      return user==null ? homeService.getAllVinyls() : homeService.getVinyls(user);
+      return homeService.getVinyls(user);
     }
 
     @GetMapping("/sale_ads")
     public List<SaleHomeDTO> getSaleAds(){
         User user = userSession.getUser();
-        return user==null ? homeService.getAllSaleAds() : homeService.getSaleAds(user);
+        return homeService.getSaleAds(user);
     }
 
     @GetMapping("/exchange_ads")
     public List<ExchangeHomeDTO> getExchangeAds(){
         User user = userSession.getUser();
-        return user==null ? homeService.getAllExchangeAds() : homeService.getExchangeAds(user);
+        return homeService.getExchangeAds(user);
     }
-
-    @GetMapping("/vinyl/owner/{id}")
-    public String getVinylOwner(@PathVariable Long id){
-        try{
-            Vinyl vinyl = vinylService.findById(id);
-            return vinyl.getOwner().getUsername();
-        }catch(RequestDeniedException e){
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    @GetMapping("/vinyl/{id}")
-    public UpdateVinylDTO getVinylInfo(@PathVariable Long id){
-        try{
-            return vinylService.getVinylInfo(id);
-        }catch(RequestDeniedException e){
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    @GetMapping("/search/{regex}")
-    public List<String> searchUsersByRegex(@PathVariable String regex) {
-        return userService.searchByRegex(regex);
-    }
-
-    @GetMapping("/profile/{username}")
-    public UserProfileDTO getUserProfile(@PathVariable String username) {
-        return userService.getUserProfile(userService.findByUsername(username));
-    }
-
-
 
 }

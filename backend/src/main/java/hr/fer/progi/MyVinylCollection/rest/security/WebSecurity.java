@@ -59,15 +59,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        User guest = new User();
-        guest.setUsername("guest");
-        VinylUserDetails anonymousUser = new VinylUserDetails(guest);
-        http.anonymous().principal(anonymousUser);
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/home/*","/vinyls/global/*").permitAll()
                 .antMatchers("/users/auth/*").permitAll()
                 .antMatchers("/genres").permitAll()
                 .anyRequest().authenticated();
