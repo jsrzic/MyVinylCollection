@@ -10,6 +10,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import BlockIcon from "@mui/icons-material/Block";
+import FaceIcon from "@mui/icons-material/Face";
 
 import authHeader from "../auth-header";
 
@@ -27,12 +28,11 @@ function AdminUsers() {
       },
     }).then((response) =>
       response.json().then((d) => {
-        console.log(d);
         setUsers(d);
-        // setBlockedUsers(d.filter((u) => u));
+        setBlockedUsers(d.filter((u) => u.active !== true));
       })
     );
-  }, []);
+  }, [users]);
 
   return (
     <List
@@ -49,7 +49,12 @@ function AdminUsers() {
           (user) =>
             user.username !== "admin" && (
               <>
-                <AdminUserTab name={user.username} />
+                <AdminUserTab
+                  isBlocked={blockedUsers && blockedUsers.includes(user)}
+                  name={user.username}
+                  setBlockedUsers={setBlockedUsers}
+                  setUsers={setUsers}
+                />
                 <Divider variant="inset" component="li" />
               </>
             )
@@ -58,14 +63,53 @@ function AdminUsers() {
   );
 }
 
-function AdminUserTab({ name, isBlocked }) {
+function AdminUserTab({ name, isBlocked, setUsers, setBlockedUsers }) {
+  const api = process.env.REACT_APP_API_URL;
+  const origin = process.env.REACT_APP_URL;
+
+  function handleBlock() {
+    fetch(api + `/users/status/${name}`, {
+      method: "PUT",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin,
+        "Content-Type": "application/json",
+      },
+    }).then((r) =>
+      r.json().then(() => {
+        fetch(api + "/users", {
+          method: "GET",
+          headers: {
+            Authorization: authHeader(),
+            Origin: origin,
+          },
+        }).then((response) =>
+          response.json().then((d) => {
+            setUsers(d);
+            setBlockedUsers(d.filter((u) => u.active !== true));
+          })
+        );
+      })
+    );
+  }
+
   return (
-    <ListItem disabled>
+    <ListItem>
       <ListItemAvatar>
-        <Avatar>{isBlocked && <BlockIcon color="error" />}</Avatar>
+        <Avatar>
+          {isBlocked ? (
+            <BlockIcon color="error" />
+          ) : (
+            <FaceIcon style={{ color: "black" }} />
+          )}
+        </Avatar>
       </ListItemAvatar>
       <ListItemText primary={name} />
-      <Button>UNBLOCK</Button>
+      {isBlocked ? (
+        <Button onClick={handleBlock}>UNBLOCK</Button>
+      ) : (
+        <Button onClick={handleBlock}>BLOCK</Button>
+      )}
     </ListItem>
   );
 }
