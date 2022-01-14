@@ -13,6 +13,7 @@ public interface ExchangeAdService {
     boolean deleteAd(Long id, User owner);
     boolean exchangeVinyls(ExchangeOffer offer, User user);
     ExchangeOffer askForExchange(ExchangeOffer exchangeOffer, User adCreator);
+    void declineOffer(ExchangeOffer offer, User user);
     ExchangeAd findById(Long id);
     ExchangeOffer findOfferById(Long id);
 }

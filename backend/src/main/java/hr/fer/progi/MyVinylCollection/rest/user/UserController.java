@@ -2,6 +2,8 @@ package hr.fer.progi.MyVinylCollection.rest.user;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import hr.fer.progi.MyVinylCollection.domain.*;
+import hr.fer.progi.MyVinylCollection.rest.inbox.ExchangeMessage;
+import hr.fer.progi.MyVinylCollection.rest.inbox.PurchaseMessage;
 import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
 import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetails;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtResponse;
@@ -9,6 +11,7 @@ import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtUtils;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.UserProfileDTO;
 import hr.fer.progi.MyVinylCollection.service.GenreService;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
@@ -60,8 +63,8 @@ public class UserController {
     UserSession userSession;
 
     @GetMapping("")
-    public List<User> listUsers() {
-        return userService.listAll();
+    public List<String> listUsers() {
+        return userService.listAll().stream().map(u -> u.getUsername()).collect(Collectors.toList());
     }
 
     @PostMapping("/auth/register")
@@ -118,13 +121,13 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/status/{id}")
-    public ResponseEntity<Object> updateUserStatus(@PathVariable("id") Long userId, @RequestParam boolean status){
+    @PutMapping("/status/{username}")
+    public ResponseEntity<Object> updateUserStatus(@PathVariable("username") String username){
         try{
-            if(userService.updateUserStatus(userId, status)){
-                return new ResponseEntity<Object>(userId, HttpStatus.OK);
+            if(userService.updateUserStatus(username)){
+                return new ResponseEntity<Object>("User unblocked!", HttpStatus.OK);
             }else{
-                return new ResponseEntity<Object>(userId, HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<Object>("User blocked!", HttpStatus.OK);
             }
         }catch(RequestDeniedException e){
             throw new IllegalArgumentException(e.getMessage());
@@ -201,14 +204,32 @@ public class UserController {
 
     @GetMapping("/friends")
     public List<User> getFriends() {
-        User user = userSession.getUser().user;
-       return user.getFriends();
+        return userSession.getUser().getFriends();
     }
 
     @GetMapping("/offers")
-    public List<ExchangeOffer> getOffers() {
-        User user = userSession.getUser().user;
-        return user.getOffers();
+    public List<ExchangeMessage> getOffers() {
+        return userSession.getUser().getOffers()
+                .stream().map(o -> new ExchangeMessage(o.getOfferor().getUsername(), o)).collect(Collectors.toList());
     }
+
+    @GetMapping("/purchaseOffers")
+    public List<PurchaseMessage> getPurchaseOffers() {
+        return userSession.getUser().getPurchaseOffers()
+                .stream().map(o -> new PurchaseMessage(o.getBuyer().getUsername(), o)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/search/{regex}")
+    public List<String> searchUsersByRegex(@PathVariable String regex) {
+        return userService.searchByRegex(regex);
+    }
+
+    @GetMapping("/profile/{username}")
+    public UserProfileDTO getUserProfile(@PathVariable String username) {
+        return userService.getUserProfile(userService.findByUsername(username));
+    }
+
+
+
 
 }

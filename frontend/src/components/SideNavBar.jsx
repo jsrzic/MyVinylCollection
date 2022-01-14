@@ -15,7 +15,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import AlbumIcon from "@mui/icons-material/Album";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
-import SettingsIcon from "@mui/icons-material/Settings";
+import EmailIcon from "@mui/icons-material/Email";
 import PeopleIcon from "@mui/icons-material/People";
 
 import { IsMobile, ThemeContext } from "../util/utils";
@@ -25,15 +25,15 @@ const tabsIcons = [
   <HomeIcon />,
   <AlbumIcon />,
   <FeaturedPlayListIcon />,
-  <SettingsIcon />,
+  <EmailIcon />,
   <PeopleIcon />,
 ];
-const tabs = ["Home Page", "Collection", "Ads", "Settings", "Friends"];
+const tabs = ["Home Page", "Collection", "Ads", "Inbox", "Friends"];
 const tabToPath = new Map();
 tabToPath.set("Home Page", "homepage");
 tabToPath.set("Collection", "collection");
 tabToPath.set("Ads", "ads");
-tabToPath.set("Settings", "settings");
+tabToPath.set("Inbox", "inbox");
 tabToPath.set("Friends", "friends");
 
 function SideNavBar() {
@@ -124,7 +124,7 @@ function SideNavBar() {
         <BottomNavigationAction icon={<HomeIcon />} label="Home Page" />
         <BottomNavigationAction icon={<FeaturedPlayListIcon />} label="Ads" />
         <BottomNavigationAction icon={<AlbumIcon />} label="Collection" />
-        <BottomNavigationAction icon={<SettingsIcon />} label="Settings" />
+        <BottomNavigationAction icon={<EmailIcon />} label="Inbox" />
         <BottomNavigationAction icon={<PeopleIcon />} label="Friends" />
       </BottomNavigation>
     </Box>

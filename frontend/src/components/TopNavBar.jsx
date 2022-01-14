@@ -18,6 +18,9 @@ import ToggleTheme from "./ToggleTheme";
 import icon from "../assets/icon.png";
 import { IsMobile } from "../util/utils";
 import { useHistory } from "react-router-dom";
+import authHeader from "../auth-header";
+
+const api = process.env.REACT_APP_API_URL;
 
 const navBarStyle = {
   display: "flex",
@@ -35,7 +38,34 @@ const helpBarStyle = {
 
 function TopNavBar() {
   const [open, setOpen] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState("");
   const history = useHistory();
+
+  const handleSearch = () => {
+    if(searchValue == "") return;
+
+    fetch(api + `/users/search/${searchValue}`, {
+      method: "GET",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin
+      },
+    })
+      .then((response) => {
+        if(response.ok){
+          return response.json();
+        }
+        else {
+          throw new Error(response.status)
+        }
+      })
+      .then((searchResult) => {
+          history.push("/dashboard/search-result", {
+            data: searchResult
+          });
+      })
+      .catch(err => console.log(err));
+  }
 
   return (
     <>
@@ -78,9 +108,13 @@ function TopNavBar() {
                   variant="filled"
                   hiddenLabel
                   size="small"
+                  value={searchValue}
+                  onChange={(e) => {
+                    setSearchValue(e.target.value);
+                  }}
                   InputProps={{
                     startAdornment: (
-                      <IconButton disableTouchRipple>
+                      <IconButton disableTouchRipple onClick={handleSearch}>
                         <SearchIcon />
                       </IconButton>
                     ),
@@ -99,9 +133,13 @@ function TopNavBar() {
                   variant="filled"
                   hiddenLabel
                   size="small"
+                  value={searchValue}
+                  onChange={(e) => {
+                    setSearchValue(e.target.value);
+                  }}
                   InputProps={{
                     startAdornment: (
-                      <IconButton disableTouchRipple>
+                      <IconButton disableTouchRipple onClick={handleSearch}>
                         <SearchIcon />
                       </IconButton>
                     ),

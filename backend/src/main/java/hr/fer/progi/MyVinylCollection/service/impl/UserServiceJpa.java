@@ -10,6 +10,7 @@ import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.LoginUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
+import hr.fer.progi.MyVinylCollection.rest.user.dto.UserProfileDTO;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceJpa implements UserService {
@@ -82,13 +84,12 @@ public class UserServiceJpa implements UserService {
 
 
     @Override
-    public boolean updateUserStatus(Long userId, boolean status) {
-        if(userRepo.findById(userId).isEmpty())
-            throw new RequestDeniedException("No user with id:" + userId);
-
-        if(userRepo.updateUserStatus(userId, status).isActive() == status)
-                return true;
-        return false;
+    public boolean updateUserStatus(String username) {
+        User user = userRepo.findByUsername(username).orElseThrow(
+                () -> new RequestDeniedException("No user with username:" + username));
+        user.setActive(!user.isActive());
+        userRepo.save(user);
+        return user.isActive();
     }
 
     @Override
@@ -146,6 +147,16 @@ public class UserServiceJpa implements UserService {
     public void removeFriend(User currentUser, User friend) {
         currentUser.getFriends().remove(friend);
         userRepo.save(currentUser);
+    }
+
+    @Override
+    public List<String> searchByRegex(String regex) {
+        return userRepo.searchByRegex(regex).stream().map(u -> u.getUsername()).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserProfileDTO getUserProfile(User user) {
+        return mapstructMapper.userToUserProfileDTO(user);
     }
 
 }

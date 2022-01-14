@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,7 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     int countByUsername(String username);
 
-    @Modifying
-    @Query("UPDATE vinyl_user u SET u.isActive = :s WHERE u.id = :id")
-    User updateUserStatus(@Param("id") Long id, @Param("s") boolean status);
+    @Query("SELECT u FROM vinyl_user u WHERE u.username LIKE %:regex%")
+    List<User> searchByRegex(@Param("regex") String regex);
 }

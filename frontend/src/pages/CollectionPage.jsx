@@ -1,9 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import VinylCollection from "../components/VinylCollection";
-import {Autocomplete, Card, Fade, TextField} from "@mui/material";
-import {getRandomColor, IsMobile} from "../util/utils";
-import AddIcon from '@mui/icons-material/Add';
-import {useHistory} from "react-router-dom";
+import {
+  Alert,
+  Autocomplete,
+  Button,
+  Card,
+  Divider,
+  Fade,
+  Snackbar,
+  TextField,
+} from "@mui/material";
+import { getRandomColor, IsMobile } from "../util/utils";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useHistory } from "react-router-dom";
 import PickArtistForm from "../components/PickArtistForm";
 import authHeader from "../auth-header";
 
@@ -24,13 +34,14 @@ function CollectionPage() {
     paddingTop: "1rem",
     paddingBottom: "1rem",
     position: "relative",
-    justifySelf: "center"
+    justifySelf: "center",
+    cursor: "pointer",
   };
 
   const scrollContainerStyleDesktop = {
     maxHeight: "90vh",
     overflowY: "scroll",
-  }
+  };
 
   const scrollContainerStyleMobile = {
     display: "grid",
@@ -39,12 +50,15 @@ function CollectionPage() {
     zoom: `${window.innerWidth / 4}%`,
   };
 
+  const collectionStyle = {
+    display: "flex",
+  };
   const vinylGridStyle = {
     display: "grid",
     gridTemplateColumns: "auto auto auto auto auto auto auto",
     justifyContent: "space-between",
     paddingRight: "3rem",
-  }
+  };
 
   const api = process.env.REACT_APP_API_URL;
   const origin = process.env.REACT_APP_URL;
@@ -53,7 +67,7 @@ function CollectionPage() {
     method: "GET",
     headers: {
       Authorization: authHeader(),
-      Origin: origin
+      Origin: origin,
     },
   };
 
@@ -62,99 +76,206 @@ function CollectionPage() {
   const [subcollections, setSubcollections] = React.useState([]);
   const [artists, setArtists] = React.useState([]);
   const [isAdded, setIsAdded] = React.useState(false);
-  const [favVinyls, setFavVinyls] = useState([]);
-
+  const [isSubcollectionRemoved, setIsSubcollectionRemoved] =
+    React.useState(false);
+  const [favVinyls, setFavVinyls] = React.useState([]);
+  const [snackbar, setSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState("");
 
   React.useEffect(() => {
     fetch(api + "/users/favourites", requestOptions)
-      .then(response => {
-        if(response.ok){
+      .then((response) => {
+        if (response.ok) {
           return response.json();
-        }
-        else {
+        } else {
           throw new Error(response.status);
         }
       })
-      .then(favVinlys => {
+      .then((favVinlys) => {
         setFavVinyls(favVinlys);
       })
-      .catch(err => console.log(err));
-
+      .catch((err) => console.log(err));
   }, []);
 
   React.useEffect(() => {
     fetch(api + `/vinyls/collection`, requestOptions)
-      .then(response => {
-        if(!response.ok){
+      .then((response) => {
+        if (!response.ok) {
           setErrorMessage(true);
         }
         return response.json();
       })
-      .then(data => {
-          setMainCollection(data);
+      .then((data) => {
+        setMainCollection(data);
       })
       .catch((err) => {
         console.log(err);
         setErrorMessage(true);
-      })
-  }, [isAdded]);
+      });
+  }, []);
 
   React.useEffect(() => {
-    fetch(api + `/vinyls/subcollection`, requestOptions)
-      .then(response => {
-        if(!response.ok){
+    fetch(api + `/vinyls/collection`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
           setErrorMessage(true);
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
+        setMainCollection(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(true);
+      });
+  }, [isAdded]);
+
+  React.useEffect(() => {
+    fetch(api + `/vinyls/subcollection`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          setErrorMessage(true);
+        }
+        return response.json();
+      })
+      .then((data) => {
         setSubcollections(data);
       })
       .catch((err) => {
         console.log(err);
         setErrorMessage(true);
-      })
-  }, [isAdded]);
+      });
+  }, [isAdded, isSubcollectionRemoved]);
 
   React.useEffect(() => {
-    const subCollectionArtists = subcollections.map(v => v.name);
-    setArtists(mainCollection.filter(a => !subCollectionArtists.includes(a.artist.name)));
+    const subCollectionArtists = subcollections.map((v) => v.name);
+    setArtists(
+      mainCollection.filter(
+        (a) => !subCollectionArtists.includes(a.artist.name)
+      )
+    );
   }, [mainCollection, subcollections]);
 
+  const handleDelete = (artistName) => {
+    let artistId = mainCollection.filter((v) => v.artist.name == artistName)[0]
+      .artist.id;
+    fetch(api + `/vinyls/subcollection/${artistId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setIsSubcollectionRemoved(!isSubcollectionRemoved);
+          setSnackbarMessage("Vinyl subcollection successfully removed");
+          setSnackbar(true);
+        } else {
+          throw new Error(response.status);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   const history = useHistory();
-  const addNewVinylCard =
-    <Card style={cardStyle} onClick={() => history.push("/dashboard/add-vinyl")}>
-      <AddIcon style={{width: "100px", height: "100px"}}/>
+  const addNewVinylCard = (
+    <Card
+      style={cardStyle}
+      onClick={() => history.push("/dashboard/add-vinyl")}
+    >
+      <AddIcon style={{ width: "100px", height: "100px" }} />
       <h2>Add new Vinyl</h2>
-    </Card>;
+    </Card>
+  );
 
   return (
-    <>
-      {errorMessage ? <h1>User not authorized.</h1> :
-      <div>
-        <h1>All Vinyls</h1>
-        <Fade in>
-          <div style={vinylGridStyle}>
-            {addNewVinylCard}
-            {mainCollection.length > 0 ? <VinylCollection data={mainCollection} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
-          </div>
-        </Fade>
-        <h1>SUB-COLLECTIONS</h1>
-        <PickArtistForm updateFunction={setIsAdded} data={artists}/>
-        {subcollections.length > 0 ? subcollections.map(subc =>
-          <>
-            <h1>{subc.name}</h1>
-            <div style={vinylGridStyle}>
-              {subc.items.length > 0 ? <VinylCollection data={subc.items} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
+    <div style={{ flexGrow: 1 }}>
+      {errorMessage ? (
+        <h1>User not authorized.</h1>
+      ) : (
+        <div>
+          <Divider style={{ marginTop: "1rem" }} textAlign="left">
+            <h1>ALL VINYLS</h1>
+          </Divider>
+          <Fade in>
+            <div style={collectionStyle}>
+              <div>{addNewVinylCard}</div>
+              {mainCollection.length > 0 ? (
+                <VinylCollection
+                  data={mainCollection}
+                  favVinyls={favVinyls}
+                  updateFunction={setFavVinyls}
+                />
+              ) : (
+                <Alert variant="outlined" severity="info">
+                  No vinyls in this collection.
+                </Alert>
+              )}
             </div>
-          </>
-        ) : <h1>No subcollections.</h1>}
+          </Fade>
 
-        <h1>FAVOURITES</h1>
-        {favVinyls.length > 0 ? <VinylCollection data={favVinyls} favVinyls={favVinyls} updateFunction={setFavVinyls}/> : <h1>No vinyls in this collection.</h1>}
-      </div>
-      }
-    </>
+          <Divider style={{ marginTop: "4rem" }} textAlign="left">
+            <h1>SUB-COLLECTIONS</h1>
+          </Divider>
+          <PickArtistForm
+            updateFunction={() => setIsAdded(!isAdded)}
+            data={artists}
+          />
+          {subcollections.length > 0 ? (
+            subcollections.map((subc) => (
+              <>
+                <h2>{subc.name}</h2>
+                {subc.items.length > 0 ? (
+                  <VinylCollection
+                    data={subc.items}
+                    favVinyls={favVinyls}
+                    updateFunction={setFavVinyls}
+                  />
+                ) : (
+                  <Alert variant="outlined" severity="info">
+                    No vinyls in this collection.
+                  </Alert>
+                )}
+                <Button
+                  style={{ margin: "1rem 0 4rem 2rem" }}
+                  variant="outlined"
+                  startIcon={<DeleteIcon />}
+                  onClick={() => handleDelete(subc.name)}
+                >
+                  Delete sub-collection
+                </Button>
+              </>
+            ))
+          ) : (
+            <h1>No subcollections.</h1>
+          )}
+
+          <Divider style={{ marginTop: "4rem" }} textAlign="left">
+            <h1>FAVOURITES</h1>
+          </Divider>
+          {favVinyls.length > 0 ? (
+            <VinylCollection
+              data={favVinyls}
+              favVinyls={favVinyls}
+              updateFunction={setFavVinyls}
+            />
+          ) : (
+            <Alert variant="outlined" severity="info">
+              No vinyls in this collection.
+            </Alert>
+          )}
+          <Snackbar
+            open={snackbar}
+            autoHideDuration={3000}
+            onClose={() => setSnackbar(false)}
+            message={snackbarMessage}
+            action={null}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 

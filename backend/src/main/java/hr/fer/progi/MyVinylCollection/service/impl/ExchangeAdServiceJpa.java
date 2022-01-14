@@ -45,16 +45,16 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
 
     @Override
     public boolean deleteAd(Long id, User owner) {
-        if(!owner.equals(exchangeAdRepo.findById(id).get().getCreator()))
-            throw new RequestDeniedException("You are not owner of this ad.");
-        owner.getExchangeAds().remove(exchangeAdRepo.findById(id));
-        userRepo.save(owner);
+        owner.getExchangeAds().remove(exchangeAdRepo.findById(id).orElseThrow(
+                () -> new RequestDeniedException("You are not owner of this ad.")));
         exchangeAdRepo.deleteById(id);
+        userRepo.save(owner);
         return true;
     }
 
     @Override
     public boolean exchangeVinyls(ExchangeOffer offer, User user) {
+        //Boilerplate code that makes you cry, but it works at least! :)
         if(offer.getAd().isActive()) {
             offer.getGivingVinyl().setOwner(user);
             offer.getReceivingVinyl().setOwner(offer.getOfferor());
@@ -75,13 +75,18 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
             userRepo.save(user);
             userRepo.save(offer.getOfferor());
             userCollection.add(offer.getGivingVinyl());
+            user.getBoughtVinyls().add(offer.getGivingVinyl());
+            user.getSoldVinyls().add(offer.getReceivingVinyl());
+            offer.getOfferor().getBoughtVinyls().add(offer.getGivingVinyl());
+            offer.getOfferor().getSoldVinyls().add(offer.getReceivingVinyl());
             offerorCollection.add(offer.getReceivingVinyl());
+            user.getOffers().remove(offer);
             userRepo.save(user);
             userRepo.save(offer.getOfferor());
-
             return true;
         } else {
             user.getOffers().remove(offer);
+            userRepo.save(user);
             return false;
         }
     }
@@ -92,6 +97,12 @@ public class ExchangeAdServiceJpa implements ExchangeAdService {
         adCreator.getOffers().add(exchangeOffer);
         userRepo.save(adCreator);
         return exchangeOffer;
+    }
+
+    @Override
+    public void declineOffer(ExchangeOffer offer, User user) {
+        user.getOffers().remove(offer);
+        userRepo.save(user);
     }
 
     @Override

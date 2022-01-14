@@ -71,7 +71,23 @@ public class User {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<ExchangeOffer> offers;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<PurchaseOffer> purchaseOffers;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Vinyl> boughtVinyls;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Vinyl> soldVinyls;
 
     public User() {}
 
@@ -221,5 +237,29 @@ public class User {
 
     public void setOffers(List<ExchangeOffer> offers) {
         this.offers = offers;
+    }
+
+    public List<PurchaseOffer> getPurchaseOffers() {
+        return purchaseOffers;
+    }
+
+    public void setPurchaseOffers(List<PurchaseOffer> purchaseOffers) {
+        this.purchaseOffers = purchaseOffers;
+    }
+
+    public List<Vinyl> getBoughtVinyls() {
+        return boughtVinyls;
+    }
+
+    public void setBoughtVinyls(List<Vinyl> boughtVinyls) {
+        this.boughtVinyls = boughtVinyls;
+    }
+
+    public List<Vinyl> getSoldVinyls() {
+        return soldVinyls;
+    }
+
+    public void setSoldVinyls(List<Vinyl> soldVinyls) {
+        this.soldVinyls = soldVinyls;
     }
 }

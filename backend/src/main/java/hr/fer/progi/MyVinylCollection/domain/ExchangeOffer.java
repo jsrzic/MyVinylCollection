@@ -1,5 +1,7 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity(name="exchange_offer")
@@ -19,6 +21,7 @@ public class ExchangeOffer {
 
     @ManyToOne
     @JoinColumn(name="offeror_id")
+    @JsonBackReference
     private User offeror;
 
     @ManyToOne

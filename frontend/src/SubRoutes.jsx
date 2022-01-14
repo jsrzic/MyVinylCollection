@@ -5,6 +5,11 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import CollectionPage from "./pages/CollectionPage";
 import AddVinylPage from "./pages/AddVinylPage";
+import AdsPage from "./pages/AdsPage";
+import UserPage from "./pages/UserPage";
+import FriendsPage from "./pages/FriendsPage";
+import SearchResultPage from "./pages/SearchResultPage";
+import VinylInfoPage from "./pages/VinylInfoPage";
 
 function SubRoutes() {
   return (
@@ -26,22 +31,37 @@ function SubRoutes() {
       </Route>
       <Route path="/dashboard/ads">
         <DashboardWrap>
-          <h1>profile</h1>
+          <AdsPage />
         </DashboardWrap>
       </Route>
-      <Route path="/dashboard/settings">
+      <Route path="/dashboard/inbox">
         <DashboardWrap>
-          <h1>settings</h1>
+          <h1>inbox</h1>
         </DashboardWrap>
       </Route>
       <Route path="/dashboard/friends">
         <DashboardWrap>
-          <h1>friends</h1>
+          <FriendsPage />
         </DashboardWrap>
       </Route>
       <Route path="/dashboard/add-vinyl">
         <DashboardWrap>
           <AddVinylPage />
+        </DashboardWrap>
+      </Route>
+      <Route path="/dashboard/users/:username">
+        <DashboardWrap>
+          <UserPage />
+        </DashboardWrap>
+      </Route>
+      <Route path="/dashboard/search-result">
+        <DashboardWrap>
+          <SearchResultPage />
+        </DashboardWrap>
+      </Route>
+      <Route path="/vinyl/info">
+        <DashboardWrap>
+          <VinylInfoPage />
         </DashboardWrap>
       </Route>
     </>
