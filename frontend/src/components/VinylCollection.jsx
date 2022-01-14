@@ -30,6 +30,7 @@ function VinylCollection({ data, favVinyls, updateFunction }) {
       )}
       {data.map((d) => (
         <VinylCard
+          hasHeart
           vinylData={d}
           favVinyls={favVinyls}
           updateFunction={updateFunction}

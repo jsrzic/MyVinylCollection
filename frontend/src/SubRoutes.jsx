@@ -10,6 +10,7 @@ import UserPage from "./pages/UserPage";
 import FriendsPage from "./pages/FriendsPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import VinylInfoPage from "./pages/VinylInfoPage";
+import InboxPage from "./pages/InboxPage";
 
 function SubRoutes() {
   return (
@@ -36,7 +37,7 @@ function SubRoutes() {
       </Route>
       <Route path="/dashboard/inbox">
         <DashboardWrap>
-          <h1>inbox</h1>
+          <InboxPage />
         </DashboardWrap>
       </Route>
       <Route path="/dashboard/friends">
