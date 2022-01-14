@@ -21,12 +21,13 @@ const usernameStyle = { fontSize: "1.2rem", marginLeft: "1rem" };
 function UserTab() {
   const history = useHistory();
   const username = getCurrentUser();
+  const isAdmin = JSON.parse(localStorage.getItem("user")).roles.includes("ROLE_ADMIN");
 
 if(username!=null) {
   return (
     <div
       style={userContainerStyle}
-      onClick={() => history.push("/dashboard/profile")}
+      onClick={() => {if(!isAdmin) history.push("/dashboard/profile")}}
     >
       <Avatar alt="user" sx={avatarStyle}>
         {username.substring(0,1).toUpperCase()}
