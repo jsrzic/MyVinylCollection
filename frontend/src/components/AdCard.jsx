@@ -23,7 +23,7 @@ import authHeader from "../auth-header";
 import VinylComponent from "./VinylComponent";
 import Button from "@mui/material/Button";
 
-function AdCard({ username, price, name, isSale, id, removeAd }) {
+function AdCard({ username, price, name, isSale, id, removeAd, ad }) {
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
 
@@ -31,6 +31,8 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const myUsername = getCurrentUser();
+
+  React.useEffect(() => console.log(ad), []);
 
   const wrapperStyle = {
     width: cardDimension,
@@ -103,7 +105,11 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
             )}
           </div>
         </div>
-        <AdComponent id={id} size={vinylDimension} name={name} />
+        <AdComponent
+          id={ad.exchangeAd.vinyl.id}
+          size={vinylDimension}
+          name={name}
+        />
         <div style={saleHeaderStyle}>
           <Chip
             icon={<FaceIcon style={{ color: "black" }} />}
