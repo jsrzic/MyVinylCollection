@@ -13,7 +13,9 @@
 			
 			\textit{Frontend} dio web aplikacije napisan je korištenjem Javascript biblioteke \underline{React}\footnote{\url{https://reactjs.org/}} i programskog jezika \underline{JavaScript}\footnote{\url{https://www.javascript.com/}}, dok je \textit{backend} dio napisan je korištenjem radnog okvira \underline{Spring Boot}\footnote{\url{https://spring.io/projects/spring-boot}} i programskog jezika \underline{Java}\footnote{\url{https://www.java.com/en/}}. React (također poznat kao React.js ili ReactJS) open-source biblioteka za izgradnju korisničkih sučelja temeljenih na UI komponentama. React se bavi samo upravljanjem stanjem i prikazivanjem tog stanja DOM-u, s obzirom na to stvaranje aplikacija obično zahtijeva korištenje dodatnih biblioteka za interakciju s API-jem. Radni okvir Spring Boot olakšava stvaranje samostalnih aplikacija koje se temelje na Springu koje se mogu samo "pokrenuti".
 			
-			Za upravljanje relacijskom bazom podataka korišten je sustav \underline{PostgreSQL}\footnote{\url{https://www.postgresql.org/}}, a za pokretanje i rad aplikacije korištena je platforma \underline{Heroku}\footnote{\url{https://id.heroku.com/login}}. Dokumentacija je napisana u Latex uredniku \underline{Texmaker}\footnote{\url{https://www.xm1math.net/texmaker/}}, UML dijagrami su napravljeni u programu \underline{AstahUML}\footnote{\url{https://astah.net/}} i ispitivanje programskog rješenja je odrađeno korištenjem metode JUnit u Javi za ispitivanje komponenti i programa \underline{Selenium IDE}\footnote{\url{https://www.selenium.dev/selenium-ide/}} za ispitivanje sustava.
+			Za upravljanje relacijskom bazom podataka korišten je sustav \underline{PostgreSQL}\footnote{\url{https://www.postgresql.org/}}, a za pokretanje i rad aplikacije korištena je platforma \underline{Heroku}\footnote{\url{https://id.heroku.com/login}}. Dokumentacija je napisana u Latex uredniku \underline{Texmaker}\footnote{\url{https://www.xm1math.net/texmaker/}}, UML dijagrami napravljeni su u programu \underline{AstahUML}\footnote{\url{https://astah.net/}} i ispitivanje programskog rješenja je odrađeno korištenjem metode JUnit u Javi za ispitivanje komponenti i programa \underline{Selenium IDE}\footnote{\url{https://www.selenium.dev/selenium-ide/}} za ispitivanje sustava.
+			
+			\eject
 
 	
 		\section{Ispitivanje programskog rješenja}
@@ -22,11 +24,171 @@
 %			
 %			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
 
-		Za ispitivanje sustava koristio se Selenium IDE.
-	
 			
 			\subsection{Ispitivanje komponenti}
 %			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+
+Za prva tri ispitna slučaja korištena je konfiguracija:
+
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/usjpa1.png}
+					\centering
+					\caption{1. dio konfiguracije}
+					\label{fig:konf1}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/usjpa2.png}
+					\centering
+					\caption{2. dio konfiguracije}
+					\label{fig:konf2}
+				\end{figure}
+
+
+\textbf{Ispitni slučaj 1: Provjera registracije korisnika}
+
+	\noindent\textbf{Ulaz:}
+		Ispravni korisnički podaci.
+
+	\noindent\textbf{Očekivani rezultat:}
+		Uspješna registracija korisnika.
+
+	\noindent\textbf{Rezultat:}
+		Očekivani rezultat uspješan.
+	
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/register_test_res.jpg}
+					\centering
+					\caption{Prikaz rezultata unit testa 1}
+					\label{fig:rez_test1}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/register_test_code.jpg}
+					\centering
+					\caption{Prikaz koda unit testa 1}
+					\label{fig:kod_test1}
+				\end{figure}
+
+\noindent\textbf{Ispitni slučaj 2: Pretraga korisnika prema username-u}
+
+	\noindent\textbf{Ulaz:}
+		Korisničko ime.
+
+	\noindent\textbf{Očekivani rezultat:}
+		Prikazan korisnički profil pretraženog korisničkog imena.
+
+	\noindent\textbf{Rezultat:}
+		Očekivani rezultat uspješan.
+	
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/username_test_res.jpg}
+					\centering
+					\caption{Prikaz rezultata unit testa 2}
+					\label{fig:rez_test2}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/username_test_code.jpg}
+					\centering
+					\caption{Prikaz koda unit testa 2}
+					\label{fig:kod_test2}
+				\end{figure}
+
+\noindent\textbf{Ispitni slučaj 3: Prikaz svih korisnika}
+
+	\noindent\textbf{Ulaz:}
+		Nema ulaza.
+		
+	\noindent\textbf{Očekivani rezultat:}
+		Lista svih korisnika.
+		
+	\noindent\textbf{Rezultat:}
+		Očekivani rezultat uspješan.
+	
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/get_user_code.jpg}
+					\centering
+					\caption{Prikaz rezultata unit testa 3}
+					\label{fig:rez_test3}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/get_user_res.jpg}
+					\centering
+					\caption{Prikaz koda unit testa 3}
+					\label{fig:kod_test3}
+				\end{figure}
+				
+Za ostala tri ispitna slučaja korištena je konfiguracija: 
+
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/setup1.png}
+					\centering
+					\caption{1. dio druge konfiguracije}
+					\label{fig:konf1}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/setup2.png}
+					\centering
+					\caption{2. dio druge konfiguracije}
+					\label{fig:konf2}
+				\end{figure}
+
+\noindent\textbf{Ispitni slučaj 4: Dodavanje novog vinila}
+
+	\noindent\textbf{Ulaz:}
+		Potrebni podaci za stvaranje vinila.
+		
+	\noindent\textbf{Očekivani rezultat:}
+		Uspješno dodan vinil.
+		
+	\noindent\textbf{Rezultat:}
+		Očekivani rezultat uspješan.
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/slucaj4.png}
+					\centering
+					\caption{Prikaz koda unit testa 4}
+					\label{fig:kod_test4}
+				\end{figure}
+
+\noindent\textbf{Ispitni slučaj 5: Brisanje oglasa}
+
+	\noindent\textbf{Ulaz:}
+		Ime vinila.
+	
+	\noindent\textbf{Očekivani rezultat:}
+		Vinil maknut iz kolekcije.
+		
+	\noindent\textbf{Rezultat:}
+		Očekivani rezultat uspješan.
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/slucaj5.png}
+					\centering
+					\caption{Prikaz koda unit testa 5}
+					\label{fig:kod_test5}
+				\end{figure}
+
+\noindent\textbf{Ispitni slučaj 6: Dohvati vinil}
+
+	\noindent\textbf{Ulaz:}
+		Zahtjev.
+	
+	\noindent\textbf{Očekivani rezultat:}
+		Odgovor. (200)
+		
+	\noindent\textbf{Rezultat:}
+		Očekivani rezultat uspješan.
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/slucaj6.png}
+					\centering
+					\caption{Prikaz koda unit testa 6}
+					\label{fig:kod_test6}
+				\end{figure}
 			
 			
 			
@@ -42,7 +204,9 @@
 %		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
 %			
 
-\textbf{Ispitni slučaj 1: Prijava u sustav - uspješna prijava}
+Za ispitivanje sustava koristio se Selenium IDE.\\
+
+\noindent\textbf{Ispitni slučaj 1: Prijava u sustav - uspješna prijava}
 			
 				\noindent\textbf{Ulaz:}
 				
@@ -68,7 +232,7 @@
 						
 					\end{packed_enum}
 				
-				\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen. \textcolor{green}{Aplikacija je prošla test.}
+				\noindent\textbf{Rezultat:} Očekivani rezultat je ostvaren.
 				
 				\begin{figure}[H]
 					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/login_steps.png}
@@ -111,7 +275,7 @@
 						
 					\end{packed_enum}
 				
-				\noindent\textbf{Rezultat:} Očekivani rezultat je zadovoljen. \textcolor{green}{Aplikacija je prošla test.}
+				\noindent\textbf{Rezultat:} Očekivani rezultat je ostvaren. 
 				
 				\begin{figure}[H]
 					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/login_fail_steps.png}
@@ -127,8 +291,110 @@
 					\label{fig:login_home_page}
 				\end{figure}
 				
-				\noindent\textbf{Ispitni slučaj 3: Dodavanje oglasa}
-				\noindent\textbf{Ispitni slučaj 4: Stvaranje kolekcije}
+\noindent\textbf{Ispitni slučaj 3: Dodavanje oglasa}
+				
+					\noindent\textbf{Ulaz:}
+				
+					\begin{packed_enum}
+					
+						\item Pritisak gumba "ADS"
+						\item Pritisak gumba "Add new ad"
+						\item Odabir između opcije namjene oglasa: "SALE" i "EXCHANGE"
+						\item Pritsak na padajući izbornik
+						\item Pritisak na vinil koji će biti u oglasu
+						\item Pritisak na praznu kućicu u koju se unosi cijena
+						\item Upis cijene vinila (u dolarima)
+						\item Pritisak gumba "OK"
+												
+					\end{packed_enum}
+				
+				\noindent\textbf{Očekivani rezultat:}
+				
+					\begin{packed_enum}
+					
+						\item Prikazuje se stranica "ADS" sa dodanim oglasom
+						
+					\end{packed_enum}
+				
+				\noindent\textbf{Rezultat:} Očekivani rezultat je ostvaren. 
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/dodavanje_oglasa_steps.png}
+					\centering
+					\caption{Potrebni koraci za dodavanje oglasa}
+					\label{fig:dodavanje_oglasa_steps}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/dodavanje_oglasa.png}
+					\centering
+					\caption{Uspješno dodan oglas}
+					\label{fig:ads}
+				\end{figure}
+				
+\noindent\textbf{Ispitni slučaj 4: Dodavanje vinila u kolekciju}
+
+				\noindent\textbf{Ulaz:}
+				
+					\begin{packed_enum}
+					
+						\item Pritisak gumba "COLLECTION"
+						\item Pritisak gumba "Add new vinyl"
+						\item Pritisak na praznu kućicu za upis imena albuma
+						\item Upis imena albuma
+						\item Pritisak na padajući izbornik za odabir izvođača
+						\item Odabir izvođača
+						\item Pritisak na praznu kućicu za upis godine izdanja
+						\item Upis godine izdanja
+						\item Pritisak na padajući izbornik za odabir žanra
+						\item Odabir žanra
+						\item Pritisak na praznu kućicu za upis evaulacije stanja
+						\item Upis evaulacije stanja
+						\item Pritisak na praznu kućicu za upis RPM-a
+						\item Upis RPM-a
+						\item Pritisak na praznu kućicu za upis kapaciteta
+						\item Upis kapaciteta
+						\item Pritisak na praznu kućicu za upis kvalitete reprodukcije
+						\item Upis kvalitete reprodukcije
+						\item Pritisak na praznu kućicu za upis broja audio kanala
+						\item Upis broja audio kanala
+						\item Pritisak na praznu kućicu za upis vremena reprodukcije
+						\item Upis vremena reprodukcije
+						\item Odabir između opcije: "Yes" i "No" za raritet vinila
+						\item Pritisak gumba "ADD"
+						
+					\end{packed_enum}
+				
+				\noindent\textbf{Očekivani rezultat:}
+				
+					\begin{packed_enum}
+					
+						\item Prikazuje se stranica "COLLECTION" sad dodanim vinilima
+						
+					\end{packed_enum}
+				
+				\noindent\textbf{Rezultat:} Očekivani rezultat je ostvaren. 
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/dodavanje_vinila_u_kolekciju1_steps.png}
+					\centering
+					\caption{Potrebni koraci dodavanje vinila u kolekciju - 1.dio}
+					\label{fig:dodavanje_vinila1_steps}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/dodavanje_vinila_u_kolekciju2_steps.png}
+					\centering
+					\caption{Potrebni koraci dodavanje vinila u kolekciju - 2.dio}
+					\label{fig:dodavanje_vinila2_steps}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{SeleniumIDE_testovi/dodavanje_vinila_u_kolekciju.png}
+					\centering
+					\caption{Uspješno dodani vinili u kolekciju}
+					\label{fig:kolekcija}
+				\end{figure}
 			
 			\eject 
 		
@@ -158,7 +424,49 @@
 %			
 %			
 %			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+
+Za deployanje aplikacije korištena je cloud platforma Heroku te se pomoću .yml datoteke na svaki push na granu master automatski pokrene pipeline koji postavlja novi kod na heroku server. Kako se naš repozitorij sastoji od backend i frontend projekta, na Heroku platformi su stvorene dvije zasebne aplikacije. Frontend i backend su povezani preko varijabli okruženja koje moramo definirati i na heroku serveru i u našem projektu kako bi se aplikacija mogla izvoditi i lokalno i na serveru. Primjer varijabli okruženja za frontend:
+
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/upute1.png}
+					\centering
+					\caption{Varijable okruženja u postavkama heroku frontend aplikacije}
+					\label{fig:upute1}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/upute2.png}
+					\centering
+					\caption{Datoteka varijabli okruženja u frontend projektu}
+					\label{fig:upute2}
+				\end{figure}
+				
+U backend heroku aplikaciji također je pod Resources dodana Heroku Postgres baza te kako bismo se povezali na nju dodane su varijable okruženja u konfiguracijske varijable heroku backend aplikacije i pod \textit{application.properties} u našom backend projektu u repozitoriju:
+	
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/upute3.png}
+					\centering
+					\caption{Prikaz Heroku Postgres baze}
+					\label{fig:upute3}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/upute4.png}
+					\centering
+					\caption{Varijable okruženja u postavkama heroku backend aplikacije}
+					\label{fig:upute4}
+				\end{figure}
+				
+				\begin{figure}[H]
+					\includegraphics[width=\textwidth]{slike/upute5.png}
+					\centering
+					\caption{Datoteka \textit{application.properties} sa varijablama okruženja u backend projektu}
+					\label{fig:upute5}
+				\end{figure}
 			
+			\noindent\textbf{Upute za pokretanje na vlastitom računalu}
 			
+Korisnik prvotno mora klonirati projekt u odabranom razvojnom okruženju sa git repozitorija. Zatim se potrebno pozicionirati putem konzole (cmd-windows/bash-linux) unutar mape sa backend projektom te izvršiti naredbu \textbf{mvn spring-boot:run} (u našem projektu koristimo Maven kao alat za automatizaciju gradnje) ili otvoriti projekt u razvojnom okruženju na putanji gdje se nalazi taj projekt te stisnuti gumb Run kako bi se pokrenuo pozadinski servis. Nakon što smo pokrenuli pozadinski servis, pozicioniramo se unutar mape sa frontend projektom opet ili putem konzole ili IDE-a. Ako određeni paketi nisu instalirani, potrebno ih je instalirati izvršavanjem naredbe \textbf{npm install „naziv-paketa“}(ili samo sa izvršiti naredbu npm install koja onda instalira sve pakete koji nisu u tom trenutku instalirani). Nakon toga, pokrećemo React aplikaciju naredbom \textbf{npm start} nakon čega će se naša aplikacija pokrenuti na adresi \underline{\url{http://localhost:3000}}.
+
 			
 			\eject 
