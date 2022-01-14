@@ -26,14 +26,13 @@ function ExchangeOffer({sender, offer}) {
   }
 
   const handleAccept = () => {
-    fetch(api + `/ads/exchange_ads/exchange/`, {
+    fetch(api + `/ads/exchange_ads/exchange/${offer.id}`, {
       method: "PUT",
       headers: {
         Origin: origin,
         Authorization: authHeader(),
         "Content-Type": "application/json"
       },
-      body: offer.id
     })
       .then(response => {
         if(response.ok){
