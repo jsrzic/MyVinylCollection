@@ -24,6 +24,7 @@ function InboxPage() {
         throw new Error(response.status);
       }
     }).then(data => {
+      console.log(JSON.stringify(data, null, 2));
       setOffers(data);
       setLoading(false);
     }).catch(err => {
@@ -34,15 +35,14 @@ function InboxPage() {
   }, []);
 
   return (
-    <div>
+    <div style={{marginLeft:"1rem", marginTop:"2rem", width: "100%"}}>
       {loading ? <LinearProgress style={{marginTop: "1rem"}}/> :
         <>
           {
             errorMessage ?
               <Alert variant="outlined" severity="error">Error occurred while communicating with the server.</Alert> :
-              <>
-                <p>{JSON.stringify(offers, null, 2)}</p>
-                {/*{offers.map(o => <ExchangeOffer sender={o.senderUsername} offer={o.offer}/>)}*/}
+              <>{offers.length == 0 ? <Alert style={{flexGrow: 1}} variant="outlined" severity="info">Empty inbox.</Alert> :
+                offers.map(o => <ExchangeOffer sender={o.senderUsername} offer={o.offer}/>)}
               </>
           }
         </>

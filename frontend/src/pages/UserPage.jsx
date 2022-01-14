@@ -42,6 +42,7 @@ function UserPage() {
   React.useEffect(() => {
     fetch(api + `/users/profile/${params.username}`, requestOptions)
       .then((response) => {
+        console.log(response)
         if (response.ok) {
           return response.json();
         } else {
@@ -49,12 +50,13 @@ function UserPage() {
         }
       })
       .then((data) => {
+        console.log(data)
         setData(data);
         setLoading(false);
       })
       .catch((err) => {
-        setLoading(false);
         setErrorMessage(true);
+        setLoading(false);
         console.log(err);
       });
   }, []);
