@@ -22,7 +22,7 @@ function HomePageAds({ exchangeAds, saleAds }) {
           name={ad.saleAd.vinyl.album}
           isSale
           id={ad.saleAd.vinyl.id}
-          ad={ad}
+          ad={ad.saleAd}
           fromHomepage
         />
       ))}
@@ -31,7 +31,7 @@ function HomePageAds({ exchangeAds, saleAds }) {
           username={ad.username}
           name={ad.exchangeAd.vinyl.album}
           id={ad.exchangeAd.vinyl.id}
-          ad={ad}
+          ad={ad.exchangeAd}
           fromHomepage
         />
       ))}

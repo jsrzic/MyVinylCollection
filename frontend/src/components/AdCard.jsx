@@ -68,7 +68,7 @@ function AdCard({
 
   return (
     <div style={wrapperStyle}>
-      <ExchangeOfferDialog open={modalOpen} setOpen={setModalOpen} adId={id} />
+      <ExchangeOfferDialog open={modalOpen} setOpen={setModalOpen} adId={ad.id} />
       <Card style={cardStyle}>
         <div style={saleHeaderStyle}>
           <div
