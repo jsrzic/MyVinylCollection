@@ -23,26 +23,14 @@ import authHeader from "../auth-header";
 import VinylComponent from "./VinylComponent";
 import Button from "@mui/material/Button";
 
-function AdCard({
-  username,
-  price,
-  name,
-  isSale,
-  id,
-  removeAd,
-  ad,
-  fromHomepage,
-}) {
+function AdCard({ username, price, name, isSale, id, removeAd, vinylId }) {
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
 
   const [color, setColor] = useState(getRandomColor());
-  const [exchangeModal, setExchangeModal] = useState(false);
-  const [saleModal, setSaleModal] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const myUsername = getCurrentUser();
-
-  React.useEffect(() => console.log(ad), []);
 
   const wrapperStyle = {
     width: cardDimension,
@@ -69,12 +57,7 @@ function AdCard({
 
   return (
     <div style={wrapperStyle}>
-      <ExchangeOfferDialog
-        open={exchangeModal}
-        setOpen={setExchangeModal}
-        adId={ad.id}
-      />
-      <SaleOfferDialog open={saleModal} setOpen={setSaleModal} adId={ad.id} />
+      <ExchangeOfferDialog open={modalOpen} setOpen={setModalOpen} adId={id} />
       <Card style={cardStyle}>
         <div style={saleHeaderStyle}>
           <div
@@ -88,7 +71,6 @@ function AdCard({
             {isSale ? (
               <Chip
                 icon={<AttachMoneyIcon />}
-                onClick={() => setSaleModal(true)}
                 label={
                   <p
                     style={{
@@ -104,7 +86,7 @@ function AdCard({
             ) : (
               <Tooltip title="Exchange">
                 <ChangeCircleIcon
-                  onClick={() => {if(username !== getCurrentUser()) setExchangeModal(true)}}
+                  onClick={() => setModalOpen(true)}
                   style={{
                     color: "white",
                     border: "5px dodgerblue solid",
@@ -121,16 +103,7 @@ function AdCard({
             )}
           </div>
         </div>
-        {fromHomepage ? (
-          <AdComponent id={id} size={vinylDimension} name={name} />
-        ) : (
-          <AdComponent
-            id={ad && ad.vinyl.id}
-            size={vinylDimension}
-            name={name}
-          />
-        )}
-
+        <AdComponent id={id} size={vinylDimension} name={name} />
         <div style={saleHeaderStyle}>
           <Chip
             icon={<FaceIcon style={{ color: "black" }} />}
@@ -222,44 +195,6 @@ function ExchangeOfferDialog({ open, setOpen, adId }) {
           ) : (
             <p>Loading...</p>
           )}
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-}
-
-function SaleOfferDialog({ open, setOpen, adId }) {
-  const api = process.env.REACT_APP_API_URL;
-
-  function handlePurchase() {
-    fetch(api + `/ads/sale_ads/${adId}/offer/`, {
-      method: "PUT",
-      headers: {
-        Authorization: authHeader(),
-        Origin: origin,
-        "Content-Type": "application/json",
-      },
-    }).then((r) => r.json().then((d) => console.log(d)));
-    setOpen(false);
-  }
-
-  return (
-    <div>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Offer to buy this vinyl?</DialogTitle>
-        <DialogContent
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "15vw",
-          }}
-        >
-          <Button variant="contained" onClick={handlePurchase}>
-            OK
-          </Button>
-          <Button variant="outlined" onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
         </DialogContent>
       </Dialog>
     </div>

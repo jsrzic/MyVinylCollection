@@ -56,6 +56,9 @@ public class SaleAdServiceJpa implements SaleAdService {
     @Override
     public boolean sellVinyl(PurchaseOffer offer, User seller) {
         offer.getAd().getVinyl().setOwner(offer.getBuyer());
+        SaleAd ad = offer.getAd();
+        ad.setActive(false);
+        saleAdRepo.save(ad);
         vinylRepo.save(offer.getAd().getVinyl());
         seller.getVinyls().remove(offer.getAd().getVinyl());
         seller.getSoldVinyls().add(offer.getAd().getVinyl());
