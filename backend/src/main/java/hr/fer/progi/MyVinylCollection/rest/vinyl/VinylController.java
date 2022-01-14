@@ -80,25 +80,6 @@ public class VinylController {
         }
     }
 
-    @GetMapping("/owner/{id}")
-    public String getVinylInfo(@PathVariable Long id){
-        try{
-            Vinyl vinyl = vinylService.findById(id);
-            return vinyl.getOwner().getUsername();
-        }catch(RequestDeniedException e){
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    @GetMapping("/{id}")
-    public UpdateVinylDTO getVinylOwner(@PathVariable Long id){
-        try{
-            return vinylService.getVinylInfo(id);
-        }catch(RequestDeniedException e){
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateVinylInfo(@PathVariable Long id,
                                               @RequestBody UpdateVinylDTO updatedVinyl){

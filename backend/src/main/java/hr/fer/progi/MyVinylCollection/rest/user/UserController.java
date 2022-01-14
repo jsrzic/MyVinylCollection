@@ -219,16 +219,6 @@ public class UserController {
                 .stream().map(o -> new PurchaseMessage(o.getBuyer().getUsername(), o)).collect(Collectors.toList());
     }
 
-    @GetMapping("/search/{regex}")
-    public List<String> searchUsersByRegex(@PathVariable String regex) {
-        return userService.searchByRegex(regex);
-    }
-
-    @GetMapping("/profile/{username}")
-    public UserProfileDTO getUserProfile(@PathVariable String username) {
-        return userService.getUserProfile(userService.findByUsername(username));
-    }
-
 
 
 

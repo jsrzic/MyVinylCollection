@@ -12,11 +12,17 @@ public class UserSession {
     private UserService userService;
 
     public User getUser() {
-        return userService.findByUsername(getUsername());
+        return getUsername() == "guest" ? null : userService.findByUsername(getUsername());
     }
 
     public String getUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return ((VinylUserDetails) auth.getPrincipal()).getUsername();
+        String username = ((VinylUserDetails) auth.getPrincipal()).getUsername();
+        if(username == "guest") {
+            return "guest";
+        } else {
+            return ((VinylUserDetails) auth.getPrincipal()).getUsername();
+        }
+
     }
 }
