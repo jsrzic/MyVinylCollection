@@ -11,6 +11,7 @@ import FriendsPage from "./pages/FriendsPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import VinylInfoPage from "./pages/VinylInfoPage";
 import InboxPage from "./pages/InboxPage";
+import AdminPage from "./pages/AdminPage";
 
 function SubRoutes() {
   return (
@@ -63,6 +64,11 @@ function SubRoutes() {
       <Route path="/vinyl/info">
         <DashboardWrap>
           <VinylInfoPage />
+        </DashboardWrap>
+      </Route>
+      <Route path="/dashboard/admin">
+        <DashboardWrap>
+          <AdminPage />
         </DashboardWrap>
       </Route>
     </>

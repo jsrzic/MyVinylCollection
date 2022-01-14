@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import {
   Card,
-  Chip, Dialog, DialogContent, DialogTitle, FormControl, MenuItem, Select, TextField, ToggleButton, ToggleButtonGroup,
-  Tooltip
+  Chip,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  MenuItem,
+  Select,
+  Tooltip,
 } from "@mui/material";
 
 import FaceIcon from "@mui/icons-material/Face";
@@ -11,18 +17,20 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import { getRandomColor, IsMobile } from "../util/utils";
+import { getCurrentUser, getRandomColor, IsMobile } from "../util/utils";
 import AdComponent from "./AdComponent";
 import authHeader from "../auth-header";
 import VinylComponent from "./VinylComponent";
 import Button from "@mui/material/Button";
 
-
 function AdCard({ username, price, name, isSale, id, removeAd }) {
   const cardDimension = IsMobile() ? 100 : 200;
   const vinylDimension = IsMobile() ? 75 : 150;
+
   const [color, setColor] = useState(getRandomColor());
   const [modalOpen, setModalOpen] = useState(false);
+
+  const myUsername = getCurrentUser();
 
   const wrapperStyle = {
     width: cardDimension,
@@ -49,7 +57,7 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
 
   return (
     <div style={wrapperStyle}>
-      <ExchangeOfferDialog open={modalOpen} setOpen={setModalOpen} adId={id}/>
+      <ExchangeOfferDialog open={modalOpen} setOpen={setModalOpen} adId={id} />
       <Card style={cardStyle}>
         <div style={saleHeaderStyle}>
           <div
@@ -84,13 +92,15 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
                     border: "5px dodgerblue solid",
                     borderRadius: 100,
                   }}
-              />
+                />
               </Tooltip>
             )}
-            <ClearIcon
-              onClick={() => removeAd(id)}
-              style={{ cursor: "pointer" }}
-            />
+            {myUsername === username && (
+              <ClearIcon
+                onClick={() => removeAd(id)}
+                style={{ cursor: "pointer" }}
+              />
+            )}
           </div>
         </div>
         <AdComponent id={id} size={vinylDimension} name={name} />
@@ -115,7 +125,7 @@ function AdCard({ username, price, name, isSale, id, removeAd }) {
   );
 }
 
-function ExchangeOfferDialog({open, setOpen, adId}) {
+function ExchangeOfferDialog({ open, setOpen, adId }) {
   const api = process.env.REACT_APP_API_URL;
   const origin = process.env.REACT_APP_URL;
   const [vinyls, setVinyls] = useState([]);
@@ -146,14 +156,16 @@ function ExchangeOfferDialog({open, setOpen, adId}) {
         Authorization: authHeader(),
         Origin: origin,
         "Content-Type": "application/json",
-      }
-    }).then(response => {
-      if(!response.ok) {
-        throw new Error(response.status);
-      }
-      setOpen(false);
-    }).catch(err => console.log(err));
-  }
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.status);
+        }
+        setOpen(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -172,16 +184,21 @@ function ExchangeOfferDialog({open, setOpen, adId}) {
                   </MenuItem>
                 ))}
               </Select>
-              <Button style={{marginTop: "1rem"}} variant="contained" onClick={askForExchange}>
+              <Button
+                style={{ marginTop: "1rem" }}
+                variant="contained"
+                onClick={askForExchange}
+              >
                 OFFER
               </Button>
             </FormControl>
-          ) : <p>Loading...</p>}
+          ) : (
+            <p>Loading...</p>
+          )}
         </DialogContent>
       </Dialog>
     </div>
   );
 }
-
 
 export default AdCard;
