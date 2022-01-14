@@ -19,7 +19,7 @@
     <changeSet id="16" author="Marta">
         <addAutoIncrement incrementBy="1" tableName="subgenre" columnName="id" columnDataType="int8" />
     </changeSet>
-    <changeSet id="18" author="Marta">
+    <changeSet id="32" author="Marta">
         <sqlFile path="db.changelog/changes/subgenre-data.sql" />
     </changeSet>
 </databaseChangeLog>

@@ -17,7 +17,7 @@
     <changeSet id="17" author="Marta">
         <addAutoIncrement incrementBy="1" tableName="artist" columnName="id" columnDataType="int8" />
     </changeSet>
-    <changeSet id="19" author="Marta">
-        <sqlFile path="db.changelog/changes/artist-data.sql" />
+    <changeSet id="31" author="Marta">
+        <sqlFile path="db.changelog/changes/artist-data.sql"/>
     </changeSet>
 </databaseChangeLog>
