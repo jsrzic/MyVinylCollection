@@ -12,5 +12,5 @@
     <include file="changes/6-add-artist.xml" relativeToChangelogFile="true"/>
     <include file="changes/7-add-sale_ad.xml" relativeToChangelogFile="true"/>
     <include file="changes/8-add-exchange_ad.xml" relativeToChangelogFile="true"/>
-    <!--<include file="changes/10-add-event.xml" relativeToChangelogFile="true"/>-->
+    <include file="changes/10-add-event.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

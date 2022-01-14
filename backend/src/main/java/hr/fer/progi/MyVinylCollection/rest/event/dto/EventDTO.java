@@ -9,8 +9,6 @@ public class EventDTO {
 
     private String social_network_link;
 
-    private Location eventLocation;
-
     public String getTitle() {
         return title;
     }
@@ -35,11 +33,4 @@ public class EventDTO {
         this.social_network_link = social_network_link;
     }
 
-    public Location getEventLocation() {
-        return eventLocation;
-    }
-
-    public void setEventLocation(Location eventLocation) {
-        this.eventLocation = eventLocation;
-    }
 }

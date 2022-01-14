@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
-    <changeSet  id="29"  author="Tea">
+    <changeSet  id="30"  author="Tea">
         <createTable  tableName="event">
             <column  name="id"  type="int8">
                 <constraints  primaryKey="true"  nullable="false"/>
@@ -15,9 +15,6 @@
             <column  name="description"  type="varchar(250)">
             </column>
             <column  name="social_network_link"  type="varchar(250)">
-            </column>
-            <column  name="location_id"  type="int8">
-                <constraints  validateForeignKey="true"  nullable="false"/>
             </column>
         </createTable>
         <addAutoIncrement incrementBy="1" tableName="event" columnName="id" columnDataType="int8" />

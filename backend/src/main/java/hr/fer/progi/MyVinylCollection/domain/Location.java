@@ -19,11 +19,6 @@ public class Location {
     private String latitude;
     private String longitude;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Event> event;
-
     public Location(String ipAddress, String city, String latitude, String longitude) {
         this.ipAddress = ipAddress;
         this.city = city;
@@ -75,11 +70,4 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public List<Event> getEvent() {
-        return event;
-    }
-
-    public void setEvent(List<Event> event) {
-        this.event = event;
-    }
 }
