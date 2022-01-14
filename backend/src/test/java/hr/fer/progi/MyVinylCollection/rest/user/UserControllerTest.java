@@ -1,52 +1,79 @@
 package hr.fer.progi.MyVinylCollection.rest.user;
 
-import hr.fer.progi.MyVinylCollection.rest.security.UserSession;
-import hr.fer.progi.MyVinylCollection.rest.security.VinylUserDetailsService;
-import hr.fer.progi.MyVinylCollection.rest.security.WebSecurity;
+import hr.fer.progi.MyVinylCollection.dao.UserRepository;
+import hr.fer.progi.MyVinylCollection.domain.User;
+import hr.fer.progi.MyVinylCollection.rest.security.jwt.JwtUtils;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import hr.fer.progi.MyVinylCollection.service.impl.UserServiceJpa;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(UserController.class)
-@ActiveProfiles({"test"})
+@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class UserControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
-    @MockBean
-    private VinylUserDetailsService vinylUserDetailsService;
-
-    @MockBean
-    private WebSecurity webSecurity;
-
-    @MockBean
+    @Autowired
+    @InjectMocks
     private UserController userController;
 
-    @MockBean
-    private UserSession userSession;
+    @Mock
+    private UserRepository userRepository;
 
-    @MockBean
-    private UserServiceJpa userServiceJpa;
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private JwtUtils jwtUtils;
+
+    @Mock
+    private UserService userService;
+
+    private User user;
+
+    @Before
+    public void setUp(){
+        //userService = new UserServiceJpa(userRepository, passwordEncoder, jwtUtils);
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+
+        User user = new User();
+        user.setId(1L);
+        user.setName("Ime");
+        user.setSurname("Prezime");
+        user.setUsername("username");
+        user.setPassword(passwordEncoder.encode("12345678"));
+    }
 
     @Test
-    void demoTestMethod() {
-        assertTrue(true);
+    public void testGetUsers() throws Exception {
+        mockMvc.perform(get("/users")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testRegisterUserWithExistingPassword() throws Exception {
+        //
     }
 
 }

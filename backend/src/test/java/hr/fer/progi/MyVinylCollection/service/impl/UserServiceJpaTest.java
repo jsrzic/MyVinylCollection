@@ -5,6 +5,7 @@ import hr.fer.progi.MyVinylCollection.dao.UserRepository;
 import hr.fer.progi.MyVinylCollection.domain.Genre;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
+import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +39,7 @@ class UserServiceJpaTest {
     @MockBean
     private UserRepository userRepository;
 
-    @MockBean
+    @InjectMocks
     private UserServiceJpa userServiceJpa;
 
     @MockBean
@@ -54,6 +55,8 @@ class UserServiceJpaTest {
     RegisterUserDTO registerUserDTO;
 
     private List<Genre> userGenrePreference;
+
+    private User user1;
 
 
     @BeforeEach
@@ -79,7 +82,7 @@ class UserServiceJpaTest {
         userGenrePreference.add(genreRepository.getById(1L));
         userGenrePreference.add(genreRepository.getById(2L));
 
-        User user1 = new User(registerUserDTO, null, null);
+        user1 = new User(registerUserDTO, null, null);
 
         given(userRepository.findByUsername("mdulibic")).willReturn(Optional.of(user1));
         given(userRepository.findById(1L)).willReturn(Optional.of(user1));
@@ -93,10 +96,9 @@ class UserServiceJpaTest {
     }
 
     @Test
-    public void testFindByUsername(){
-        userServiceJpa.findByUsername("mdulibic");
-        verify(userRepository).findByUsername("mdulibic");
+    public void testFindUserByUsername(){
         User foundUser = userServiceJpa.findByUsername("mdulibic");
+        verify(userRepository).findByUsername("mdulibic");
         assertEquals("mdulibic", foundUser.getUsername());
     }
 
@@ -105,20 +107,18 @@ class UserServiceJpaTest {
     @Test
     public void testRegisterUser(){
         User newUser = userServiceJpa.registerUser(registerUserDTO, null, null);
-        //registerUserDTO.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
-        //user =  userRepository.save(new User(registerUserDTO, null, null));
-        //System.out.println(userRepository.findAll());
-        //System.out.println(user);
-
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
-
         verify(userRepository).save(userArgumentCaptor.capture());
         User capturedUser = userArgumentCaptor.getValue();
+        assertThat("mdulibic").isEqualTo(capturedUser.getUsername());
 
-        assertThat(capturedUser).isEqualTo(newUser);
+    }
 
-        //user = userServiceJpa.registerUser(registerUserDTO, null, null);
-        //assertEquals("mdulibic", user.getUsername());
+    @Test
+    @Disabled
+    public void testRegisterUserWithExistingPassword() throws Exception {
+       // when(userRepository.save(user1.getPassword())).thenReturn(Optional.of(user1.getPassword()));
+        //assertThrows(RequestDeniedException.class, () -> userServiceJpa.registerUser(user1));
     }
 
 }

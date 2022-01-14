@@ -9,21 +9,21 @@ import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
 import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -41,6 +41,7 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 @ActiveProfiles({"test"})
 @WebMvcTest(VinylServiceJpa.class)
 @ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 class VinylServiceJpaTest {
 
     @MockBean
@@ -60,6 +61,9 @@ class VinylServiceJpaTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     @MockBean
     private WebSecurity webSecurity;
@@ -92,8 +96,9 @@ class VinylServiceJpaTest {
         RegisterUserDTO registerUserDTO = new RegisterUserDTO();
         registerUserDTO.setName("Marta");
         registerUserDTO.setSurname("Dubilić");
-        registerUserDTO.setUsername("mdulibic");
-        registerUserDTO.setPassword("123456789");
+        registerUserDTO.setUsername("md");
+        registerUserDTO.setPassword("abcdefghij");
+        registerUserDTO.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
         registerUserDTO.setEmail("mdulibic@gmail.com");
         User user = new User(registerUserDTO, null, null);
         given(userRepository.getById(1L)).willReturn(user);
@@ -178,7 +183,7 @@ class VinylServiceJpaTest {
         //System.out.println(user);
     }
 
-    //user get vinyls je nulla
+
     @Test
     public void testDeleteVinyl(){
         assertEquals(true, vinylServiceJpa.deleteVinyl(1L));
