@@ -1,9 +1,11 @@
 package hr.fer.progi.MyVinylCollection.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name="location")
 public class Location {
@@ -67,4 +69,5 @@ public class Location {
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
+
 }

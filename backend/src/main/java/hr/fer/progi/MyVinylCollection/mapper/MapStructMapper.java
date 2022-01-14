@@ -1,7 +1,9 @@
 package hr.fer.progi.MyVinylCollection.mapper;
 
+import hr.fer.progi.MyVinylCollection.domain.Event;
 import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.domain.Vinyl;
+import hr.fer.progi.MyVinylCollection.rest.event.dto.EventDTO;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.UpdateUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
 import org.mapstruct.BeanMapping;
@@ -20,5 +22,8 @@ public interface MapStructMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Vinyl updateVinylDTOToVinyl(UpdateVinylDTO dto, @MappingTarget Vinyl entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Event updateEventDTOtoEvent(EventDTO dto, @MappingTarget Event entity);
 
 }

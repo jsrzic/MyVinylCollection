@@ -23,7 +23,7 @@ public class LocationServiceImpl implements LocationService {
     @Autowired
     private LocationRepository locationRepo;
 
-    private DatabaseReader dbReader;
+    private DatabaseReader dbReader = null;
 
     public LocationServiceImpl() throws IOException {
         File database = new File(URLDecoder.decode(this.getClass().getClassLoader().getResource("GeoLite2-City.mmdb").getFile(),"UTF-8"));
