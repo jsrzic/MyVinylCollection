@@ -26,6 +26,12 @@ public class EventController {
         return eventService.listAll();
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @GetMapping("/sorted")
+    public List<Event> listEventsByNewest(){
+        return eventService.listSorted();
+    }
+
     @Secured("ROLE_ADMIN")
     @PostMapping("/createEvent")
     public Event createEvent(@RequestBody EventDTO eventDTO) {
