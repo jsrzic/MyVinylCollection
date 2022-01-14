@@ -26,7 +26,7 @@ function SideNavBar() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const userIsLoggedIn = getCurrentUser() !== null;
-  const userIsAdmin = user.roles[0] === "ROLE_ADMIN";
+  const userIsAdmin = userIsLoggedIn && user.roles[0] === "ROLE_ADMIN";
 
   let tabs = ["Home Page", "Collection", "Ads", "Inbox", "Friends"];
   const tabToPath = new Map();
