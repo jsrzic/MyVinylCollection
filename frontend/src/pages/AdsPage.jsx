@@ -80,7 +80,7 @@ function AdsPage() {
   return (
     <>
       <div>
-        <h1>Active Ads</h1>
+        <h1> Ads</h1>
         {ads && saleAds && exchangeAds ? (
           <div style={{ display: "flex" }}>
             <div>
@@ -121,28 +121,6 @@ function AdsPage() {
         ) : (
           <p>Loading...</p>
         )}
-      </div>
-      <div>
-        <h1>Bought Ads</h1>
-        <div
-          style={{
-            display: "flex",
-            maxWidth: window.innerWidth * 0.83,
-            height: "20rem",
-            overflow: "scroll",
-          }}
-        ></div>
-      </div>
-      <div>
-        <h1>Sold Ads</h1>
-        <div
-          style={{
-            display: "flex",
-            maxWidth: window.innerWidth * 0.83,
-            height: "20rem",
-            overflow: "scroll",
-          }}
-        ></div>
       </div>
     </>
   );
