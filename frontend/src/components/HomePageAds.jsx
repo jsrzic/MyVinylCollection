@@ -10,7 +10,7 @@ function HomePageAds({exchangeAds, saleAds}) {
 
   return (
     <div style={containerGridStyle}>
-      {saleAds.map(ad => <AdCard username={ad.username} price={ad.saleAd.price} name={ad.saleAd.vinyl.album} isSale id={ad.saleAd.id} vinylId={{ad.saleAd.vinyl.id }/>)}
+      {saleAds.map(ad => <AdCard username={ad.username} price={ad.saleAd.price} name={ad.saleAd.vinyl.album} isSale id={ad.saleAd.id} vinylId={ad.saleAd.vinyl.id }/>)}
       {exchangeAds.map(ad => <AdCard username={ad.username}  name={ad.exchangeAd.vinyl.album} id={ad.exchangeAd.id}/>)}
     </div>
   );
