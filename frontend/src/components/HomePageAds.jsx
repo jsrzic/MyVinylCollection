@@ -8,6 +8,11 @@ function HomePageAds({ exchangeAds, saleAds }) {
     gap: "2rem",
   };
 
+  React.useEffect(() => {
+    console.log(saleAds);
+    console.log(exchangeAds);
+  }, []);
+
   return (
     <div style={containerGridStyle}>
       {saleAds.map((ad) => (
@@ -16,16 +21,18 @@ function HomePageAds({ exchangeAds, saleAds }) {
           price={ad.saleAd.price}
           name={ad.saleAd.vinyl.album}
           isSale
-          id={ad.saleAd.id}
+          id={ad.saleAd.vinyl.id}
           ad={ad}
+          fromHomepage
         />
       ))}
       {exchangeAds.map((ad) => (
         <AdCard
           username={ad.username}
           name={ad.exchangeAd.vinyl.album}
-          id={ad.exchangeAd.id}
+          id={ad.exchangeAd.vinyl.id}
           ad={ad}
+          fromHomepage
         />
       ))}
     </div>
