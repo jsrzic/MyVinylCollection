@@ -37,7 +37,8 @@ function AdCard({
   const vinylDimension = IsMobile() ? 75 : 150;
 
   const [color, setColor] = useState(getRandomColor());
-  const [modalOpen, setModalOpen] = useState(false);
+  const [exchangeModal, setExchangeModal] = useState(false);
+  const [saleModal, setSaleModal] = useState(false);
 
   const myUsername = getCurrentUser();
 
@@ -68,7 +69,12 @@ function AdCard({
 
   return (
     <div style={wrapperStyle}>
-      <ExchangeOfferDialog open={modalOpen} setOpen={setModalOpen} adId={ad.id} />
+      <ExchangeOfferDialog
+        open={exchangeModal}
+        setOpen={setExchangeModal}
+        adId={ad.id}
+      />
+      <SaleOfferDialog open={saleModal} setOpen={setSaleModal} adId={ad.id} />
       <Card style={cardStyle}>
         <div style={saleHeaderStyle}>
           <div
@@ -82,6 +88,7 @@ function AdCard({
             {isSale ? (
               <Chip
                 icon={<AttachMoneyIcon />}
+                onClick={() => setSaleModal(true)}
                 label={
                   <p
                     style={{
@@ -97,7 +104,7 @@ function AdCard({
             ) : (
               <Tooltip title="Exchange">
                 <ChangeCircleIcon
-                  onClick={() => {if(username !== getCurrentUser()) setModalOpen(true)}}
+                  onClick={() => {if(username !== getCurrentUser()) setExchangeModal(true)}}
                   style={{
                     color: "white",
                     border: "5px dodgerblue solid",
@@ -215,6 +222,45 @@ function ExchangeOfferDialog({ open, setOpen, adId }) {
           ) : (
             <p>Loading...</p>
           )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function SaleOfferDialog({ open, setOpen, adId }) {
+  const api = process.env.REACT_APP_API_URL;
+
+  function handlePurchase() {
+    console.log(adId);
+    const numId = Number(adId);
+    fetch(api + `/ads/sale_ads/${numId}/offer/`, {
+      method: "PUT",
+      headers: {
+        Authorization: authHeader(),
+        Origin: origin,
+        "Content-Type": "application/json",
+      },
+    }).then((r) => r.json().then((d) => console.log(d.message)));
+  }
+
+  return (
+    <div>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Offer to buy this vinyl?</DialogTitle>
+        <DialogContent
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "15vw",
+          }}
+        >
+          <Button variant="contained" onClick={handlePurchase}>
+            OK
+          </Button>
+          <Button variant="outlined" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
         </DialogContent>
       </Dialog>
     </div>
