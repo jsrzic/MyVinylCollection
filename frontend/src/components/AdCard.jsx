@@ -232,16 +232,15 @@ function SaleOfferDialog({ open, setOpen, adId }) {
   const api = process.env.REACT_APP_API_URL;
 
   function handlePurchase() {
-    console.log(adId);
-    const numId = Number(adId);
-    fetch(api + `/ads/sale_ads/${numId}/offer/`, {
+    fetch(api + `/ads/sale_ads/${adId}/offer/`, {
       method: "PUT",
       headers: {
         Authorization: authHeader(),
         Origin: origin,
         "Content-Type": "application/json",
       },
-    }).then((r) => r.json().then((d) => console.log(d.message)));
+    }).then((r) => r.json().then((d) => console.log(d)));
+    setOpen(false);
   }
 
   return (
