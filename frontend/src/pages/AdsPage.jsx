@@ -228,11 +228,11 @@ function AddNewSaleAd({ setOpen, open, setAds }) {
         <h2>Add new ad</h2>
       </Card>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add New Sale Ad</DialogTitle>
+        <DialogTitle>Add New Ad</DialogTitle>
         <DialogContent>
           {vinyls ? (
             <FormControl fullWidth>
-              <ToggleButtonGroup value={type}>
+              <ToggleButtonGroup value={type} fullWidth>
                 <ToggleButton value="sale" onClick={() => setType("sale")}>
                   Sale
                 </ToggleButton>
@@ -243,7 +243,13 @@ function AddNewSaleAd({ setOpen, open, setAds }) {
                   Exchange
                 </ToggleButton>
               </ToggleButtonGroup>
-              <Select label="Vinyl" value={vinyl} onChange={handleChange}>
+              <Select
+                style={{ marginTop: "1rem" }}
+                value={vinyl}
+                onChange={handleChange}
+                fullWidth
+                displayEmpty
+              >
                 {vinyls.map((v) => (
                   <MenuItem style={{ height: "3rem" }} value={v}>
                     <div style={{ display: "flex", alignItems: "center" }}>
@@ -253,10 +259,19 @@ function AddNewSaleAd({ setOpen, open, setAds }) {
                   </MenuItem>
                 ))}
               </Select>
+              {type === "sale" && (
+                <TextField
+                  label="Price"
+                  style={{ marginTop: "10px" }}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              )}
               <TextField
                 label="Price"
-                style={{ marginTop: "10px", marginBottom: "10px" }}
-                onChange={(e) => setPrice(e.target.value)}
+                style={{
+                  height: "20px",
+                  visibility: "hidden",
+                }}
               />
               <Button variant="contained" onClick={postSaleAd}>
                 OK

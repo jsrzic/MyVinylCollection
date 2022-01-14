@@ -17,15 +17,10 @@ public class Event {
 
     private String social_network_link;
 
-    @ManyToOne
-    @JoinColumn(name = "location_id", nullable = false)
-    private Location eventLocation;
-
     public Event(EventDTO dto) {
         this.title = dto.getTitle();
         this.description = dto.getDescription();
         this.social_network_link = dto.getSocial_network_link();
-        this.eventLocation = dto.getEventLocation();
     }
 
     public Event() {
@@ -64,11 +59,4 @@ public class Event {
         this.social_network_link = social_network_link;
     }
 
-    public Location getEventLocation() {
-        return eventLocation;
-    }
-
-    public void setEventLocation(Location eventLocation) {
-        this.eventLocation = eventLocation;
-    }
 }

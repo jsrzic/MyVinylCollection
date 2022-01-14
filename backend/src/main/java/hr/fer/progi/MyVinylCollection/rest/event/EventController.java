@@ -26,6 +26,12 @@ public class EventController {
         return eventService.listAll();
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @GetMapping("/sorted")
+    public List<Event> listEventsByNewest(){
+        return eventService.listSorted();
+    }
+
     @Secured("ROLE_ADMIN")
     @PostMapping("/createEvent")
     public Event createEvent(@RequestBody EventDTO eventDTO) {
@@ -35,7 +41,7 @@ public class EventController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateEventInfo (@PathVariable Long eventId, @RequestBody EventDTO eventDTO) {
+    public ResponseEntity<Object> updateEventInfo (@PathVariable("id") Long eventId, @RequestBody EventDTO eventDTO) {
         if(eventService.updateEventInfo(eventId, eventDTO))
             return new ResponseEntity<Object>(eventId, HttpStatus.OK);
         else
@@ -44,7 +50,7 @@ public class EventController {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteEvent(@PathVariable Long eventId){
+    public ResponseEntity<Object> deleteEvent(@PathVariable("id") Long eventId){
         if(eventService.deleteEvent(eventId)){
             return new ResponseEntity<Object>(eventId, HttpStatus.OK);
         }else{

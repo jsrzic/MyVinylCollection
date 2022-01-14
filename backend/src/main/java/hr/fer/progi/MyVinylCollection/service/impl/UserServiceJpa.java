@@ -84,13 +84,12 @@ public class UserServiceJpa implements UserService {
 
 
     @Override
-    public boolean updateUserStatus(Long userId, boolean status) {
-        if(userRepo.findById(userId).isEmpty())
-            throw new RequestDeniedException("No user with id:" + userId);
-
-        if(userRepo.updateUserStatus(userId, status).isActive() == status)
-                return true;
-        return false;
+    public boolean updateUserStatus(String username) {
+        User user = userRepo.findByUsername(username).orElseThrow(
+                () -> new RequestDeniedException("No user with username:" + username));
+        user.setActive(!user.isActive());
+        userRepo.save(user);
+        return user.isActive();
     }
 
     @Override

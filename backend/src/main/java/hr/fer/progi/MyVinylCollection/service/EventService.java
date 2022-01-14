@@ -11,6 +11,7 @@ public interface EventService {
 
     Event createEvent(Event event);
     List<Event> listAll();
+    List<Event> listSorted();
     boolean deleteEvent(long eventId);
     boolean updateEventInfo(long eventId, EventDTO eventDTO);
 }

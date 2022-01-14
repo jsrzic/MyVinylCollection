@@ -73,7 +73,10 @@ function LandingPage() {
             </Button>
           </div>
           <Button
-            onClick={() => history.push("/dashboard/homepage")}
+            onClick={() => {
+              localStorage.removeItem("user");
+              history.push("/dashboard/homepage");
+            }}
             endIcon={<ExploreIcon />}
             variant="contained"
             color="secondary"

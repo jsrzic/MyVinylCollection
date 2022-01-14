@@ -12,6 +12,7 @@ function VinylCollection({ data, favVinyls, updateFunction }) {
         height: "20rem",
         overflow: "scroll",
         position: "relative",
+        margin: "-1rem",
       }}
       onScroll={() => setScrolled(true)}
     >
@@ -23,6 +24,7 @@ function VinylCollection({ data, favVinyls, updateFunction }) {
             position: "absolute",
             zIndex: 5,
             right: 0,
+            marginTop: "-1rem",
             backgroundImage:
               "radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%)",
           }}
@@ -30,6 +32,7 @@ function VinylCollection({ data, favVinyls, updateFunction }) {
       )}
       {data.map((d) => (
         <VinylCard
+          hasHeart
           vinylData={d}
           favVinyls={favVinyls}
           updateFunction={updateFunction}

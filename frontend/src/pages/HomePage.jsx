@@ -1,29 +1,123 @@
-import React from "react";
-
-import VinylCollection from "../components/VinylCollection";
+import React, {useEffect, useState} from "react";
+import {Box, Tabs, Tab, LinearProgress, Alert, Paper} from "@mui/material";
+import authHeader from "../auth-header";
+import HomePageAds from "../components/HomePageAds";
+import HomePageVinyls from "../components/HomePageVinyls";
 
 function HomePage() {
-  const mockData = [
-    { name: "Bohemian Rhapsody", forSale: true, ad: true },
-    { name: "Tražena si roba u gradu", forSale: true, ad: false },
-    { name: "Mesečar", forSale: false, ad: true },
-    { name: "Vraćam se majci u Bosnu", forSale: false, ad: false },
-    { name: "Instant crush", forSale: false, ad: false },
-    { name: "Don't cry", forSale: false, ad: false },
-    { name: "Three little birds", forSale: true, ad: false },
-    { name: "Without me", forSale: false, ad: true },
-    { name: "Đuskanje ne pomaže", forSale: false, ad: false },
-    { name: "Highlife", forSale: true, ad: true },
-    { name: "Namazan U Kocki", forSale: false, ad: false },
-    { name: "Lemonade", forSale: true, ad: false },
-    { name: "Džin i limunada", forSale: false, ad: true },
-    { name: "Run to the hills", forSale: false, ad: true },
-  ];
+  const api = process.env.REACT_APP_API_URL;
+  const [tabIndex, setTabIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [saleAds, setSaleAds] = useState([]);
+  const [exchangeAds, setExchangeAds] = useState([]);
+  const [vinyls, setVinyls] = useState([]);
+
+  const requestOptionsGet = {
+    method: "GET",
+    headers: {
+      origin: origin,
+      Authorization: authHeader()
+    }
+  }
+
+  function getSaleAds() {
+    return fetch(api + "/home/sale_ads", requestOptionsGet)
+      .then(response => {
+        if(response.ok){
+          return response.json();
+        } else {
+          throw new Error(response.status);
+        }
+      })
+      .then(data => {
+        setSaleAds(data);
+        setLoading(false);
+        console.log(data);
+      })
+      .catch(err => {
+        setErrorMessage(true);
+        console.log(err);
+      })
+  }
+
+  function getExchangeAds() {
+    return fetch(api + "/home/exchange_ads", requestOptionsGet)
+      .then(response => {
+        if(response.ok){
+          return response.json();
+        } else {
+          throw new Error(response.status);
+        }
+      })
+      .then(data => {
+        setExchangeAds(data);
+        setLoading(false);
+        console.log(data);
+      })
+      .catch(err => {
+        setErrorMessage(true);
+        console.log(err);
+      })
+  }
+
+  function getVinyls() {
+    return fetch(api + "/home/vinyls", requestOptionsGet)
+      .then(response => {
+        if(response.ok){
+          return response.json();
+        } else {
+          throw new Error(response.status);
+        }
+      })
+      .then(data => {
+        setVinyls(data);
+        setLoading(false);
+        console.log(data);
+      })
+      .catch(err => {
+        setErrorMessage(true);
+        console.log(err);
+      })
+  }
+
+  useEffect(() => {
+    Promise.all([getExchangeAds(), getSaleAds(), getVinyls()])
+      .then(() => {
+        setLoading(false);
+      })
+
+  }, []);
+
+  const handleChange = (event, newValue) => {
+    setTabIndex(newValue);
+  };
 
   return (
-    <>
-      <VinylCollection data={mockData} favVinyls={mockData}/>
-    </>
+    <Box sx={{ width: '100%'}}>
+      <Tabs style={{marginBottom: "3rem"}} value={tabIndex} onChange={handleChange} centered>
+        <Tab label="Vinyls" />
+        <Tab label="Ads" />
+        <Tab label="Events" />
+      </Tabs>
+
+      <>
+        {loading ? <LinearProgress style={{marginTop: "1rem"}}/> :
+          <>
+            {
+              errorMessage ?
+                <Alert variant="outlined" severity="error">Error occurred while communicating with the server.</Alert> :
+                <>
+                  {tabIndex == 0 && <HomePageVinyls vinyls={vinyls}/>}
+                  {tabIndex == 1 && <HomePageAds saleAds={saleAds} exchangeAds={exchangeAds}/>}
+                </>
+            }
+          </>
+
+        }
+      </>
+
+    </Box>
   );
 }
 

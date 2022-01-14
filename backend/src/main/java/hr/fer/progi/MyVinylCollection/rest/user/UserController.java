@@ -63,8 +63,8 @@ public class UserController {
     UserSession userSession;
 
     @GetMapping("")
-    public List<User> listUsers() {
-        return userService.listAll();
+    public List<String> listUsers() {
+        return userService.listAll().stream().map(u -> u.getUsername()).collect(Collectors.toList());
     }
 
     @PostMapping("/auth/register")
@@ -121,13 +121,13 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/status/{id}")
-    public ResponseEntity<Object> updateUserStatus(@PathVariable("id") Long userId, @RequestParam boolean status){
+    @PutMapping("/status/{username}")
+    public ResponseEntity<Object> updateUserStatus(@PathVariable("username") String username){
         try{
-            if(userService.updateUserStatus(userId, status)){
-                return new ResponseEntity<Object>(userId, HttpStatus.OK);
+            if(userService.updateUserStatus(username)){
+                return new ResponseEntity<Object>("User unblocked!", HttpStatus.OK);
             }else{
-                return new ResponseEntity<Object>(userId, HttpStatus.EXPECTATION_FAILED);
+                return new ResponseEntity<Object>("User blocked!", HttpStatus.OK);
             }
         }catch(RequestDeniedException e){
             throw new IllegalArgumentException(e.getMessage());

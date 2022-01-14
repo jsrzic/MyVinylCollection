@@ -20,7 +20,6 @@ const infoStyle = {
 
 function VinylInfo() {
   const api = process.env.REACT_APP_API_URL;
-  const username = getCurrentUser();
 
   const location = useLocation();
   const id = location.state.id;
