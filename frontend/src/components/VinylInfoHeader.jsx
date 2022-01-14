@@ -15,10 +15,8 @@ function VinylInfoHeader({ vinyl }) {
   const vinylDimension = IsMobile() ? 75 : 150;
   const color = getRandomColor();
   const history = useHistory();
-  let pressed = false;
 
   function deleteVinyl() {
-    pressed = true;
     fetch(api + "/vinyls/collection", {
       method: "GET",
       headers: {

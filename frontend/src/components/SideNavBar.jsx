@@ -17,29 +17,49 @@ import AlbumIcon from "@mui/icons-material/Album";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import EmailIcon from "@mui/icons-material/Email";
 import PeopleIcon from "@mui/icons-material/People";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
-import { IsMobile, ThemeContext } from "../util/utils";
+import { getCurrentUser, IsMobile, ThemeContext } from "../util/utils";
 import UserTab from "./UserTab";
 
-const tabsIcons = [
-  <HomeIcon />,
-  <AlbumIcon />,
-  <FeaturedPlayListIcon />,
-  <EmailIcon />,
-  <PeopleIcon />,
-];
-const tabs = ["Home Page", "Collection", "Ads", "Inbox", "Friends"];
-const tabToPath = new Map();
-tabToPath.set("Home Page", "homepage");
-tabToPath.set("Collection", "collection");
-tabToPath.set("Ads", "ads");
-tabToPath.set("Inbox", "inbox");
-tabToPath.set("Friends", "friends");
-
 function SideNavBar() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const userIsLoggedIn = getCurrentUser() !== null;
+  const userIsAdmin = user.roles[0] === "ROLE_ADMIN";
+
+  let tabs = ["Home Page", "Collection", "Ads", "Inbox", "Friends"];
+  const tabToPath = new Map();
+
+  let tabsIcons = [
+    <HomeIcon />,
+    <AlbumIcon />,
+    <FeaturedPlayListIcon />,
+    <EmailIcon />,
+    <PeopleIcon />,
+  ];
+
+  if (userIsLoggedIn) {
+    tabToPath.set("Home Page", "homepage");
+    tabToPath.set("Collection", "collection");
+    tabToPath.set("Ads", "ads");
+    tabToPath.set("Inbox", "inbox");
+    tabToPath.set("Friends", "friends");
+  } else {
+    tabs = ["Home Page"];
+    tabToPath.set("Home Page", "homepage");
+    tabsIcons = [<HomeIcon />];
+  }
+
   const url = window.location.href.substring(
     window.location.href.lastIndexOf("/") + 1
   );
+
+  React.useEffect(() => {
+    if (userIsAdmin) {
+      history.push("/dashboard/admin");
+    }
+  }, []);
 
   const [active, setActive] = React.useState(url);
 
@@ -103,19 +123,29 @@ function SideNavBar() {
       >
         <UserTab />
         <Divider />
-        {tabs.map((tab, index) => (
+        {userIsAdmin && (
           <Tab
-            label={<p>{tabs[index]}</p>}
-            value={index}
-            style={isActive(tabToPath.get(tab)) ? activeTabStyle : tabStyle}
-            onClick={() => {
-              setActive(tabToPath.get(tabs[index]));
-              history.push(`/dashboard/${tabToPath.get(tabs[index])}`);
-            }}
-            icon={tabsIcons[index]}
+            label={<p>Admin</p>}
+            value={6}
+            style={activeTabStyle}
+            icon={<AdminPanelSettingsIcon />}
             iconPosition="start"
           />
-        ))}
+        )}
+        {!userIsAdmin &&
+          tabs.map((tab, index) => (
+            <Tab
+              label={<p>{tabs[index]}</p>}
+              value={index}
+              style={isActive(tabToPath.get(tab)) ? activeTabStyle : tabStyle}
+              onClick={() => {
+                setActive(tabToPath.get(tabs[index]));
+                history.push(`/dashboard/${tabToPath.get(tabs[index])}`);
+              }}
+              icon={tabsIcons[index]}
+              iconPosition="start"
+            />
+          ))}
       </Tabs>
     </Paper>
   ) : (
