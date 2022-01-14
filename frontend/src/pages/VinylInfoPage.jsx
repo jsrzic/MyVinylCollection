@@ -41,7 +41,7 @@ function VinylInfo() {
 
   return (
     <div style={infoStyle}>
-      <VinylInfoHeader vinyl={vinyl && vinyl} />
+      <VinylInfoHeader vinyl={vinyl && vinyl} id={id}/>
       {vinyl ? (
         <div
           style={{

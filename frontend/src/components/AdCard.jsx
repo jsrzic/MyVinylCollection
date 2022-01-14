@@ -97,7 +97,7 @@ function AdCard({
             ) : (
               <Tooltip title="Exchange">
                 <ChangeCircleIcon
-                  onClick={() => setModalOpen(true)}
+                  onClick={() => {if(username !== getCurrentUser()) setModalOpen(true)}}
                   style={{
                     color: "white",
                     border: "5px dodgerblue solid",
