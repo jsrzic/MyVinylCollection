@@ -2,16 +2,23 @@ package hr.fer.progi.MyVinylCollection.service.impl;
 
 import hr.fer.progi.MyVinylCollection.dao.*;
 import hr.fer.progi.MyVinylCollection.domain.*;
+import hr.fer.progi.MyVinylCollection.mapper.MapStructMapper;
 import hr.fer.progi.MyVinylCollection.rest.user.dto.RegisterUserDTO;
 import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.AddVinylDTO;
+import hr.fer.progi.MyVinylCollection.rest.vinyl.dto.UpdateVinylDTO;
+import hr.fer.progi.MyVinylCollection.service.RequestDeniedException;
 import hr.fer.progi.MyVinylCollection.service.UserService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.quality.Strictness;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,6 +28,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -32,7 +41,7 @@ class VinylServiceJpaTest {
     @Mock
     private VinylRepository vinylRepository;
 
-    @MockBean
+    @InjectMocks
     private VinylServiceJpa vinylServiceJpa;
 
     @MockBean
@@ -46,6 +55,9 @@ class VinylServiceJpaTest {
 
     @MockBean
     private UserRepository userRepository;
+
+    @Mock
+    private MapStructMapper mapstructMapper;
 
     @BeforeEach
     public void setUp(){
@@ -76,13 +88,47 @@ class VinylServiceJpaTest {
         registerUserDTO.setPassword("123456789");
         registerUserDTO.setEmail("mdulibic@gmail.com");
         User user = new User(registerUserDTO, null, null);
-        when(userRepository.getById(1L)).thenReturn(user);
+        given(userRepository.getById(1L)).willReturn(user);
 
+        AddVinylDTO vinylDto = new AddVinylDTO();
+        vinylDto.setAlbum("Slušaj mater");
+        vinylDto.setArtistId(5L);
+        vinylDto.setReleaseYear(1948);
+        vinylDto.setGenreId(1L);
+        vinylDto.setSubgenreId(1L);
+        vinylDto.setConditionEvaluation(4);
+        vinylDto.setRare(false);
+        vinylDto.setDescription("blab123");
+        vinylDto.setPriceKn(50.0);
+        vinylDto.setRPM("33");
+        vinylDto.setDiameter(2.0);
+        vinylDto.setCapacity("50");
+        vinylDto.setReproductionQuality("good");
+        vinylDto.setNmbOfAudioChannels(3);
+        vinylDto.setTimeOfReproduction(LocalTime.parse("01:24:00"));
+
+        Vinyl vinyl1 = new Vinyl(vinylDto, artist, genre1, subgenre);
+        vinyl1.setOwner(user);
+        //vinylRepository.save(vinyl1);
+        given(vinylRepository.findById(1L)).willReturn(java.util.Optional.of(vinyl1));
     }
+
 
     @Test
     void demoTestMethod() {
         assertTrue(true);
+    }
+
+    @Test
+    void testFindById(){
+        Vinyl v = vinylServiceJpa.findById(1L);
+        assertEquals("Slušaj mater", v.getAlbum());
+        System.out.println(v);
+    }
+
+    @Test
+    void testFindByIdWrongId(){
+        assertThrows(RequestDeniedException.class, () -> vinylServiceJpa.findById(10L));
     }
 
     @Test
@@ -121,6 +167,12 @@ class VinylServiceJpaTest {
         vinylServiceJpa.addVinyl(vinyl, userRepository.getById(1L));
         System.out.println(vinylRepository.findAll());
         //System.out.println(user);
+    }
+
+    @Test
+    public void testDeleteVinyl(){
+        vinylServiceJpa.deleteVinyl(1L);
+        verify(vinylRepository).deleteById(1L);
     }
 
 }
