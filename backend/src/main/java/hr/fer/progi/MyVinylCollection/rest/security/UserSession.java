@@ -19,4 +19,5 @@ public class UserSession {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return ((VinylUserDetails) auth.getPrincipal()).getUsername();
     }
+
 }

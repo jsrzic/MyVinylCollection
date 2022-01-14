@@ -12,6 +12,9 @@ public interface HomeService {
     List<Vinyl> getVinyls(User user);
     List<SaleHomeDTO> getSaleAds(User user);
     List<ExchangeHomeDTO> getExchangeAds(User user);
+    List<Vinyl> getAllVinyls();
+    List<SaleHomeDTO> getAllSaleAds();
+    List<ExchangeHomeDTO> getAllExchangeAds();
 
 
 }

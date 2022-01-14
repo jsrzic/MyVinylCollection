@@ -1,5 +1,6 @@
 package hr.fer.progi.MyVinylCollection.rest.security;
 
+import hr.fer.progi.MyVinylCollection.domain.User;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.AuthEntryPointJwt;
 import hr.fer.progi.MyVinylCollection.rest.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,4 +69,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
+
 }

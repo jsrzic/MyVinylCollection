@@ -129,7 +129,7 @@ public class AdController {
     }
 
     @PutMapping("/sale_ads/decline/{id}")
-    public ResponseEntity<Object> declinePurchaseOffer(@PathVariable("id id") Long id){
+    public ResponseEntity<Object> declinePurchaseOffer(@PathVariable("id") Long id){
         User user = userSession.getUser();
         PurchaseOffer offer = saleAdService.findOfferById(id);
         saleAdService.declineOffer(offer, user);

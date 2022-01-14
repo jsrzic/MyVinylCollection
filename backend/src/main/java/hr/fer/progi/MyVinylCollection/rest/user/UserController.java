@@ -63,8 +63,8 @@ public class UserController {
     UserSession userSession;
 
     @GetMapping("")
-    public List<String> listUsers() {
-        return userService.listAll().stream().map(u -> u.getUsername()).collect(Collectors.toList());
+    public List<User> listUsers() {
+        return userService.listAll();
     }
 
     @PostMapping("/auth/register")
